@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//
-//         $schedule->command('cancelOrder')->withoutOverlapping()
-//                  ->everyMinute();
+
+         $schedule->command('cancelOrder')->withoutOverlapping()
+                  ->everyMinute();
     }
 
     /**

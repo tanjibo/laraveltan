@@ -112,7 +112,7 @@ class ExperienceBooking extends Model
      */
     public function rooms()
     {
-        return $this->belongsToMany('\common\models\ExperienceRoomModel', 'experience_booking_room', 'experience_booking_id', 'experience_room_id');
+        return $this->belongsToMany(ExperienceRoom::class, 'experience_booking_room', 'experience_booking_id', 'experience_room_id');
     }
 
     /**
@@ -200,12 +200,6 @@ class ExperienceBooking extends Model
                     $user->balance += $booking->balance;
                     $user->save();
 
-                }
-
-                $room = '';
-                foreach ($booking->rooms as $v)
-                {
-                    $room .= '[' . $v->name . ']';
                 }
 
 
