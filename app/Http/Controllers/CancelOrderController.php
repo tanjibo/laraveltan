@@ -23,7 +23,7 @@ class CancelOrderController extends Controller
 
         if(count($data->toArray())){
               foreach($data as $v){
-                  ExperienceBooking::changeStatus($v->id,10);
+                  ExperienceBooking::changeStatus($v->id,-10);
                   \Log::info('',$v->toArray());
               }
            }
