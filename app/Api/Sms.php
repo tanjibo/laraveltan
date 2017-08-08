@@ -223,8 +223,8 @@ class Sms extends Model
             'mobile'  => (string)$mobile,
             'msg'     => $content,
         ];
-        $client=new Client(['timeout'=>2]);
-       $response= $client->request('POST',self::SMS_REQUEST,$params);
+        $client=new Client(['timeout'=>2,'base_uri'=>self::SMS_REQUEST]);
+       $response= $client->request('POST','',$params);
 
 //        $result = \HttpResponse::post(self::SMS_REQUEST, http_build_query($params));
 //        $result = explode(',', $result);
