@@ -13,7 +13,7 @@ class CancelOrderController extends Controller
      static public function canBookingNormal()
     {
         $date   = new Carbon('now');
-          if(\App::environment('develop')){
+          if(\App::environment()=='develop'){
               $before = $date->subMinutes(1);
           }else{
               $before=$date->subMinutes(10);
