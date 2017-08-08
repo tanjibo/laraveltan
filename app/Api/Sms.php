@@ -219,16 +219,16 @@ class Sms extends Model
         // 示远科技短信接口
         $params = [
             'account' => self::SMS_ACCOUNT,
-            'pswd'    => self::SMS_PASSWORD,
+            'psåwd'    => self::SMS_PASSWORD,
             'mobile'  => (string)$mobile,
             'msg'     => $content,
         ];
-        $client=new Client(['timeout'=>2,'base_uri'=>self::SMS_REQUEST]);
-       $response= $client->request('POST','',$params);
+        $client=new Client(['timeout'=>2,'base_uri'=>'http://send.18sms.com']);
+       $res= $client->post('/msg/HttpBatchSendSM',$params);
 
 //        $result = \HttpResponse::post(self::SMS_REQUEST, http_build_query($params));
 //        $result = explode(',', $result);
-       dd($response);
+       dd($res->getBody());
         // 保存短信记录
 //        self::store(
 //            [
