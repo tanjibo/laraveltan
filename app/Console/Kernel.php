@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CancelOrder;
+use App\Console\Commands\CancelSpecialPrice;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CancelOrder::class,
+        CancelOrder::class,  //取消订单
+        CancelSpecialPrice::class  //取消特殊价格
     ];
 
     /**
@@ -28,6 +30,8 @@ class Kernel extends ConsoleKernel
 
          $schedule->command('cancelOrder')->withoutOverlapping()
                   ->everyMinute();
+
+         $schedule->command('cancelSpecialPrice')->withoutOverlapping()->daily();
     }
 
     /**

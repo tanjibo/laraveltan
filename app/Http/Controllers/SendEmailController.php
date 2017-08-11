@@ -24,7 +24,7 @@ class SendEmailController extends Controller
 
         // 用户短信通知
         $template = Sms::template(Sms::TYPE_EXPERIENCE_BOOKING_WITH_USER, $params);
-        Sms::send('18610729170', $template, Sms::TYPE_EXPERIENCE_BOOKING_WITH_USER);
+        Sms::send('', $template, Sms::TYPE_EXPERIENCE_BOOKING_WITH_USER);
 
     }
 }
