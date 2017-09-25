@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Foundation\Exception\ExceptionReport;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -44,6 +45,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+       $report=ExceptionReport::make($exception);
+        if ($report->shouldReturn()){
+
+            return $report->report();
+        }
+
         return parent::render($request, $exception);
     }
 

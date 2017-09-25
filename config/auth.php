@@ -42,8 +42,13 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
+        ],
+
+        'admin_api' => [
+            'driver' => 'passport',
+            'provider' => 'admin_users',
         ],
     ],
 
@@ -66,14 +71,16 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
+            'driver' => 'lrss-eloquent',
+            'model' => \App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+
+
+         'admin_users' => [
+             'driver' => 'lrss-eloquent',
+             'model' => \App\Models\Admin::class,
+         ],
     ],
 
     /*

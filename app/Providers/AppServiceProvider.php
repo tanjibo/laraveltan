@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
+        if ($this->app->environment() == 'develop') {
+            $this->app->register(\Reliese\Coders\CodersServiceProvider::class);
+        }
     }
 }
