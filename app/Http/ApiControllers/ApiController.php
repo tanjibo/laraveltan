@@ -36,7 +36,6 @@ class ApiController extends Controller
         $response = \Route::dispatch($proxy);
 
         $data = json_decode($response->getContent(), true);
-
         if ($response->getStatusCode() == $this->statusCode) {
             return $this->success($data);
         }
