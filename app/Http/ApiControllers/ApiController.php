@@ -20,23 +20,29 @@ class ApiController extends Controller
 {
     use ApiResponse;
 
-    protected function token( Request $request,string $guard='api' )
+    protected function token( Request $request, string $guard = 'api' )
     {
 
         $request->request->add(
+            config('passport') +
             [
-                'grant_type'    => 'password',
-                'client_id'     => 6,
-                'client_secret' => 'Bx2yV5kbl1MIiuWBxdLALBK2HRm8LaTsef68fckU',
-                'username'      => $request->username?:$request->mobile,
-                'password'      => $request->password,
-                'guard' =>$guard
+                'username' => $request->username ?: $request->mobile,
+                'password' => $request->password,
+                'guard'    => $guard,
             ]
         );
         $proxy = Request::create('oauth/token', 'POST');
 
         $response = \Route::dispatch($proxy);
-        return $response;
+
+        $data = json_decode($response->getContent(), true);
+
+        if ($response->getStatusCode() == $this->statusCode) {
+            return $this->success($data);
+        }
+        else {
+            return $this->notFound($data);
+        }
     }
 
 
