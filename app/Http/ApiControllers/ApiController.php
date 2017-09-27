@@ -23,6 +23,7 @@ class ApiController extends Controller
     protected function token( Request $request, string $guard = 'api' )
     {
 
+
         $request->request->add(
             config('passport') +
             [
