@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-   echo 2333;
+   echo 2;
 });
 
 Route::get('cancel','CancelOrderController@canBookingNormal');
