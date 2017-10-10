@@ -11,40 +11,60 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class ExperienceSpecialPrice
- * 
+ *
  * @property int $experience_room_id
  * @property \Carbon\Carbon $date
  * @property int $price
  * @property string $type
- * 
+ *
  * @property \App\Models\ExperienceRoom $experience_room
  *
  * @package App\Models
  */
 class ExperienceSpecialPrice extends Eloquent
 {
-	protected $table = 'experience_special_price';
-	public $incrementing = false;
-	public $timestamps = false;
+    protected $table        = 'experience_special_price';
+    public    $incrementing = false;
+    public    $timestamps   = false;
 
-	protected $casts = [
-		'experience_room_id' => 'int',
-		'price' => 'int'
-	];
+    protected $casts
+        = [
+            'experience_room_id' => 'int',
+            'price'              => 'int',
+        ];
 
-	protected $dates = [
-		'date'
-	];
+    protected $dates
+        = [
+            'date',
+        ];
 
-	protected $fillable = [
-		'experience_room_id',
-		'date',
-		'price',
-		'type'
-	];
+    protected $fillable
+        = [
+            'experience_room_id',
+            'date',
+            'price',
+            'type',
+        ];
 
-	public function experience_room()
-	{
-		return $this->belongsTo(\App\Models\ExperienceRoom::class);
-	}
+    public function experience_room()
+    {
+        return $this->belongsTo(\App\Models\ExperienceRoom::class);
+    }
+
+    /**
+     * Set attribute with price
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setPriceAttribute( $value )
+    {
+        $this->attributes[ 'price' ] = intval($value * 100);
+    }
+
+
+    public function getPriceAttribute( $value )
+    {
+        return doubleval($value / 100);
+    }
 }

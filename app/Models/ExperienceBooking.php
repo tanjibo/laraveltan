@@ -7,8 +7,11 @@
 
 namespace App\Models;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Reliese\Database\Eloquent\Model as Eloquent;
+use Repositories\ExperienceRoomBookingRepository;
 
 /**
  * Class ExperienceBooking
@@ -41,8 +44,9 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class ExperienceBooking extends Eloquent
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-    use SearchableTrait;
+    use ExperienceRoomBookingTrait,
+        \Illuminate\Database\Eloquent\SoftDeletes,
+        SearchableTrait;
     protected $table = 'experience_booking';
 
     protected $casts
@@ -57,6 +61,22 @@ class ExperienceBooking extends Eloquent
             'status'     => 'int',
             'is_comment' => 'int',
         ];
+
+    /**
+     * 订单状态
+     */
+    const STATUS_UNPAID   = 0;    // 待支付
+    const STATUS_PAID     = 1;    // 已支付
+    const STATUS_CHECKIN  = 2;    // 已入住
+    const STATUS_COMPLETE = 10;   // 已完成
+    const STATUS_CANCEL   = -10;  // 已取消
+
+    /**
+     * 支付方式
+     */
+    const PAY_MODE_OFFLINE = 0;    // 线下支付
+    const PAY_MODE_WECHAT  = 1;    // 微信支付
+    const PAY_MODE_BALANCE = 10;   // 余额支付
 
     protected $dates
         = [
@@ -74,27 +94,27 @@ class ExperienceBooking extends Eloquent
              * @var array
              */
             'columns' => [
-               'experience_booking.id'       => 10,
-             'experience_booking.checkin'  => 5,
-                'experience_booking.checkout' => 5,
-                'experience_booking.price'    => 5,
-                'experience_booking.real_price'    => 5,
-               'experience_booking.customer' => 5,
-              'experience_booking.user_id'  =>5,
-                'experience_booking.mobile'   => 5,
-                'experience_booking.requirements'   => 20,
-                'experience_booking.remark'   =>20,
-                'user.nickname'=>5,
-                'user.mobile'=>5,
-                'experience_room.name'=>5,
+                'experience_booking.id'           => 10,
+                'experience_booking.checkin'      => 5,
+                'experience_booking.checkout'     => 5,
+                'experience_booking.price'        => 5,
+                'experience_booking.real_price'   => 5,
+                'experience_booking.customer'     => 5,
+                'experience_booking.user_id'      => 5,
+                'experience_booking.mobile'       => 5,
+                'experience_booking.requirements' => 20,
+                'experience_booking.remark'       => 20,
+                'user.nickname'                   => 5,
+                'user.mobile'                     => 5,
+                'experience_room.name'            => 5,
 
             ],
             'joins'   => [
-                'user' => [ 'user.id', 'experience_booking.user_id' ],
+                'user'                    => [ 'user.id', 'experience_booking.user_id' ],
                 'experience_booking_room' => [ 'experience_booking_room.experience_booking_id', 'experience_booking.id' ],
-                'experience_room'=>[
-                    'experience_room.id','experience_booking_room.experience_room_id'
-                ]
+                'experience_room'         => [
+                    'experience_room.id', 'experience_booking_room.experience_room_id',
+                ],
             ],
         ];
 
@@ -118,6 +138,30 @@ class ExperienceBooking extends Eloquent
             'partner',
         ];
 
+
+    public function setPriceAttribute( $value )
+    {
+        $this->attributes[ 'price' ] = intval($value * 100);
+    }
+
+
+    public function getPriceAttribute( $value )
+    {
+        return doubleval($value / 100);
+    }
+
+
+    public function setRealPriceAttribute( $value )
+    {
+        $this->attributes[ 'real_price' ] = intval($value * 100);
+    }
+
+
+    public function getRealPriceAttribute( $value )
+    {
+        return doubleval($value / 100);
+    }
+
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
@@ -127,4 +171,82 @@ class ExperienceBooking extends Eloquent
     {
         return $this->hasMany(\App\Models\ExperienceBookingRoom::class);
     }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(ExperienceRoom::class, 'experience_booking_room', 'experience_booking_id', 'experience_room_id');
+    }
+
+    public function comments()
+    {
+        $this->hasMany(ExperienceBookingComment::class);
+    }
+
+
+    /**
+     * @param Request $request
+     * @return bool
+     * 数据处理放在观察者 ExperienceRoomBookingObserver 里
+     */
+    public static function store( Request $request )
+    {
+
+        if ($model = static::query()->create($request->all())->rooms()->create($request->rooms)) {
+            return $model;
+        }
+
+        return false;
+    }
+
+    /**
+     * 计算费用
+     *
+     * @param  [type] $checkin  [description]
+     * @param  [type] $checkout [description]
+     * @param  array $room [description]
+     * @return [type]           [description]
+     */
+    public static function calculateFee( $checkin, $checkout, $room = [] )
+    {
+        $total = 0;
+        $ds    = ExperienceRoomBookingRepository::_splitDate($checkin, $checkout);
+
+        // 房间金额
+        foreach ( $room as $v ) {
+            $r = ExperienceRoom::query()->select('id', 'price', 'type')->find($v);
+
+            foreach ( $ds as $date ) {
+                // 节日价
+                $special = ExperienceSpecialPrice::query()->where('experience_room_id', $r->id)->where('date', $date)->value('price');
+                $total   += $special === null ? $r->price : $special;
+            }
+        }
+
+        return $total;
+    }
+
+
+    /**
+     * @param $id
+     * @param $status
+     * @return bool
+     * 更改订单状态
+     */
+    public static function changeBookingOrder( $id, $status )
+    {
+
+        if (!$booking = static::query()->find($id))
+            return false;
+
+        if ($booking->status == $status)
+            return true;
+
+        $booking->status = $status;
+
+        return $booking->save();
+    }
+
+
+
+
 }

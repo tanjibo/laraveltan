@@ -9,11 +9,14 @@
         "guzzlehttp/guzzle": "^6.3",
         "hautelook/phpass": "1.*",
         "ignasbernotas/laravel-model-generator": "^1.2",
+        "iwanli/wxxcx": "^2.0",
         "laravel/framework": "5.5.*",
         "laravel/passport": "^4.0",
         "laravel/tinker": "~1.0",
-        "reliese/laravel": "^0.0.13",
-        "nicolaslopezj/searchable": "1.*"
+        "nicolaslopezj/searchable": "1.*",
+        "predis/predis": "^1.1",
+        "prettus/l5-repository": "^2.6",
+        "reliese/laravel": "^0.0.13"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

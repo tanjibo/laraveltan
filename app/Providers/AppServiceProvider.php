@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\ExperienceBooking;
+use App\Observer\Front\ExperienceRoomBookingObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //订单监听
+        ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
     }
 
     /**

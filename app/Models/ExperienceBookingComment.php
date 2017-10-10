@@ -54,4 +54,12 @@ class ExperienceBookingComment extends Eloquent
 		'status',
 		'is_reply'
 	];
+
+	public function reply(){
+	   return  $this->hasOne(ExperienceBookingCommentReply::class,'comment_id');
+    }
+
+    public function user(){
+	    return $this->belongsTo(User::class,'user_id');
+    }
 }

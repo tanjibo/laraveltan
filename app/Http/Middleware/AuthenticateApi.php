@@ -6,7 +6,7 @@ namespace App\Http\Middleware;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate;
 
-class AdminAuthenticateApi extends  Authenticate
+class AuthenticateApi extends Authenticate
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,13 @@ class AdminAuthenticateApi extends  Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    protected function authenticate(array $guards=['admin_api'])
+    protected function authenticate(array $guards=['api'])
     {
 
-            if ($this->auth->guard('admin_api')->check()) {
+        if ($this->auth->guard('api')->check()) {
 
-                return $this->auth->shouldUse('admin_api');
-            }
+            return $this->auth->shouldUse('api');
+        }
 
         throw new AuthenticationException('Unauthenticated.', $guards);
     }

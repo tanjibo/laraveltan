@@ -40,8 +40,30 @@ class AccountRecord extends Eloquent
 		'type'
 	];
 
+    const TYPE_CASH    = 1;    // 现金
+    const TYPE_BALANCE = 2;    // 余额
+
 	public function user()
 	{
 		return $this->belongsTo(\App\Models\User::class);
 	}
+
+
+    /**
+     * Set attribute with amount
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = intval($value * 100);
+    }
+
+
+
+    public function getAmountAttribute($value)
+    {
+        return doubleval($value / 100);
+    }
 }

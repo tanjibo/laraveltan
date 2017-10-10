@@ -22,7 +22,7 @@ webhook
 ![](http://orvwtnort.bkt.clouddn.com/201721343/1506493828455.png)
 >当在`develop`分支上面进行开发，并且推送到git服务器的时候，`webhook`会把代码`git pull`到`test.liaorusanshe.com`下，当合并到`master`上，并且推送到git服务器的时候，`webhook` 会把代码`git pull`到`api.liaorusanshe.com`下
 
-**所以,一定要在develop分支上开发，重要的事情说三遍，一定要在develop 分支上面开发！一定要在develop 分支上面开发！一定要在develop 分支上面开发！**
+**`所以,一定要在develop分支上开发，重要的事情说三遍，一定要在develop 分支上面开发！一定要在develop 分支上面开发！一定要在develop 分支上面开发！`**
 
 其他
 ---

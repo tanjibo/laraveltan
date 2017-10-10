@@ -16,6 +16,7 @@ class PassportAdminServiceProvider extends BasePassportServiceProvider
      */
     protected function makePasswordGrant()
     {
+
         $grant = new PasswordGrant(
         //主要是这里，我们调用我们自己UserRepository
             $this->app->make(AdminPassportRepository::class),

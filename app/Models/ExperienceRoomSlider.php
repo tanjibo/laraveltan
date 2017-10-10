@@ -31,4 +31,5 @@ class ExperienceRoomSlider extends Eloquent
 		'room_id',
 		'url'
 	];
+
 }

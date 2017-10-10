@@ -11,7 +11,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class ExperienceRoomCommonSetting
- * 
+ *
  * @property int $id
  * @property string $url
  * @property string $system_tip
@@ -25,13 +25,37 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class ExperienceRoomCommonSetting extends Eloquent
 {
-	use \Illuminate\Database\Eloquent\SoftDeletes;
-	protected $table = 'experience_room_common_setting';
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    protected $table = 'experience_room_common_setting';
 
-	protected $fillable = [
-		'url',
-		'system_tip',
-		'type',
-		'name'
-	];
+    protected $fillable
+        = [
+            'url',
+            'system_tip',
+            'type',
+            'name',
+        ];
+
+
+    /**
+     * @param array $attach_url_id
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     *
+     */
+    public  static function attachUrl( array $attach_url_id )
+    {
+        return static::query()->whereIn('id', $attach_url_id)->where('type', 'supporting_url')->select('url')->get();
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function unsubscribe()
+    {
+        $un = static::query()->where('type', 'system_tip')->value('system_tip');
+        return str_replace([ "\r\n", "\n", "\r" ], '<br/>', $un);
+    }
+
+
 }

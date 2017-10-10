@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-   echo 2232234;
-});
 
 Route::get('cancel','CancelOrderController@canBookingNormal');
 

@@ -182,6 +182,11 @@ return [
 
         \App\Providers\PassportAdminServiceProvider::class,
 
+         //repository
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
+        Iwanli\Wxxcx\WxxcxServiceProvider::class
+
 
     ],
 
