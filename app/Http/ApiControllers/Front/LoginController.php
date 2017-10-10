@@ -51,28 +51,28 @@ class LoginController extends ApiController
     public function miniLogin( Request $request )
     {
         //根据code 获取登录信息
-//        $this->wx->getLoginInfo($request->code);
-//
-//        $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
-//
-//        extract($userInfo);
-//        $userData = [
-//            'avatar'   => $avatarUrl,
-//            'nickname' => $nickName,
-//            'union_id' => $unionId,
-//            'gender'   => $gender,
-//        ];
-//
-//        if ($user = User::query()->where('union_id', $unionId)->first()) {
-//
-//            $user->update($userData);
-//
-//        }
-//        else {
-//            User::query()->create($userData);
-//
-//        }
-        $unionId=$request->union_id;
+        $this->wx->getLoginInfo($request->code);
+
+        $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
+
+        extract($userInfo);
+        $userData = [
+            'avatar'   => $avatarUrl,
+            'nickname' => $nickName,
+            'union_id' => $unionId,
+            'gender'   => $gender,
+        ];
+
+        if ($user = User::query()->where('union_id', $unionId)->first()) {
+
+            $user->update($userData);
+
+        }
+        else {
+            User::query()->create($userData);
+
+        }
+
         $request->request->add([ 'union_id' => $unionId, 'password' => "" ]);
 
         return $this->token($request,'api');
