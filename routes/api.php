@@ -48,9 +48,10 @@ Route::group(
 
     Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
     //房间列表
+    Route::post('/room/list','ExperienceRoomController@roomList')->name('room.list');
+
     Route::group(
         [ 'middleware' => 'auth.api_front' ], function() {
-        Route::post('/room/list','ExperienceRoomController@roomList')->name('room.list');
 
     }
     );
