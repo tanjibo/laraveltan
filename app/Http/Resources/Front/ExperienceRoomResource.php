@@ -21,7 +21,7 @@ class ExperienceRoomResource extends Resource
                 'id'             => $this->id,
                 'name'           => $this->name,
                 'price'          => $this->price,
-                'cover'          => $this->cover . '?imageView2/q/70/interlace/1|imageslim',
+                'cover'          => $this->cover,
                 'type'           => $this->type,
                 'comment_counts' => $this->comments()->count(),//评价数
                 'comment_score'  => ceil($this->comments()->avg('score')),
