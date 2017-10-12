@@ -54,6 +54,10 @@ trait ApiResponse
         return $this->status($status, [ 'message' => $message ], $code);
     }
 
+    public function error($message,$code=BaseResponse::HTTP_BAD_REQUEST,$status="error"){
+        return $this->status($status, [ 'message' => $message ], $code);
+    }
+
     public function message( $message, $status = 'success' )
     {
         return $this->status($status, [ 'message' => $message ]);

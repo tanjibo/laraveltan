@@ -22,9 +22,11 @@ class ExperienceBookingCommentResource extends Resource
                    'score'      => $this->score,
                    'reply'      => $this->reply,
                    'created_at' => $this->created_at->toDateTimeString(),
+                   'pics'=>$this->when(isset($request->room_id),$this->pics()->pluck('pic_url'))
 
                ];
     }
+
 
 
 }

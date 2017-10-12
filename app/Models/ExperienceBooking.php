@@ -247,6 +247,52 @@ class ExperienceBooking extends Eloquent
     }
 
 
+    /**
+     * @param $room
+     * @return array 获取已经下单的房间的日子
+     */
+    public static function getOneRoomOrderDateApi( $room )
+    {
+
+        if (!$room) {
+            return [];
+        }
+
+        $already = \DB::table('experience_booking')
+                      ->leftJoin('experience_booking_room', 'id', 'experience_booking_room.experience_booking_id')
+                      ->select('checkin', 'checkout')
+                      ->where('status', '<>', self::STATUS_CANCEL)
+                      ->where('experience_booking_room.experience_room_id', $room)
+                      ->where('checkin', '>=', date('Ymd'))->where('deleted_at', null)->orwhere('checkout', date('Ymd'))
+                      ->groupBy('id')->get()
+        ;
+        //不要get  就可以打印出来
+        // dd($already->toSql());
+
+        $date = [];
+        if ($already) {
+            foreach ( $already as $v ) {
+                $date = array_merge($date, static::calculateDate($v->checkin, $v->checkout));
+            }
+        }
+
+        return $date;
+    }
+
+
+    public static function calculateDate( $start, $end )
+    {
+        $ds    = [];
+        $start = strtotime($start);
+        $end   = strtotime($end);
+
+        while ( $start <= $end ) {
+            $ds[]  = date('Y-m-d', $start);
+            $start = strtotime('+1 day', $start);
+        }
+
+        return $ds;
+    }
 
 
 }

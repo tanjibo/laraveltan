@@ -35,4 +35,7 @@ class ExperienceSpecialRoomTimePoint extends Eloquent
 		'room_id',
 		'time_point'
 	];
+    public function schedule(){
+        return $this->hasMany(ExperienceSpecialRoomSchedule::class,'schedule_id','id');
+    }
 }

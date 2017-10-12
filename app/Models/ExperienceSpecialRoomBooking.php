@@ -210,4 +210,30 @@ class ExperienceSpecialRoomBooking extends Eloquent
     {
         return doubleval($value / 100);
     }
+
+    /**
+     * 计算价格 dot 18,19
+     */
+    public static function countPrice( $data )
+    {
+        $timeDot = explode(',', $data);
+
+        if (!$timeDot) return 0;
+
+        $price=0;
+        foreach ( $timeDot as $v ) {
+            $price+= $v<static::PRICE_LIMIT_TIME_POINT? static::PRICE_TIME_BEFORE:static::PRICE_TIME_AFTER;
+        }
+        return $price;
+    }
+
+    /**
+     * @param array $data
+     * @return $this|bool|\Illuminate\Database\Eloquent\Model
+     *  数据处理放在观察者 ExperienceRoomBookingShanObserver 中
+     */
+    public function store(array $data){
+         if($model=static::query()->create($data)) return $model;
+         return false;
+    }
 }

@@ -62,4 +62,8 @@ class ExperienceBookingComment extends Eloquent
     public function user(){
 	    return $this->belongsTo(User::class,'user_id');
     }
+
+    public function pics(){
+        return $this->hasMany(ExperienceBookingCommentPic::class,'comment_id');
+    }
 }

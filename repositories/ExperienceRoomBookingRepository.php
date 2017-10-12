@@ -48,10 +48,10 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
      * @param $room_id
      *
      */
-    public function roomCheckinDisableApi()
+    public function roomCheckinDisableApi(int $room_id=null)
     {
 
-        return static::_roomCheckinDisable($this->request->room_id);
+        return static::_roomCheckinDisable($room_id?:$this->request->room_id);
     }
 
 

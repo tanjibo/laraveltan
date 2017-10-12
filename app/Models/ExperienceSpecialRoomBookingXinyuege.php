@@ -171,4 +171,20 @@ class ExperienceSpecialRoomBookingXinyuege extends Eloquent
     {
         return doubleval($value / 100);
     }
+
+    /**
+     * 获得下单的山云荟日期
+     */
+    public static function getOneRoomOrderDateApi( $room_id )
+    {
+
+        return static::where('room_id', $room_id)
+                     ->where('date', ">=", date('Y-m-d'))
+                     ->where('deleted_at', null)
+                     ->groupBy('date')
+                     ->where('status', '<>', self::STATUS_CANCEL)
+                     ->pluck('date')->toArray()
+            ;
+
+    }
 }

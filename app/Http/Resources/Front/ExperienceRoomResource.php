@@ -67,7 +67,11 @@ class ExperienceRoomResource extends Resource
      */
     protected function sliderUrl()
     {
-        return [ 'slider_url' => ExperienceRoomSliderResource::collection($this->experience_room_sliders) ];
+       $url=$this->experience_room_sliders()->pluck('url')->map(function($item){
+           if($item) return $item.'?imageView2/q/70/interlace/1|imageslim';
+           return;
+       });
+        return [ 'slider_url' =>$url ];
     }
 
     /**
