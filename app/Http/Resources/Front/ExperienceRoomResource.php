@@ -64,11 +64,13 @@ class ExperienceRoomResource extends Resource
     /**
      * @return array
      * 轮播图
+     * 有待处理
      */
     protected function sliderUrl()
     {
        $url=$this->experience_room_sliders()->pluck('url')->map(function($item){
-           if($item) return $item.'?imageView2/q/70/interlace/1|imageslim';
+//           if($item) return $item.'?imageView2/q/70/interlace/1|imageslim';
+           if($item) return $item;
            return;
        });
         return [ 'slider_url' =>$url ];
