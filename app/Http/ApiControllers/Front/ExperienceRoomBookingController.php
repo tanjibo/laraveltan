@@ -11,15 +11,17 @@ use App\Models\ExperienceSpecialRoomBooking;
 use App\Models\ExperienceSpecialRoomBookingXinyuege;
 use Illuminate\Http\Request;
 use Repositories\ExperienceRoomBookingRepository;
+use Repositories\MiniDateRepository;
 
 class ExperienceRoomBookingController extends ApiController
 {
 
-    public $bookingRepository;
+    public $bookingRepository,$dateRepository;
 
-    public function __construct( ExperienceRoomBookingRepository $bookingRepository )
+    public function __construct( ExperienceRoomBookingRepository $bookingRepository,MiniDateRepository $date )
     {
         $this->bookingRepository = $bookingRepository;
+        $this->dateRepository=$date;
     }
 
     /**
@@ -142,6 +144,12 @@ class ExperienceRoomBookingController extends ApiController
     public function orderToReply()
     {
 
+    }
+
+
+    public function calendarInit(){
+        
+       return $this->success($this->dateRepository->getDate());
     }
 
 

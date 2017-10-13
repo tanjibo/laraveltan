@@ -98,6 +98,8 @@ Route::group(
     //创建特殊订单
     Route::post('/specialRoom/booking', 'ExperienceBookingSanAndXingController@createSpecialOrder')->name('specialRoom.booking');
 
+    //时间选择器初始化
+    Route::post('/booking/calendarInit', 'ExperienceRoomBookingController@calendarInit')->name('booking.calendarInit');
 
 
 }
