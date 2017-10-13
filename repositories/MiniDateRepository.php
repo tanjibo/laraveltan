@@ -22,12 +22,15 @@ class MiniDateRepository
     protected $days; //获得给定的月份应有的天数
     protected $dayofweek; //得到给定的月份的 1号 是星期几
     protected $today;
-
-    public function __construct()
+    protected  $booking;
+    protected  $request;
+    public function __construct(ExperienceRoomBookingRepository $booking,Request $request)
     {
         $this->month = date('m');
         $this->year  = date('Y');
         $this->today = date('Y-m-d');
+        $this->booking=$booking;
+        $this->request=$request;
 
     }
 
@@ -40,6 +43,7 @@ class MiniDateRepository
 
   private  function _getDate()
     {
+        $checkinDisableDate=$this->request->checkin?$this->booking->roomCheckoutDisableApi()->toArray():$this->booking->roomCheckinDisableApi()->toArray();
 
         $week  = $this->dayofweek + 1;
         $third = [];
@@ -54,6 +58,7 @@ class MiniDateRepository
             $_tmp[ 'date' ]      = $i;
             $_tmp[ 'fullDate' ]  = date("Y-m-d", mktime(0, 0, 0, $this->month, $i, $this->year));
             $_tmp['avaliable']=strtotime($_tmp['fullDate'])<strtotime(date('Y-m-d'))?0:1;
+            if(in_array($_tmp['fullDate'],$checkinDisableDate))$_tmp['avaliable']=0;
             $_tmp[ 'today' ]     = $_tmp[ 'fullDate' ] == date('Y-m-d') ? 1 : 0;
 
             array_push($third, $_tmp);
@@ -95,6 +100,7 @@ class MiniDateRepository
 
     public function getDate(){
        $date=$this->thirdDate();
+
        $arr=[];
        foreach($date as $key=>$v){
            $this->month =$v['month'];
