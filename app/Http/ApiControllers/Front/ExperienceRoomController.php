@@ -45,9 +45,8 @@ class ExperienceRoomController extends ApiController
 
     public function roomDetail($id)
     {
-        dump(Auth::user());
-        dump(Auth::id());
-        exit;
+
+        //dump(Auth::id());
         if($data=$this->repository->find($id)){
             return $this->success($data);
         }else{
