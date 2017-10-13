@@ -43,6 +43,7 @@ class MiniDateRepository
 
   private  function _getDate()
     {
+
         $checkinDisableDate=$this->request->checkin?$this->booking->roomCheckoutDisableApi()->toArray():$this->booking->roomCheckinDisableApi()->toArray();
 
         $week  = $this->dayofweek + 1;

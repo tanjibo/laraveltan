@@ -105,10 +105,10 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
      * 获取一个房间所有入住的开始时间
      * @return array
      */
-    private function _oneRoomOrderAllStartDate()
+    private static function _oneRoomOrderAllStartDate()
     {
 
-        return collect(static::_oneRoomOrderDate($this->request->room_id) ?: [])->pluck('checkin')->map(
+        return collect(static::_oneRoomOrderDate(request()->room_id) ?: [])->pluck('checkin')->map(
             function( $item ) {
                 return date('Y-m-d', strtotime($item));
             }
@@ -121,10 +121,10 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
      * 获取一个房间所有入住的结束时间
      * @return array
      */
-    private function _oneRoomOrderEndDate()
+    private static function _oneRoomOrderEndDate()
     {
 
-        return collect(static::_oneRoomOrderDate($this->request->room_id) ?: [])->pluck('checkout')->map(
+        return collect(static::_oneRoomOrderDate(request()->room_id) ?: [])->pluck('checkout')->map(
             function( $item ) {
                 return date('Y-m-d', strtotime($item));
             }
