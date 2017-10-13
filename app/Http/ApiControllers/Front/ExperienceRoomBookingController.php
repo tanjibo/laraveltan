@@ -148,7 +148,7 @@ class ExperienceRoomBookingController extends ApiController
 
 
     public function calendarInit(){
-        
+
        return $this->success($this->dateRepository->getDate());
     }
 

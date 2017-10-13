@@ -33,12 +33,12 @@ class MiniDateRepository
 
  private   function initDate($month,$year)
     {
-        $this->currentDate = $year . '-' . $month;//当前得到的日期信息
+
         $this->days        = date("t", mktime(0, 0, 0, $month, 1, $year));//得到给定的月份应有的天数
         $this->dayofweek   = date("w", mktime(0, 0, 0, $month, 1, $year));//得到给定的月份的 1号 是星期几
     }
 
-    function _getDate()
+  private  function _getDate()
     {
 
         $week  = $this->dayofweek + 1;
@@ -53,7 +53,7 @@ class MiniDateRepository
         for ( $i = 1; $i <= $this->days; $i++ ) {//输出天数信息
             $_tmp[ 'date' ]      = $i;
             $_tmp[ 'fullDate' ]  = date("Y-m-d", mktime(0, 0, 0, $this->month, $i, $this->year));
-           // $_tmp[ 'available' ] = 1;
+            $_tmp['avaliable']=strtotime($_tmp['fullDate'])<strtotime(date('Y-m-d'))?0:1;
             $_tmp[ 'today' ]     = $_tmp[ 'fullDate' ] == date('Y-m-d') ? 1 : 0;
 
             array_push($third, $_tmp);
@@ -97,12 +97,14 @@ class MiniDateRepository
        $date=$this->thirdDate();
        $arr=[];
        foreach($date as $key=>$v){
-           $this->initDate($v['month'],$v['year']);
-           $this->_getDate();
-           $_tmp['month']=$v['year'].'-'.$v['month'];
+           $this->month =$v['month'];
+           $this->year  =$v['year'];
+           $this->initDate($this->month,$this->year);
+           $_tmp['month']=$this->year.'-'.$this->month;
            $_tmp['day']=$this->_getDate();
            array_push($arr,$_tmp);
        }
+
        return $arr;
 
     }
