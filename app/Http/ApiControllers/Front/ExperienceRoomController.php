@@ -15,6 +15,7 @@ namespace App\Http\ApiControllers\Front;
 
 use App\Http\ApiControllers\ApiController;
 
+use Illuminate\Support\Facades\Auth;
 use Repositories\ExperienceRoomRepository;
 
 
@@ -33,6 +34,7 @@ class ExperienceRoomController extends ApiController
      */
     public function roomList()
     {
+
         if($data=$this->repository->all()){
 
             return $this->success($data);
@@ -43,6 +45,9 @@ class ExperienceRoomController extends ApiController
 
     public function roomDetail($id)
     {
+        dump(Auth::user());
+        dump(Auth::id());
+        exit;
         if($data=$this->repository->find($id)){
             return $this->success($data);
         }else{
