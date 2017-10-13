@@ -98,7 +98,8 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
 
 
         //今天到预定开始时间段 ---- 合并 ---- 已经预定的时间
-        return collect(static::_splitDate(date('Y-m-d'), $checkin))->merge($leftDisable)->merge($endDate)->unique();
+        return  collect([])->merge($leftDisable)->merge($endDate)->unique();
+       // return collect(static::_splitDate(date('Y-m-d'), $checkin))->merge($leftDisable)->merge($endDate)->unique();
     }
 
     /**
