@@ -47,7 +47,7 @@ class Payment
         //再次签名
         $parameters              = [
             'appId'     => config('wxxcx.app_id'),
-            'timeStamp' => time(),
+            'timeStamp' => (string)time(),
             'nonceStr'  => static::createNoncestr(),
             'package'   => "prepay_id=$prepayId",
             'signType'  => "MD5",
