@@ -61,6 +61,7 @@ class LoginController extends ApiController
             'nickname' => $nickName,
             'union_id' => $unionId,
             'gender'   => $gender,
+            'mini_open_id'=>$openId
         ];
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {

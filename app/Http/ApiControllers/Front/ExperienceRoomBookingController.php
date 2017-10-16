@@ -12,16 +12,18 @@ use App\Models\ExperienceSpecialRoomBookingXinyuege;
 use Illuminate\Http\Request;
 use Repositories\ExperienceRoomBookingRepository;
 use Repositories\MiniDateRepository;
+use Repositories\PaymentRepository;
 
 class ExperienceRoomBookingController extends ApiController
 {
 
-    public $bookingRepository,$dateRepository;
+    public $bookingRepository, $dateRepository,$payment;
 
-    public function __construct( ExperienceRoomBookingRepository $bookingRepository,MiniDateRepository $date )
+    public function __construct( ExperienceRoomBookingRepository $bookingRepository, MiniDateRepository $date,PaymentRepository $payment)
     {
         $this->bookingRepository = $bookingRepository;
-        $this->dateRepository=$date;
+        $this->dateRepository    = $date;
+        $this->payment=$payment;
     }
 
     /**
@@ -81,13 +83,23 @@ class ExperienceRoomBookingController extends ApiController
         if (is_string($request->rooms)) {
             $request->rooms = json_decode($request->rooms, true);
         }
-        if ($model = ExperienceBooking::store($request)) {
-            $response = [
-                'id'      => $model->id,
-                'price'   => $model->real_fee,
-                'pay_url' => '/pay/?type=experience&id=' . $model->id,
+
+        if ($model = ExperienceBooking::query()->first()) {
+
+       // if ($model = ExperienceBooking::store($request)) {
+            //和微信支付交互
+
+            $this->payment->unifiedorder($model,$request);
+            $data = [
+                'timeStamp' => time(),
+                'nonceStr'  => '3342234',
+                'package'   => '',
+                'signType'  => 'MD5',
+                'paySign'   => '',
             ];
-            return $this->success($response);
+
+
+            // return $this->success($response);
         }
         else {
             return $this->internalError();
@@ -147,9 +159,10 @@ class ExperienceRoomBookingController extends ApiController
     }
 
 
-    public function calendarInit(){
+    public function calendarInit()
+    {
 
-       return $this->success($this->dateRepository->getDate());
+        return $this->success($this->dateRepository->getDate());
     }
 
 
