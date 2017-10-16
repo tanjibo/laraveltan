@@ -44,13 +44,13 @@ Route::group(
     //小程序登录
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
 
-
+    //房间列表
+    Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
 
     Route::group(
-        [ 'middleware' => App::environment()=='develop'?:'auth.api_front' ], function() {
+       [ 'middleware' => App::environment()=='develop'?:'auth.api_front' ], function() {
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
-        //房间列表
-        Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
+
 
         //房间详情
         Route::post('/room/detail/{room_id}', 'ExperienceRoomController@roomDetail')->name('room.detail');
