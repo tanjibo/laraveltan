@@ -192,7 +192,7 @@ class ExperienceBooking extends Eloquent
     {
 
         if ($model = static::query()->create($request->all())) {
-           $model->rooms()->create($request->rooms);
+           $model->rooms()->attach($request->rooms);
            return $model;
         }
 
