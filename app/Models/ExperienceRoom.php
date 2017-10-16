@@ -72,6 +72,29 @@ class ExperienceRoom extends Eloquent
             'design_concept',
         ];
 
+    public function setPriceAttribute( $value )
+    {
+        $this->attributes[ 'price' ] = intval($value * 100);
+    }
+
+
+    public function getPriceAttribute( $value )
+    {
+        return doubleval($value / 100);
+    }
+
+
+    public function setRealPriceAttribute( $value )
+    {
+        $this->attributes[ 'real_price' ] = intval($value * 100);
+    }
+
+
+    public function getRealPriceAttribute( $value )
+    {
+        return doubleval($value / 100);
+    }
+
     public function experience_booking_rooms()
     {
         return $this->hasMany(\App\Models\ExperienceBookingRoom::class);

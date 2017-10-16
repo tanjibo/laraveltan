@@ -47,7 +47,7 @@ Route::group(
 
 
     Route::group(
-        [ 'middleware' => 'auth.api_front' ], function() {
+        [ 'middleware' => App::environment()=='develop'?:'auth.api_front' ], function() {
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
         //房间列表
         Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
