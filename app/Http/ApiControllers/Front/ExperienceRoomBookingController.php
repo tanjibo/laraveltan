@@ -18,13 +18,13 @@ use Repositories\PaymentRepository;
 class ExperienceRoomBookingController extends ApiController
 {
 
-    public $bookingRepository, $dateRepository,$payment;
+    public $bookingRepository, $dateRepository, $payment;
 
-    public function __construct( ExperienceRoomBookingRepository $bookingRepository, MiniDateRepository $date,PaymentRepository $payment)
+    public function __construct( ExperienceRoomBookingRepository $bookingRepository, MiniDateRepository $date, PaymentRepository $payment )
     {
         $this->bookingRepository = $bookingRepository;
         $this->dateRepository    = $date;
-        $this->payment=$payment;
+        $this->payment           = $payment;
     }
 
     /**
@@ -87,11 +87,11 @@ class ExperienceRoomBookingController extends ApiController
 
         if ($model = ExperienceBooking::query()->first()) {
 
-       // if ($model = ExperienceBooking::store($request)) {
+            // if ($model = ExperienceBooking::store($request)) {
             //和微信支付交互
 
-          $data= $this->payment->unifiedorder($model);
-             return $this->success($data);
+            $data = $this->payment->unifiedorder($model);
+            return $this->success($data);
         }
         else {
             return $this->internalError();
@@ -99,6 +99,28 @@ class ExperienceRoomBookingController extends ApiController
 
 
     }
+
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * 重新支付
+     */
+    public function repay( Request $request )
+    {
+
+
+        if ($model = ExperienceBooking::query()->find($request->booking_id)) {
+            //和微信支付交互
+
+            $data = $this->payment->unifiedorder($model);
+            return $this->success($data);
+        }
+        else {
+            return $this->error('没有这个订单');
+        }
+    }
+
 
     /**
      * 订单列表
@@ -162,9 +184,10 @@ class ExperienceRoomBookingController extends ApiController
      * @param Request $request
      * 微信支付回调
      */
-    public function miniNotifyCallback(Request $request){
+    public function miniNotifyCallback( Request $request )
+    {
 
-       extract($this->payment->notify());
+        extract($this->payment->notify());
 
         ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
 
@@ -177,8 +200,10 @@ class ExperienceRoomBookingController extends ApiController
                     'type'         => PaymentLog::TYPE_MINI,
                     'created_at'   => date('Y-m-d H:i:s'),
                 ]
-            );
+            )
+            ;
 
+        }
     }
 
 

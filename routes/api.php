@@ -103,7 +103,7 @@ Route::group(
     );
 
     //支付
-   Route::post('/mini/callback/{booking_id}','ExperienceBookingController@miniNotifyCallback')->name('mini.callback');
+   Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
 
 
 }
