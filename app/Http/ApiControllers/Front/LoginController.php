@@ -66,7 +66,7 @@ class LoginController extends ApiController
         ];
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {
-           dump($user,$userData);
+         
             $user->update($userData);
 
         }
