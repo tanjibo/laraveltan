@@ -185,14 +185,15 @@ class ExperienceBooking extends Eloquent
 
     /**
      * @param Request $request
-     * @return bool
+     * @return bool|
      * 数据处理放在观察者 ExperienceRoomBookingObserver 里
      */
     public static function store( Request $request )
     {
 
-        if ($model = static::query()->create($request->all())->rooms()->create($request->rooms)) {
-            return $model;
+        if ($model = static::query()->create($request->all())) {
+           $model->rooms()->create($request->rooms);
+           return $model;
         }
 
         return false;

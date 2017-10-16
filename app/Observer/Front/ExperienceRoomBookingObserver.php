@@ -53,8 +53,8 @@ class ExperienceRoomBookingObserver
             $booking->real_price = $total;
         }
 
-        $booking->checkin  = date('Ymd', strtotime($this->request->checkin));
-        $booking->checkout = date('Ymd', strtotime($this->request->checkout));
+        $booking->checkin  = date('Y-m-d', strtotime($this->request->checkin));
+        $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
         $booking->status   = $booking::STATUS_UNPAID;
 
     }
