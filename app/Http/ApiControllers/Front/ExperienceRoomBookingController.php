@@ -9,6 +9,7 @@ use App\Http\Resources\Front\ExperienceRoomBookingXingResource;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceSpecialRoomBooking;
 use App\Models\ExperienceSpecialRoomBookingXinyuege;
+use App\Models\PaymentLog;
 use Illuminate\Http\Request;
 use Repositories\ExperienceRoomBookingRepository;
 use Repositories\MiniDateRepository;
@@ -89,17 +90,8 @@ class ExperienceRoomBookingController extends ApiController
        // if ($model = ExperienceBooking::store($request)) {
             //和微信支付交互
 
-            $this->payment->unifiedorder($model,$request);
-            $data = [
-                'timeStamp' => time(),
-                'nonceStr'  => '3342234',
-                'package'   => '',
-                'signType'  => 'MD5',
-                'paySign'   => '',
-            ];
-
-
-            // return $this->success($response);
+          $data= $this->payment->unifiedorder($model);
+             return $this->success($data);
         }
         else {
             return $this->internalError();
@@ -163,6 +155,30 @@ class ExperienceRoomBookingController extends ApiController
     {
 
         return $this->success($this->dateRepository->getDate());
+    }
+
+
+    /**
+     * @param Request $request
+     * 微信支付回调
+     */
+    public function miniNotifyCallback(Request $request){
+
+       extract($this->payment->notify());
+
+        ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
+
+        if (!PaymentLog::query()->where('order_number', $out_trade_no)->count()) {
+            PaymentLog::query()->create(
+                [
+                    'order_number' => $out_trade_no,
+                    'trade_number' => $transaction_id,
+                    'fee'          => $total_fee / 100,
+                    'type'         => PaymentLog::TYPE_MINI,
+                    'created_at'   => date('Y-m-d H:i:s'),
+                ]
+            );
+
     }
 
 

@@ -11,7 +11,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class PaymentLog
- * 
+ *
  * @property int $id
  * @property string $order_number
  * @property string $trade_number
@@ -23,18 +23,20 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class PaymentLog extends Eloquent
 {
-	protected $table = 'payment_log';
-	public $timestamps = false;
+    protected $table      = 'payment_log';
+    public    $timestamps = false;
+    const TYPE_MINI = 'mini';
+    protected $casts
+        = [
+            'fee'  => 'int',
+            'type' => 'int',
+        ];
 
-	protected $casts = [
-		'fee' => 'int',
-		'type' => 'int'
-	];
-
-	protected $fillable = [
-		'order_number',
-		'trade_number',
-		'fee',
-		'type'
-	];
+    protected $fillable
+        = [
+            'order_number',
+            'trade_number',
+            'fee',
+            'type',
+        ];
 }

@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Request;
 class Payment
 {
 
-    static public function unifiedorder($number, $fee, $body, $notifyUrl )
+    static public function unifiedorder( $number, $fee, $body, $notifyUrl )
     {
         $params = [
             'out_trade_no'     => $number,
@@ -27,7 +27,7 @@ class Payment
             'total_fee'        => (double)$fee * 100,
             'notify_url'       => 'https://' . $_SERVER[ 'HTTP_HOST' ] . $notifyUrl,
             'trade_type'       => 'JSAPI',
-            'openid'           => Auth::user()->mini_open_id,
+            'openid'           => Auth::user() ? Auth::user()->mini_open_id : 'oIu4X0aZSiZsJ0VwxzNmnW3pxxbs',
             'appid'            => config('wxxcx.appid'),
             'mch_id'           => config('pay.mch_id'),
             'spbill_create_ip' => Request::getClientIp(),
@@ -38,13 +38,36 @@ class Payment
         $xml              = static::array2xml($params);
 
         // 获取预支付ID
-        $client=new Client();
-        $data = $client->post('https://api.mch.weixin.qq.com/pay/unifiedorder', $xml);
+        $data = static::post('https://api.mch.weixin.qq.com/pay/unifiedorder', $xml);
         $data = static::xml2array($data);
         if (!isset($data[ 'prepay_id' ]))
             return false;
-
         $prepayId = $data[ 'prepay_id' ];
+
+        //再次签名
+        $parameters              = [
+            'appId'     => config('wxxcx.app_id'),
+            'timeStamp' => time(),
+            'nonceStr'  => static::createNoncestr(),
+            'package'   => "prepay_id=$prepayId",
+            'signType'  => "MD5",
+        ];
+        $parameters[ 'paySign' ] = static::createSign($parameters);
+        unset($parameters[ 'appId' ]);
+        return $parameters;
+
+    }
+
+    public static function post( $url, $params )
+    {
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);         // 过滤HTTP头
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);   // 显示输出结果
+        curl_setopt($curl, CURLOPT_POST, true);          // post传输
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // 传输数据
+        $responseText = curl_exec($curl);
+        curl_close($curl);
+        return $responseText;
     }
 
     /**
@@ -59,7 +82,7 @@ class Payment
         foreach ( $params as $k => $v ) {
             $str .= $k . '=' . $v . '&';
         }
-        $str = $str . 'key=' . config('wxxcx.secret');
+        $str = $str . 'key=' . config('pay.pay_key');
         $str = md5($str);
         return strtoupper($str);
     }
