@@ -29,7 +29,7 @@ class ExperienceBookingCommentController extends ApiController
 
     function commentList( Request $request )
     {
-        return $this->comment->commentListApi($request->room_id, $request->has_pic ?: false);
+        return $this->success($this->comment->commentListApi($request->room_id, $request->has_pic ?: false));
 
     }
 

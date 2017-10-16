@@ -54,7 +54,6 @@ class Payment
             'signType'  => "MD5",
         ];
         $parameters[ 'paySign' ] = static::createSign($parameters);
-        unset($parameters[ 'appId' ]);
         return $parameters;
 
     }
