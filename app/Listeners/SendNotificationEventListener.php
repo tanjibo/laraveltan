@@ -43,7 +43,8 @@ class SendNotificationEventListener
         }
 //        取消支付时候的通知,这个地方需要注意，因为取消的时候可能是系统自动取消，也可能是用户取消的，我们确保用户取消的时候发通知
         if(isset($this->request->status) && $event->booking->status==ExperienceBooking::STATUS_CANCEL){
-            $this->cancelNotify($event->booking,new WechatTemplate());
+
+           $this->cancelNotify($event->booking,new WechatTemplate());
         }
     }
 
@@ -53,7 +54,7 @@ class SendNotificationEventListener
     public function payNotify( ExperienceBooking $booking )
     {
 
-        $this->_tpl($booking, Sm::TYPE_EXPERIENCE_PAID_WITH_USER);
+        $this->_tpl($booking, Sm::TYPE_EXPERIENCE_PAID_WITH_USER,Sm::TYPE_EXPERIENCE_PAID_WITH_OPERATOR);
 
     }
 
@@ -62,9 +63,9 @@ class SendNotificationEventListener
      */
     public function cancelNotify( ExperienceBooking $booking,WechatTemplate $template)
     {
-        $this->_tpl($booking, Sm::TYPE_EXPERIENCE_CANCEL_WITH_USER);
+        $this->_tpl($booking, Sm::TYPE_EXPERIENCE_CANCEL_WITH_USER,Sm::TYPE_EXPERIENCE_CANCEL_WITH_OPERATOR);
         //微信service message
-        $template->sendCancelTpl($this->request->form_id,$booking->id);
+        //$template->sendCancelTpl($this->request->form_id,$booking->id);
     }
 
     /**
@@ -88,18 +89,19 @@ class SendNotificationEventListener
     }
 
 
-    private function _tpl( ExperienceBooking $booking, $status )
+    private function _tpl( ExperienceBooking $booking, $statusOrder,$statusStuff )
     {
-        //用户
-        $template = Sm::template($status, $booking);
-        Sm::send($booking->mobile, $template, $status);
+
+       // 用户
+        $template = Sm::template($statusOrder, $booking);
+        Sm::send($booking->mobile, $template, $statusOrder);
 
         // 运营短信通知
         $mobile   = implode(',', config('lrss.experience'));
-        $template = Sm::template($status, $booking);
-        Sm::send($mobile, $template, $status);
+        $template = Sm::template($statusStuff, $booking);
+        Sm::send($mobile, $template, $statusStuff);
 
         //wechat 后台人员通知
-        $this->wechatNotify(config('lrss.experience'), $booking, $status);
+        $this->wechatNotify(config('lrss.experience'), $booking, $statusStuff);
     }
 }

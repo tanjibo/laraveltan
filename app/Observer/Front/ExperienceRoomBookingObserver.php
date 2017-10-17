@@ -183,8 +183,9 @@ class ExperienceRoomBookingObserver
         //退款------------
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
-            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_fee);
 
+            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_fee);
+           dd($request);
             if ($result)
                 ExperienceRefund::query()->create($result);
         }

@@ -64,6 +64,7 @@ class WechatSmsNotify
             'url'         => '',  //跳转地址
         ];
 
+
         $sendData = [
             'room' =>$booking->rooms->pluck('name')->map(
                     function( $item ) {

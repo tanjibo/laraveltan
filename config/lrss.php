@@ -11,7 +11,7 @@
 
 if ($_SERVER['HTTP_HOST'] == 'api.lrss.com') {
     return [
-        'experience' => [ 18610729170 ],
+        'experience' => [ '18610729170','13076966542' ],
         'wechatSms'  => [
 
             'app_id'    => 'wx744602f2d362bace',
@@ -22,7 +22,7 @@ if ($_SERVER['HTTP_HOST'] == 'api.lrss.com') {
 
             'template_id_booking'     => "ETZ04TnlIqMxfyhwpWPGJdyu75m2Gcgd_VG53lunuEY",
             'template_id_pay_success' => "3Q79kMhTzuOlfftk82cHjhhF8KkeImRznRwdiwt6vPo",
-            'template_id_cancel '     => "ngpwbUoQAt-lVQPuyEISGoGB0bwpMZDjRRrV3L9W_5M",
+            'template_id_cancel'     => "ngpwbUoQAt-lVQPuyEISGoGB0bwpMZDjRRrV3L9W_5M",
         ],
     ];
 }
