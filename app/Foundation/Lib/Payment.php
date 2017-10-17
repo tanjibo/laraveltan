@@ -98,12 +98,12 @@ class Payment
         ];
         $params[ 'sign' ] = static::createSign($params);
         $xml              = static::array2xml($params);
-
+         dd($params);
         // 获取预支付ID
         $data = static::postSsl('https://api.mch.weixin.qq.com/secapi/pay/refund', $xml);
 
         $result = static::xml2array($data);
-        dd($result);
+
         if($result['return_code']=='SUCCESS'){
             return $result;
         }
