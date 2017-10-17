@@ -65,8 +65,7 @@ Route::group(
         Route::post('/booking/orderTotalFee', 'ExperienceRoomBookingController@orderTotalFee')->name('room.booking.orderTotal');
 
         Route::post('/booking/createBookingOrder', 'ExperienceRoomBookingController@createBookingOrder')->name('room.booking.create');
-        //更改订单状态
-        Route::post('/booking/changeOrderStatus/{booking_id}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
+
 
         //订单列表
         Route::post('/booking/orderList', 'ExperienceRoomBookingController@orderList')->name('room.booking.orderList');
@@ -110,6 +109,9 @@ Route::group(
 
    //测试通知
     Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
+
+    //更改订单状态
+    Route::get('/booking/changeOrderStatus/booking_id/{booking_id}/status/{status}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
 
 
 

@@ -167,6 +167,7 @@ class ExperienceRoomBookingController extends ApiController
     public function orderStatusToChange( Request $request )
     {
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
+
             $this->message('success');
         }
         else {
@@ -192,7 +193,7 @@ class ExperienceRoomBookingController extends ApiController
         //Payment::refund( 'E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT),$booking->real_fee);
 
 
-        Payment::refund('E000000000203',1);
+       // Payment::refund('E000000000203',1);
 
 //        ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
     }

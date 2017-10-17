@@ -13,10 +13,12 @@ namespace App\Observer\Front;
 
 
 use App\Events\SendNotificationEvent;
+use App\Foundation\Lib\Payment;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
 
+use App\Models\ExperienceRefund;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -36,9 +38,10 @@ class ExperienceRoomBookingObserver
 
         $booking->user_id = Auth::id() ?: 1;
         //计算价格
-        if(App::environment()=='test' || App::environment()=='develop'){
+        if (App::environment() == 'test' || App::environment() == 'develop') {
             $booking->price = $total = 0.1;
-        }else{
+        }
+        else {
             $booking->price = $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms);
         }
 
@@ -163,7 +166,8 @@ class ExperienceRoomBookingObserver
                     'amount'  => $booking->balance,
                     'type'    => AccountRecord::TYPE_BALANCE,
                 ]
-            );
+            )
+            ;
         }
         if ($booking->real_price > 0) {
             AccountRecord::query()->create(
@@ -172,8 +176,19 @@ class ExperienceRoomBookingObserver
                     'amount'  => $booking->real_price,
                     'type'    => AccountRecord::TYPE_CASH,
                 ]
-            );
+            )
+            ;
         }
+
+        //退款------------
+        if ($booking->status == ExperienceBooking::STATUS_PAID) {
+
+            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_fee);
+
+            if ($result)
+                ExperienceRefund::query()->create($result);
+        }
+
     }
 
 
@@ -181,9 +196,10 @@ class ExperienceRoomBookingObserver
      * @param ExperienceBooking $booking
      * 更新完成状态后发送短信,微信通知
      */
-    public function updated(ExperienceBooking $booking){
+    public function updated( ExperienceBooking $booking )
+    {
 
-           event(new SendNotificationEvent($booking));
+        event(new SendNotificationEvent($booking));
 
 
     }

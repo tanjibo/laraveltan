@@ -58,6 +58,31 @@ class Payment
 
     }
 
+    /**
+     * @param $number
+     * @param $fee
+     * array:18 [
+    "return_code" => "SUCCESS"
+    "return_msg" => "OK"
+    "appid" => "wx28cb8b1d2b4514d0"
+    "mch_id" => "1376613602"
+    "nonce_str" => "NphYD7vfzGxs0SA4"
+    "sign" => "C587C7CFBC334D69C371C65B5B453B3D"
+    "result_code" => "SUCCESS"
+    "transaction_id" => "4200000019201710178620678951"
+    "out_trade_no" => "E000000000203"
+    "out_refund_no" => "233333422333"
+    "refund_id" => "50000704712017101702050579395"
+    "refund_channel" => []
+    "refund_fee" => "10"
+    "coupon_refund_fee" => "0"
+    "total_fee" => "10"
+    "cash_fee" => "10"
+    "coupon_refund_count" => "0"
+    "cash_refund_fee" => "10"
+    ]
+     */
+
     static public function refund( $number, $fee )
     {
         $params           = [
@@ -65,9 +90,9 @@ class Payment
             'mch_id'        => config('pay.mch_id'),
             'nonce_str'     => static::createNoncestr(),
             'out_trade_no'  => $number,
-            'out_refund_no' => '233333422333',//自己系统退款单号
-            'total_fee'     => 10,
-            'refund_fee'    => 10,
+            'out_refund_no' => static::refundId(),//自己系统退款单号
+            'total_fee'     => (double)$fee*100,
+            'refund_fee'    => (double)$fee*100,
             'op_user_id'    => config('pay.mch_id'),
            // 'sign_type'     => 'MD5',
         ];
@@ -78,10 +103,25 @@ class Payment
         $data = static::postSsl('https://api.mch.weixin.qq.com/secapi/pay/refund', $xml);
 
         $result = static::xml2array($data);
-
-        dd($result);
+        if($result['return_code']=='SUCCESS'){
+            return $result;
+        }
+        return false;
     }
 
+    /**
+     * @return string
+     * 自己系统生成的退款订单号
+     */
+     private static function refundId(){
+        return  date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+     }
+    /**
+     * @param $url
+     * @param $params
+     * @return bool|mixed
+     * 不能再本地调试，而且不能再post 方法中调用，你要不要这么坑爹
+     */
     private static function postSsl($url,$params){
         $ch = curl_init();
         //超时时间
