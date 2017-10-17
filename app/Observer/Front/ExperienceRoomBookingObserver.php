@@ -182,6 +182,9 @@ class ExperienceRoomBookingObserver
      * 更新完成状态后发送短信,微信通知
      */
     public function updated(ExperienceBooking $booking){
-        event(new SendNotificationEvent($booking));
+
+           event(new SendNotificationEvent($booking));
+
+
     }
 }

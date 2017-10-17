@@ -38,5 +38,6 @@ class PaymentLog extends Eloquent
             'trade_number',
             'fee',
             'type',
+            'created_at'
         ];
 }

@@ -23,7 +23,8 @@ class WechatTemplateController extends ApiController
      */
    function sendPayTpl(Request $request){
 
-
        $this->template->sendPayTpl($request->prepay_id,$request->booking_id);
    }
+
+
 }

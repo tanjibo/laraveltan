@@ -44,7 +44,7 @@ class Payment
         $prepayId = $data[ 'prepay_id' ];
 
         //再次签名
-        $time=time();
+        $time                    = time();
         $parameters              = [
             'appId'     => config('wxxcx.appid'),
             'timeStamp' => "$time",
@@ -53,10 +53,36 @@ class Payment
             'signType'  => "MD5",
         ];
         $parameters[ 'paySign' ] = static::createSign($parameters);
-        unset($parameters['appId']);
+        unset($parameters[ 'appId' ]);
         return $parameters;
 
     }
+
+    static public function refund( $number, $fee )
+    {
+        $params           = [
+            'appid'         => config('wxxcx.appid'),
+            'mch_id'        => config('pay.mch_id'),
+            'nonce_str'     => static::createNoncestr(),
+            'out_trade_no'  => $number,
+            'out_refund_no' => '233333422333',//自己系统退款单号
+            'total_fee'     => (double)$fee * 100,
+            'refund_fee'    => (double)$fee * 100,
+            'op_user_id'    => config('pay.mch_id'),
+            //'sign_type'     => 'MD5',
+        ];
+        $params[ 'sign' ] = static::createSign($params);
+        $xml              = static::array2xml($params);
+
+        // 获取预支付ID
+        $data = static::post('https://api.mch.weixin.qq.com/secapi/pay/refund', $xml);
+        dd($data);
+        $result = static::xml2array($data);
+
+        dd($result);
+    }
+
+
 
     public static function post( $url, $params )
     {

@@ -4,7 +4,7 @@ namespace App\Api;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExperienceBooking extends Model
+class   ExperienceBooking extends Model
 {
 
     use \Illuminate\Database\Eloquent\SoftDeletes;

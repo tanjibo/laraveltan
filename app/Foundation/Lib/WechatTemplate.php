@@ -65,7 +65,7 @@ class WechatTemplate
     /**
      * 发送支付模板通知
      */
-    function sendPayTpl( $prepay_id,$booking_id )
+  public  function sendPayTpl( $prepay_id,$booking_id )
     {
         $model=ExperienceBooking::query()->with('rooms')->find($booking_id);
 
@@ -119,15 +119,13 @@ class WechatTemplate
 
             ],
         ];
-        $client=new Client();
-        $data=$this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
-        dd($data);
-      $data=$client->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),['form_params'=>$params]);
-      dd(json_decode($data->getBody()->getContents(),true));
+
+        $this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
+
 
     }
 
-    public function post( $url, $params )
+    private function post( $url, $params )
     {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_HEADER, 0);         // 过滤HTTP头
@@ -142,34 +140,44 @@ class WechatTemplate
      * @param $form_id
      * 发送支付退款通知
      */
-    function sendCancelTpl($form_id){
+    function sendCancelTpl($form_id,$booking_id){
+        $model=ExperienceBooking::query()->with('rooms')->find($booking_id);
+
+        if(!$model) return false;
+
+        $rooms=$model->rooms->pluck('name')->map(function($item){
+                return '【'.$item.'】';
+            })->implode('和');
+
         $params = [
-            'touser'      => Auth::user()->mini_open_id ?: '',
+            'touser'      => Auth::user()?Auth::user()->mini_open_id : '',
             'template_id' => 'ShNkGQ8IvSzpQQofYcf87QYzkB5dT4JacErxfSQxVek',
             'page'        => 'order',
             'form_id'     => $form_id,
             'data'        => [
                 //房间信息
                 'keyword1'    => [
-                    'value' => '',
-                    'color' => '',
+                    'value' => $rooms,
+                    'color' => '#182a68',
                 ],
                 //订单退款
                 'keyword2'    => [
-                    'value' => '',
-                    'color' => '',
+                    'value' => '订单已成功申请'.$model->real_price.'元退款，请关注您的账户变动',
+                    'color' => '#182a68',
                 ],
                 //取消时间
                 'keyword3'    => [
-                    'value' => '',
-                    'color' => '',
+                    'value' => date('Y-m-d,H:i:s'),
+                    'color' => '#182a68',
                 ],
                 //备注
                 'keyword4'    => [
-                    'value' => '',
-                    'color' => '',
+                    'value' => '预计到账时间为5个工作日',
+                    'color' => '#cc6844',
                 ],
             ],
         ];
+
+        $this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
     }
 }

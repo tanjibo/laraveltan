@@ -108,7 +108,8 @@ Route::group(
    //发送模板通知
     Route::post('/tpl/sendPayTpl','WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
 
-    Route::post('/tpl/accessToken','WechatTemplateController@getAccessToken')->name('tpl.accessToken');
+   //测试通知
+    Route::post('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
 
 
 
