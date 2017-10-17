@@ -37,7 +37,7 @@ class ExperienceRoomBookingObserver
         $booking->user_id = Auth::id() ?: 1;
         //计算价格
         if(App::environment()=='test' || App::environment()=='develop'){
-            $booking->price = $total = 10;
+            $booking->price = $total = 0.1;
         }else{
             $booking->price = $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms);
         }
