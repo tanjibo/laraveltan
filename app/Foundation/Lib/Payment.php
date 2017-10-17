@@ -66,23 +66,53 @@ class Payment
             'nonce_str'     => static::createNoncestr(),
             'out_trade_no'  => $number,
             'out_refund_no' => '233333422333',//自己系统退款单号
-            'total_fee'     => (double)$fee * 100,
-            'refund_fee'    => (double)$fee * 100,
+            'total_fee'     => 10,
+            'refund_fee'    => 10,
             'op_user_id'    => config('pay.mch_id'),
-            //'sign_type'     => 'MD5',
+           // 'sign_type'     => 'MD5',
         ];
         $params[ 'sign' ] = static::createSign($params);
         $xml              = static::array2xml($params);
 
         // 获取预支付ID
-        $data = static::post('https://api.mch.weixin.qq.com/secapi/pay/refund', $xml);
-        dd($data);
+        $data = static::postSsl('https://api.mch.weixin.qq.com/secapi/pay/refund', $xml);
+
         $result = static::xml2array($data);
 
         dd($result);
     }
 
+    private static function postSsl($url,$params){
+        $ch = curl_init();
+        //超时时间
+        curl_setopt($ch,CURLOPT_TIMEOUT,30);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+        //这里设置代理，如果有的话
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+        //第一种方法，cert 与 key 分别属于两个.pem文件
+        //默认格式为PEM，可以注释
+        curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLCERT,storage_path().'/wechatKey/apiclient_cert.pem');
+        //默认格式为PEM，可以注释
+        curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLKEY,storage_path().'/wechatKey/apiclient_key.pem');
 
+        curl_setopt($ch,CURLOPT_POST, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
+        $data = curl_exec($ch);
+        if($data){
+            curl_close($ch);
+            return $data;
+        }
+        else {
+            $error = curl_errno($ch);
+            echo "call faild, errorCode:$error\n";
+            curl_close($ch);
+            return false;
+        }
+    }
 
     public static function post( $url, $params )
     {

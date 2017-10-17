@@ -190,7 +190,10 @@ class ExperienceRoomBookingController extends ApiController
     public function changeBookingOrder(Request $request){
        // $booking=ExperienceBooking::query()->find($request->booking_id);
         //Payment::refund( 'E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT),$booking->real_fee);
+
+
         Payment::refund('E000000000203',1);
+
 //        ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
     }
     /**
