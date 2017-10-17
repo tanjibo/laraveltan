@@ -75,7 +75,7 @@ class Payment
         $xml              = static::array2xml($params);
 
         // 获取预支付ID
-        $data = static::postSsl('https://api.mch.weixin.qq.com/secapi/pay/refund', $params);
+        $data = static::postSsl('https://api.mch.weixin.qq.com/secapi/pay/refund', $xml);
 
         $result = static::xml2array($data);
 
@@ -100,7 +100,7 @@ class Payment
         curl_setopt($ch,CURLOPT_SSLKEY,storage_path().'/wechatKey/apiclient_key.pem');
 
         curl_setopt($ch,CURLOPT_POST, 1);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,json_encode($params));
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
         $data = curl_exec($ch);
         dd($data);
         if($data){
