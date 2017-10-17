@@ -102,7 +102,6 @@ class Payment
         curl_setopt($ch,CURLOPT_POST, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
         $data = curl_exec($ch);
-        dd($data);
         if($data){
             curl_close($ch);
             return $data;
