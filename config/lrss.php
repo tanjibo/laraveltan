@@ -9,7 +9,7 @@
  * Time: 4:20 PM
  */
 
-if ($_SERVER['HTTP_HOST'] == 'api.lrss.com') {
+
     return [
         'experience' => [ '18610729170','13076966542' ],
         'wechatSms'  => [
@@ -25,7 +25,7 @@ if ($_SERVER['HTTP_HOST'] == 'api.lrss.com') {
             'template_id_cancel'     => "ngpwbUoQAt-lVQPuyEISGoGB0bwpMZDjRRrV3L9W_5M",
         ],
     ];
-}
+
 return [
 
     'experience' => [
