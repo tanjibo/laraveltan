@@ -2,7 +2,6 @@
 
 namespace App\Foundation\Lib;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 

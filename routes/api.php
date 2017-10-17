@@ -105,6 +105,9 @@ Route::group(
     //支付
    Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
 
+    Route::post('/tpl/accessToken','WechatTemplateController@getAccessToken')->name('tpl.accessToken');
+
+
 
 }
 );
