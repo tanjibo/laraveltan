@@ -67,7 +67,9 @@ class WechatTemplate
      */
     function sendPayTpl( $prepay_id,$booking_id )
     {
-        $model=ExperienceBooking::query()->with('rooms')->first();
+        $model=ExperienceBooking::query()->with('rooms')->find($booking_id);
+
+        if(!$model) return false;
 
         $rooms='您预订的房间:'.$model->rooms->pluck('name')->map(function($item){
                 return '【'.$item.'】';
@@ -119,7 +121,7 @@ class WechatTemplate
         ];
 
         $client=new Client();
-        $client->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken());
+        $client->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),$params);
 
     }
 
