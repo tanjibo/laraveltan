@@ -85,9 +85,9 @@ class ExperienceRoomBookingController extends ApiController
             $request->rooms = json_decode($request->rooms, true);
         }
 
-        if ($model = ExperienceBooking::query()->first()) {
+        //if ($model = ExperienceBooking::query()->first()) {
 
-       // if ($model = ExperienceBooking::store($request)) {
+        if ($model = ExperienceBooking::store($request)) {
             //和微信支付交互
 
             $data = $this->payment->unifiedorder($model);

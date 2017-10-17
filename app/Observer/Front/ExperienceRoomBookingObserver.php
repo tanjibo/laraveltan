@@ -19,6 +19,7 @@ use App\Models\ExperienceBooking;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class ExperienceRoomBookingObserver
@@ -35,7 +36,12 @@ class ExperienceRoomBookingObserver
 
         $booking->user_id = Auth::id() ?: 1;
         //计算价格
-        $booking->price = $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms);
+        if(App::environment()=='test' || App::environment()=='develop'){
+            $booking->price = $total = 10;
+        }else{
+            $booking->price = $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms);
+        }
+
         //如果是余额支付
         if ($booking->pay_mode == $booking::PAY_MODE_BALANCE) {
             $account = User::accountInfo($booking->user_id);
