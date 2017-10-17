@@ -82,7 +82,7 @@ class ExperienceRoomBookingObserver
                 break;
             // 已取消
             case $booking::STATUS_CANCEL:
-                static::statusToCancel($booking);
+                static::statusToCancel($booking,$this->request);
                 break;
 
         }
@@ -151,7 +151,7 @@ class ExperienceRoomBookingObserver
      * @param $booking
      * 取消订单
      */
-    public static function statusToCancel( $booking )
+    public static function statusToCancel( $booking,$request )
     {
         // 账户记录
         if ($booking->balance > 0) {
@@ -181,10 +181,10 @@ class ExperienceRoomBookingObserver
         }
 
         //退款------------
-        if ($booking->status == ExperienceBooking::STATUS_PAID) {
+        if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
             $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_fee);
-           dd($result);
+
             if ($result)
                 ExperienceRefund::query()->create($result);
         }
