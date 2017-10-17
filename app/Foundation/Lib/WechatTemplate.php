@@ -83,12 +83,12 @@ class WechatTemplate
             'data'        => [
                 //入住时间
                 'keyword1'    => [
-                    'value' => $model->checkin,
+                    'value' => $model->checkin->toDateString(),
                     'color' => '#182a68',
                 ],
                 //退房时间
                 'keyword2'    => [
-                    'value' => $model->checkout,
+                    'value' => $model->checkout->toDateString(),
                     'color' => '#182a68',
                 ],
                 //联系人姓名
@@ -119,7 +119,7 @@ class WechatTemplate
 
             ],
         ];
-
+       dd($params);
         $client=new Client();
         $data=$this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
         dd($data);
