@@ -185,7 +185,7 @@ class ExperienceRoomBookingObserver
 
 
             $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_fee);
-           dd($request);
+           dd($result);
             if ($result)
                 ExperienceRefund::query()->create($result);
         }
