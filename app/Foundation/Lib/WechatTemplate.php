@@ -78,7 +78,7 @@ class WechatTemplate
         $params = [
             'touser'      => Auth::user() ?Auth::user()->mini_open_id:'oIu4X0aZSiZsJ0VwxzNmnW3pxxbs',
             'template_id' => 'rqPgeD210gaWSd032szu1b2SGM73Fr1pZanleCIsfJw',
-            'page'        => 'order',
+            'page'        => 'booking',
             'form_id'     => $prepay_id,
             'data'        => [
                 //入住时间
@@ -99,7 +99,7 @@ class WechatTemplate
                 //联系人手机
                 'keyword4'    => [
                     'value' => $model->mobile,
-                    'color' => '',
+                    'color' => '#182a68',
                 ],
                 //地点
                 'keyword5'    => [
@@ -121,11 +121,24 @@ class WechatTemplate
         ];
 
         $client=new Client();
+        $data=$this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
+        dd($data);
       $data=$client->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),['form_params'=>$params]);
       dd(json_decode($data->getBody()->getContents(),true));
 
     }
 
+    public function post( $url, $params )
+    {
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);         // 过滤HTTP头
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);   // 显示输出结果
+        curl_setopt($curl, CURLOPT_POST, true);          // post传输
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // 传输数据
+        $responseText = curl_exec($curl);
+        curl_close($curl);
+        return $responseText;
+    }
     /**
      * @param $form_id
      * 发送支付退款通知
