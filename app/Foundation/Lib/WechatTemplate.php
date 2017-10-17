@@ -119,7 +119,6 @@ class WechatTemplate
 
             ],
         ];
-       dd($params);
         $client=new Client();
         $data=$this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
         dd($data);
