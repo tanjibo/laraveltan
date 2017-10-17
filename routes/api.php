@@ -109,7 +109,7 @@ Route::group(
     Route::post('/tpl/sendPayTpl','WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
 
    //测试通知
-    Route::post('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
+    Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
 
 
 
