@@ -170,7 +170,7 @@ class ExperienceRoomBookingController extends ApiController
 
     public function orderStatusToChange( Request $request )
     {
-       dd(Auth::user()->mini_open_id);
+       dd(Auth::user());
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
 
             return $this->message('success');
