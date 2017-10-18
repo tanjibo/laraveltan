@@ -201,6 +201,5 @@ class ExperienceRoomBookingObserver
     {
         event(new SendNotificationEvent($booking));
 
-
     }
 }
