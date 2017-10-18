@@ -26,7 +26,7 @@
         ],
         'notification'=>[
             'email'=>"1533954229@qq.com",
-            'from'=>"tanjibo@zhuozhenxua.com",
+            'from'=>"tanjibo@zhuozhenxuan.com",
             'address'=>'北京濯振轩文化发展有限公司'
         ]
     ];
@@ -55,7 +55,7 @@ return [
     ],
     'notification'=>[
         'email'=>"xiaolijuan@zhuozhenxuan.com",
-        'from'=>"tanjibo@zhuozhenxua.com",
+        'from'=>"tanjibo@zhuozhenxuan.com",
         'address'=>'北京濯振轩文化发展有限公司'
     ]
 ];
