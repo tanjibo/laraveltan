@@ -15,13 +15,14 @@ namespace App\Observer\Front;
 use App\Events\RefundFailNotificationEvent;
 use App\Events\SendNotificationEvent;
 use App\Foundation\Lib\Payment;
+use App\Jobs\SendBookingEmail;
+use App\Jobs\SendRefundFailEmail;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
 
 use App\Models\ExperienceRefund;
 use App\Models\User;
-use App\Notifications\RefundFailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -193,7 +194,8 @@ class ExperienceRoomBookingObserver
                 ExperienceRefund::query()->create($result);
             }else{
                 //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
-                event(new RefundFailNotificationEvent($booking));
+                //event(new RefundFailNotificationEvent($booking));
+                SendRefundFailEmail::dispatch($booking);
             }
 
         }
@@ -208,6 +210,7 @@ class ExperienceRoomBookingObserver
     public function updated( ExperienceBooking $booking )
     {
 
-        event(new SendNotificationEvent($booking));
+        //event(new SendNotificationEvent($booking));
+        SendBookingEmail::dispatch($booking);
     }
 }
