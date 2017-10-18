@@ -24,6 +24,11 @@
             'template_id_pay_success' => "3Q79kMhTzuOlfftk82cHjhhF8KkeImRznRwdiwt6vPo",
             'template_id_cancel'     => "ngpwbUoQAt-lVQPuyEISGoGB0bwpMZDjRRrV3L9W_5M",
         ],
+        'notification'=>[
+            'email'=>"1533954229@qq.com",
+            'from'=>"tanjibo@zhuozhenxua.com",
+            'address'=>'北京濯振轩文化发展有限公司'
+        ]
     ];
 
 return [
@@ -48,4 +53,9 @@ return [
         'template_id_pay_success' => "2B5z5ZCyY21lLxTaR4b0xJPA5lAI5NV-99YHJwEoKzk",
         'template_id_cancel'      => "xVLfxLr7anfaeYfw6b9_maDc_JSUZgIm2yiZOjB8Jyw",
     ],
+    'notification'=>[
+        'email'=>"xiaolijuan@zhuozhenxuan.com",
+        'from'=>"tanjibo@zhuozhenxua.com",
+        'address'=>'北京濯振轩文化发展有限公司'
+    ]
 ];

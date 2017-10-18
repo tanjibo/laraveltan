@@ -185,7 +185,9 @@ return [
          //repository
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
-        Iwanli\Wxxcx\WxxcxServiceProvider::class
+        Iwanli\Wxxcx\WxxcxServiceProvider::class,
+
+        Naux\Mail\SendCloudServiceProvider::class,
 
 
     ],

@@ -12,6 +12,7 @@
 namespace App\Observer\Front;
 
 
+use App\Events\RefundFailNotificationEvent;
 use App\Events\SendNotificationEvent;
 use App\Foundation\Lib\Payment;
 use App\Models\AccountRecord;
@@ -20,6 +21,7 @@ use App\Models\ExperienceBooking;
 
 use App\Models\ExperienceRefund;
 use App\Models\User;
+use App\Notifications\RefundFailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -185,9 +187,14 @@ class ExperienceRoomBookingObserver
 
 
             $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
-           dd($result);
-            if ($result)
+
+            if ($result['result_code']=='SUCCESS') {
                 ExperienceRefund::query()->create($result);
+            }else{
+                //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
+                event(new RefundFailNotificationEvent($booking));
+            }
+
         }
 
     }

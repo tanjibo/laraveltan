@@ -14,12 +14,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        //发送通知
         'App\Events\SendNotificationEvent' => [
             'App\Listeners\SendNotificationEventListener',
         ],
         'Illuminate\Database\Events\QueryExecuted'=>[
             QueryListener::class
         ],
+        'App\Events\RefundFailNotificationEvent' => [
+            'App\Listeners\RefundFailNotificationEventListener',
+        ],
+
         'Laravel\Passport\Events\AccessTokenCreated' => [
             'App\Listeners\Auth\RevokeOldTokens',
         ],

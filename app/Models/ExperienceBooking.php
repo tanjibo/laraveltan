@@ -8,6 +8,7 @@
 namespace App\Models;
 
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Reliese\Database\Eloquent\Model as Eloquent;
@@ -47,6 +48,7 @@ class ExperienceBooking extends Eloquent
     use ExperienceRoomBookingTrait,
         \Illuminate\Database\Eloquent\SoftDeletes,
         SearchableTrait;
+    use Notifiable;
     protected $table = 'experience_booking';
 
     protected $casts
