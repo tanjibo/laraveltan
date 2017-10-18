@@ -13,6 +13,7 @@ use App\Models\ExperienceSpecialRoomBookingXinyuege;
 use App\Models\PaymentLog;
 use App\Notifications\RefundFailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Naux\Mail\SendCloudTemplate;
 use Repositories\ExperienceRoomBookingRepository;
@@ -169,7 +170,7 @@ class ExperienceRoomBookingController extends ApiController
 
     public function orderStatusToChange( Request $request )
     {
-
+       dd(Auth::user()->mini_open_id);
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
 
             return $this->message('success');
