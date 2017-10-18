@@ -180,14 +180,14 @@ class ExperienceRoomBookingObserver
             ;
         }
 
-        //退款------------
+        //退款------------  暂时不用自动退款，改成人工手退
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
-             dd($result);
-            if ($result)
-                ExperienceRefund::query()->create($result);
+//            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+
+//            if ($result)
+//                ExperienceRefund::query()->create($result);
         }
 
     }

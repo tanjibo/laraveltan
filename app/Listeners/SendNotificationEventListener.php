@@ -65,7 +65,30 @@ class SendNotificationEventListener
     {
         $this->_tpl($booking, Sm::TYPE_EXPERIENCE_CANCEL_WITH_USER,Sm::TYPE_EXPERIENCE_CANCEL_WITH_OPERATOR);
         //微信service message
-        //$template->sendCancelTpl($this->request->form_id,$booking->id);
+        if($this->request->form_id)
+        $template->sendCancelTpl($this->request->form_id,$booking->id);
+    }
+
+
+    /**
+     * @param ExperienceBooking $booking
+     * @param $statusOrder  [用户状态]
+     * @param $statusStuff  [运营人员状态]
+     */
+    private function _tpl( ExperienceBooking $booking, $statusOrder,$statusStuff )
+    {
+
+       // 用户
+        $template = Sm::template($statusOrder, $booking);
+        Sm::send($booking->mobile, $template, $statusOrder);
+
+        // 运营短信通知
+        $mobile   = implode(',', config('lrss.experience'));
+        $template = Sm::template($statusStuff, $booking);
+        Sm::send($mobile, $template, $statusStuff);
+
+        //wechat 后台人员通知 ----------------- 暂时不要了
+        //$this->wechatNotify(config('lrss.experience'), $booking, $statusStuff);
     }
 
     /**
@@ -88,20 +111,4 @@ class SendNotificationEventListener
 
     }
 
-
-    private function _tpl( ExperienceBooking $booking, $statusOrder,$statusStuff )
-    {
-
-       // 用户
-        $template = Sm::template($statusOrder, $booking);
-        Sm::send($booking->mobile, $template, $statusOrder);
-
-        // 运营短信通知
-        $mobile   = implode(',', config('lrss.experience'));
-        $template = Sm::template($statusStuff, $booking);
-        Sm::send($mobile, $template, $statusStuff);
-
-        //wechat 后台人员通知
-        $this->wechatNotify(config('lrss.experience'), $booking, $statusStuff);
-    }
 }
