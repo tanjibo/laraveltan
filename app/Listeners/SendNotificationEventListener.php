@@ -63,7 +63,7 @@ class SendNotificationEventListener
      */
     public function cancelNotify( ExperienceBooking $booking,WechatTemplate $template)
     {
-        $this->_tpl($booking, Sm::TYPE_EXPERIENCE_CANCEL_WITH_USER,Sm::TYPE_EXPERIENCE_CANCEL_WITH_OPERATOR);
+        //$this->_tpl($booking, Sm::TYPE_EXPERIENCE_CANCEL_WITH_USER,Sm::TYPE_EXPERIENCE_CANCEL_WITH_OPERATOR);
         //微信service message
         if($this->request->form_id)
         $template->sendCancelTpl($this->request->form_id,$booking->id);
