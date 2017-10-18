@@ -210,8 +210,7 @@ class ExperienceRoomBookingObserver
     public function updated( ExperienceBooking $booking )
     {
 
-        SendRefundFailEmail::dispatch($booking);
         //event(new SendNotificationEvent($booking));
-       // SendBookingEmail::dispatch($booking);
+        SendBookingEmail::dispatch($booking);
     }
 }

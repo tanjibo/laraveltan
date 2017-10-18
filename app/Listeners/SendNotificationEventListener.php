@@ -86,7 +86,7 @@ class SendNotificationEventListener
         $mobile   = implode(',', config('lrss.experience'));
         $template = Sm::template($statusStuff, $booking);
         Sm::send($mobile, $template, $statusStuff);
-        Log::info('队列在运行中了');
+        //Log::info('队列在运行中了');
 
         //wechat 后台人员通知 ----------------- 暂时不要了
         //$this->wechatNotify(config('lrss.experience'), $booking, $statusStuff);
