@@ -200,6 +200,5 @@ class ExperienceRoomBookingObserver
     public function updated( ExperienceBooking $booking )
     {
         event(new SendNotificationEvent($booking));
-        
     }
 }
