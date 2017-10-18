@@ -103,8 +103,6 @@ Route::group(
         //更改订单状态
         Route::get('/booking/changeOrderStatus/booking_id/{booking_id}/status/{status}/form_id/{form_id?}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
 
-        //支付
-        Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
 
         //发送模板通知
         Route::post('/tpl/sendPayTpl','WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
@@ -114,6 +112,8 @@ Route::group(
     }
     );
 
+    //支付回调
+    Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
 
 
 
