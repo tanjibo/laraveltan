@@ -98,20 +98,25 @@ Route::group(
 
         //时间选择器初始化
         Route::post('/booking/calendarInit', 'ExperienceRoomBookingController@calendarInit')->name('booking.calendarInit');
+
+
+        //更改订单状态
+        Route::get('/booking/changeOrderStatus/booking_id/{booking_id}/status/{status}/form_id/{form_id?}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
+
+        //支付
+        Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
+
+        //发送模板通知
+        Route::post('/tpl/sendPayTpl','WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
+
+        //测试通知
+        Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
     }
     );
 
-    //支付
-   Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
 
-   //发送模板通知
-    Route::post('/tpl/sendPayTpl','WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
 
-   //测试通知
-    Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
 
-    //更改订单状态
-    Route::get('/booking/changeOrderStatus/booking_id/{booking_id}/status/{status}/form_id/{form_id?}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
 
 
 
