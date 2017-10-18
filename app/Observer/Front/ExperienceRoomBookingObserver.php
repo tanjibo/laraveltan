@@ -184,10 +184,10 @@ class ExperienceRoomBookingObserver
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-//            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
 
-//            if ($result)
-//                ExperienceRefund::query()->create($result);
+            if ($result)
+                ExperienceRefund::query()->create($result);
         }
 
     }
@@ -199,7 +199,7 @@ class ExperienceRoomBookingObserver
      */
     public function updated( ExperienceBooking $booking )
     {
-        
+
         event(new SendNotificationEvent($booking));
     }
 }
