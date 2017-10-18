@@ -185,7 +185,7 @@ class ExperienceRoomBookingObserver
 
 
             $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
-
+             dd($result);
             if ($result)
                 ExperienceRefund::query()->create($result);
         }
@@ -200,7 +200,7 @@ class ExperienceRoomBookingObserver
     public function updated( ExperienceBooking $booking )
     {
 
-        event(new SendNotificationEvent($booking));
+       // event(new SendNotificationEvent($booking));
 
 
     }

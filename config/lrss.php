@@ -11,7 +11,7 @@
 
 
     return [
-        'experience' => [ '18610729170','13076966542' ],
+        'experience' => [18610729170,13076966542],
         'wechatSms'  => [
 
             'app_id'    => 'wx744602f2d362bace',
