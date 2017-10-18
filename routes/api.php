@@ -111,7 +111,7 @@ Route::group(
     Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
 
     //更改订单状态
-    Route::get('/booking/changeOrderStatus/booking_id/{booking_id}/status/{status}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
+    Route::get('/booking/changeOrderStatus/booking_id/{booking_id}/status/{status}/form_id/{form_id?}', 'ExperienceRoomBookingController@orderStatusToChange')->name('room.booking.changeStatus');
 
 
 

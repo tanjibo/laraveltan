@@ -172,10 +172,10 @@ class ExperienceRoomBookingController extends ApiController
 
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
 
-            $this->message('success');
+            return $this->message('success');
         }
         else {
-            $this->failed('fail');
+            return  $this->failed('fail');
         }
     }
 

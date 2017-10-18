@@ -73,6 +73,7 @@ class ExperienceRoomBookingObserver
 
     public function updating( ExperienceBooking $booking )
     {
+
         switch ( $this->request->status ) {
             // 已支付
             case $booking::STATUS_PAID:
@@ -186,7 +187,7 @@ class ExperienceRoomBookingObserver
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-            $result = Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+            $result =App::environment()=='develop'?['result_code'=>'']:Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
 
             if ($result['result_code']=='SUCCESS') {
                 ExperienceRefund::query()->create($result);
@@ -207,6 +208,6 @@ class ExperienceRoomBookingObserver
     public function updated( ExperienceBooking $booking )
     {
 
-      //  event(new SendNotificationEvent($booking));
+        event(new SendNotificationEvent($booking));
     }
 }
