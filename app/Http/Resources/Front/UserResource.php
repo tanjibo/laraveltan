@@ -18,7 +18,7 @@ class UserResource extends Resource
             'mobile'   => $this->mobile,
             'id'       => $this->id,
             'nickname' => $this->nickname,
-            'avatar'   => $this->avatar,
+            'avatar'   => str_replace('http','https',$this->avatar),
             $this->mergeWhen(
                 $request->user_id, [
                 'gender'         => $this->gender,
