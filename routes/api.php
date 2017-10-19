@@ -48,7 +48,7 @@ Route::group(
     Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
 
     Route::group(
-       [ 'middleware' => App::environment()=='develop'?:'auth.api_front' ], function() {
+       [ 'middleware' => App::environment()=='local'?:'auth.api_front' ], function() {
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
 

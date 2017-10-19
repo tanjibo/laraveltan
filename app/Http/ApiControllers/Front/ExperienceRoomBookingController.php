@@ -8,6 +8,7 @@ use App\Http\Resources\Front\ExperienceRoomBookingResource;
 use App\Http\Resources\Front\ExperienceRoomBookingSanResource;
 use App\Http\Resources\Front\ExperienceRoomBookingXingResource;
 use App\Jobs\SendBookingEmail;
+use App\Jobs\SendRefundFailEmail;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceSpecialRoomBooking;
 use App\Models\ExperienceSpecialRoomBookingXinyuege;
@@ -171,7 +172,6 @@ class ExperienceRoomBookingController extends ApiController
 
     public function orderStatusToChange( Request $request )
     {
-
 
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
 

@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Foundation\Auth\LrssEloquentUserProvider;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Laravel\Horizon\Horizon;
 use Laravel\Passport\Passport;
 use Laravel\Passport\RouteRegistrar;
 
@@ -29,6 +31,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        /**
+         * 队列访问
+         */
+        Horizon::auth(function(Request $request){
+            //只能在公司访问
+            $arr=['1.119.40.2','127.0.0.1'];
+            return in_array($request->getClientIp(),$arr)?true:false;
+        });
 
 
         $this->app['auth']->provider('lrss-eloquent',function($app,$config){

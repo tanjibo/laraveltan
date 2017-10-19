@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Events\RefundFailNotificationEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Naux\Mail\SendCloudTemplate;
 
@@ -32,7 +31,6 @@ class RefundFailNotificationEventListener
         // 模板变量
         $bind_data = [
             'order_id'   => $event->booking->id,
-            'username'   => Auth::user() ? Auth::user()->nickname : '测试数据',
             'real_price' => $event->booking->real_price,
             'customer'   => $event->booking->customer,
             'mobile'     => $event->booking->mobile,
