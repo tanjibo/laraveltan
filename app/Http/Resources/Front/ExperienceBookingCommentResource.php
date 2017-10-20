@@ -21,7 +21,7 @@ class ExperienceBookingCommentResource extends Resource
                    'content'    => $this->content,
                    'score'      => $this->score,
                    'reply'      => $this->reply,
-                   'created_at' => $this->created_at->toDateTimeString(),
+                   'created_at' => $this->created_at->toDateString(),
                    'pics'=>$this->when(isset($request->room_id),$this->pics()->pluck('pic_url'))
 
                ];
