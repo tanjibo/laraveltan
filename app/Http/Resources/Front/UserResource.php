@@ -35,7 +35,7 @@ class UserResource extends Resource
         preg_match('/^(http[s]?)\:\/\/(.+)/i',$this->avatar,$data);
 
        if($data[1]=='http')
-           return preg_replace('/^(http[s]?)\:\/\/(?:.+)/i','${1}s://${2}',$this->avatar);
+           return preg_replace('http','https',$this->avatar);
        else
            return $this->avatar;
     }
