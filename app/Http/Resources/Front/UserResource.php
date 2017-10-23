@@ -14,7 +14,7 @@ class UserResource extends Resource
      */
     public function toArray( $request )
     {
-      $this->https();
+        $this->https();
         return [
             'mobile'   => $this->mobile,
             'id'       => $this->id,
@@ -22,21 +22,24 @@ class UserResource extends Resource
             'avatar'   => $this->https(),
             $this->mergeWhen(
                 $request->user_id, [
-                'gender'         => $this->gender,
-                'email'          => $this->email,
-                'total_credit'   => $this->total_credit,
-                'surplus_credit' => $this->surplus_credit,
-            ]
+                                     'gender'         => $this->gender,
+                                     'email'          => $this->email,
+                                     'total_credit'   => $this->total_credit,
+                                     'surplus_credit' => $this->surplus_credit,
+                                     'level'          => $this->credit2level($this->credit)['name'],
+                                     'balance'        => $this->balance,
+                                 ]
             ),
         ];
     }
 
-    private function https(){
-        preg_match('/^(http[s]?)\:\/\/(.+)/i',$this->avatar,$data);
+    private function https()
+    {
+        preg_match('/^(http[s]?)\:\/\/(.+)/i', $this->avatar, $data);
 
-       if($data[1]=='http')
-           return str_replace('http','https',$this->avatar);
-       else
-           return $this->avatar;
+        if ($data[ 1 ] == 'http')
+            return str_replace('http', 'https', $this->avatar);
+        else
+            return $this->avatar;
     }
 }
