@@ -109,6 +109,9 @@ Route::group(
 
         //测试通知
         Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
+
+        //用户资料
+        Route::post('/user/userInfo','UserController@userInfo');
     }
     );
 
