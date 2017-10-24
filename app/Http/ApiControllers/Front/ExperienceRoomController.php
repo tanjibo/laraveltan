@@ -15,6 +15,7 @@ namespace App\Http\ApiControllers\Front;
 
 use App\Http\ApiControllers\ApiController;
 
+use App\Models\ExperienceRoomCommonSetting;
 use Illuminate\Support\Facades\Auth;
 use Repositories\ExperienceRoomRepository;
 
@@ -53,6 +54,11 @@ class ExperienceRoomController extends ApiController
             return $this->notFound();
         }
 
+    }
+
+    public function question(){
+        $data= ExperienceRoomCommonSetting::query()->where('type','question_tip')->value('system_tip');
+        return $this->success($data);
     }
 
 

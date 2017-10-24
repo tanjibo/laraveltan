@@ -49,11 +49,15 @@ Route::group(
 
     Route::group(
        [ 'middleware' => App::environment()=='local'?:'auth.api_front' ], function() {
-        Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
+        Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
         //房间详情
         Route::post('/room/detail/{room_id}', 'ExperienceRoomController@roomDetail')->name('room.detail');
+
+        //房间常见问题
+        Route::post('/room/questions', 'ExperienceRoomController@question');
+
 
         //房间不可订日期
         Route::post('/booking/room_checkin_disable/{room_id}', 'ExperienceRoomBookingController@RoomCheckinDisableBy')->name('room.booking.roomCheckinDisable');
