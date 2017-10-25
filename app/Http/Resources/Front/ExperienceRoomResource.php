@@ -59,7 +59,7 @@ class ExperienceRoomResource extends Resource
 
         $a=$this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [];
         if($a){
-            $a=$a->map(function($item){
+            $a=collect($a)->map(function($item){
                 return $this->https($item);
             });
         }
@@ -114,7 +114,7 @@ class ExperienceRoomResource extends Resource
     {
         preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
 
-        if ($data[ 1 ] == 'http')
+        if ($data[1] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
         else
             return $url;
