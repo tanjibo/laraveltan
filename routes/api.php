@@ -48,7 +48,7 @@ Route::group(
     Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
 
     Route::group(
-       [ 'middleware' => App::environment()=='local'?:'auth.api_front' ], function() {
+        [ 'middleware' => App::environment() == 'local' ?: 'auth.api_front' ], function() {
 
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
@@ -109,22 +109,18 @@ Route::group(
 
 
         //发送模板通知
-        Route::post('/tpl/sendPayTpl','WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
+        Route::post('/tpl/sendPayTpl', 'WechatTemplateController@sendPayTpl')->name('tpl.sendPayTpl');
 
         //测试通知
-        Route::get('/tpl/changeBookingOrder','ExperienceRoomBookingController@changeBookingOrder');
+        Route::get('/tpl/changeBookingOrder', 'ExperienceRoomBookingController@changeBookingOrder');
 
         //用户资料
-        Route::post('/user/userInfo','UserController@userInfo');
+        Route::post('/user/userInfo', 'UserController@userInfo');
     }
     );
 
     //支付回调
-    Route::post('/mini/callback/{booking_id}','ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
-
-
-
-
+    Route::post('/mini/callback/{booking_id}', 'ExperienceRoomBookingController@miniNotifyCallback')->name('mini.callback');
 
 
 }

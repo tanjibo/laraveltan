@@ -42,11 +42,11 @@ class ExperienceRoomResource extends Resource
         //详情的时候
         return $this->mergeWhen(
             $request->room_id, array_merge_recursive(
-                            [
-                                'design_concept' => $this->design_concept,
-                                'intro'          => $this->intro,
-                            ], $this->attachUrl(), $this->sliderUrl(), $this->comment(), $this->un()
-                        )
+                                 [
+                                     'design_concept' => $this->design_concept,
+                                     'intro'          => $this->intro,
+                                 ], $this->attachUrl(), $this->sliderUrl(), $this->comment(), $this->un()
+                             )
         );
     }
 
@@ -56,9 +56,17 @@ class ExperienceRoomResource extends Resource
      */
     protected function attachUrl()
     {
+
+        $a=$this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [];
+        if($a){
+            $a=$a->map(function($item){
+                return $this->https($item);
+            });
+        }
         return [
-            'attach_url' => $this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [],
+            'attach_url' =>$a
         ];
+
     }
 
     /**
@@ -68,12 +76,15 @@ class ExperienceRoomResource extends Resource
      */
     protected function sliderUrl()
     {
-       $url=$this->experience_room_sliders()->pluck('url')->map(function($item){
+        $url = $this->experience_room_sliders()->pluck('url')->map(
+            function( $item ) {
 //           if($item) return $item.'?imageView2/q/70/interlace/1|imageslim';
-           if($item) return $item;
-           return;
-       });
-        return [ 'slider_url' =>$url ];
+                if ($item) return $this->https($item);
+                return;
+            }
+        )
+        ;
+        return [ 'slider_url' => $url ];
     }
 
     /**
@@ -92,5 +103,20 @@ class ExperienceRoomResource extends Resource
     protected function un()
     {
         return [ 'unsubscribe' => ExperienceRoomCommonSetting::unsubscribe() ];
+    }
+
+    /**
+     * @param $url
+     * @return mixed
+     * 转换http https 为https
+     */
+    private function https( $url )
+    {
+        preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
+
+        if ($data[ 1 ] == 'http')
+            return str_replace('http', 'https', $url);
+        else
+            return $url;
     }
 }
