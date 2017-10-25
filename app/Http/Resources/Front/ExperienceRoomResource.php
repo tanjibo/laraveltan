@@ -113,8 +113,7 @@ class ExperienceRoomResource extends Resource
     private function https( $url )
     {
         preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
-        dump($url);
-        dump($data);
+       
         if ($data[1] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
         else
