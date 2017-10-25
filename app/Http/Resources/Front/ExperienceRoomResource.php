@@ -21,7 +21,7 @@ class ExperienceRoomResource extends Resource
                 'id'             => $this->id,
                 'name'           => $this->name,
                 'price'          => $this->price,
-                'cover'          => $this->cover,
+                'cover'          => $this->https($this->cover),
                 'type'           => $this->type,
                 'comment_counts' => $this->comments()->count(),//评价数
                 'comment_score'  => ceil($this->comments()->avg('score')),
@@ -113,7 +113,7 @@ class ExperienceRoomResource extends Resource
     private function https( $url )
     {
         preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
-       
+
         if ($data[1] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
         else
