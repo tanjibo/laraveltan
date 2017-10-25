@@ -60,7 +60,7 @@ class ExperienceRoomResource extends Resource
         $a=$this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [];
         if($a){
             $a=collect($a)->map(function($item){
-                return $this->https($item);
+                return $this->https($item->url);
             });
         }
         return [
