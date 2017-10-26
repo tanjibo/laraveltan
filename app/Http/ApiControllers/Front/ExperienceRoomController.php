@@ -16,6 +16,7 @@ namespace App\Http\ApiControllers\Front;
 use App\Http\ApiControllers\ApiController;
 
 use App\Models\ExperienceRoomCommonSetting;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Repositories\ExperienceRoomRepository;
 
@@ -44,11 +45,15 @@ class ExperienceRoomController extends ApiController
         }
     }
 
-    public function roomDetail($id)
+    public function roomDetail(Request $request,$room_id)
     {
 
-        //dump(Auth::id());
-        if($data=$this->repository->find($id)){
+
+        $this->validate($request,[
+           'id'=>'required'
+        ]);
+
+        if($data=$this->repository->find($room_id)){
             return $this->success($data);
         }else{
             return $this->notFound();

@@ -188,8 +188,11 @@ class ExperienceRoomBookingController extends ApiController
     }
 
 
-    public function calendarInit()
+    public function calendarInit(Request $request)
     {
+        $this->validate($request,[
+            'room_id'=>'required'
+        ]);
         return $this->success($this->dateRepository->getDate());
     }
 
