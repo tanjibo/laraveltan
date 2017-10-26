@@ -38,8 +38,14 @@ class ExperienceRoomBookingController extends ApiController
      * @param string $room_id
      * 获取一个房间不可入住的时间
      */
-    public function RoomCheckinDisableBy()
+    public function RoomCheckinDisableBy(Request $request,$room_id)
     {
+        $request['room_id']=$room_id;
+        $this->validate($request,[
+                'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
+                'checkin'=>'date'
+        ]);
+
         return $this->success($this->bookingRepository->RoomCheckinDisableApi());
     }
 
@@ -48,8 +54,15 @@ class ExperienceRoomBookingController extends ApiController
      * 获取一个房间不可退房时间
      * @return mixed
      */
-    public function RoomCheckoutDisableBy()
+    public function RoomCheckoutDisableBy(Request $request,$room_id)
     {
+        $request['room_id']=$room_id;
+
+        $this->validate($request,[
+            'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
+            'checkin'=>'required|date_format:Y-m-d'
+        ]);
+
         return $this->success($this->bookingRepository->RoomCheckoutDisableApi());
     }
 
@@ -57,8 +70,16 @@ class ExperienceRoomBookingController extends ApiController
      * 剩余可以预订的房间
      * @return mixed
      */
-    public function leftCheckinRoom()
+    public function leftCheckinRoom(Request $request,$room_id)
     {
+        $request['room_id']=$room_id;
+
+        $this->validate($request,[
+            'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
+            'checkin'=>'required|date_format:Y-m-d',
+            'checkout'=>'required|date_format:Y-m-d'
+        ]);
+
         if ($resource = $this->bookingRepository->leftCheckinRoomApi()) {
             return $this->success($resource);
         }
@@ -77,6 +98,12 @@ class ExperienceRoomBookingController extends ApiController
         if (is_string($request->rooms)) {
             $request->rooms = json_decode($request->rooms, true);
         }
+        $this->validate($request,[
+            'checkin'=>'required|date_format:Y-m-d',
+            'checkout'=>'required|date_format:Y-m-d',
+            'rooms'=>'required|array', //房间id 不能为空
+
+        ]);
         return $this->success([ 'total' => ExperienceBooking::calculateFee($request->checkin, $request->checkout, $request->rooms) ]);
     }
 

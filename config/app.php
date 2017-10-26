@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -188,6 +188,9 @@ return [
         Iwanli\Wxxcx\WxxcxServiceProvider::class,
 
         Naux\Mail\SendCloudServiceProvider::class,
+
+        //overtrue -- lang
+        Illuminate\Translation\TranslationServiceProvider::class,
 
 
     ],

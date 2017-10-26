@@ -48,10 +48,12 @@ class ExperienceRoomController extends ApiController
     public function roomDetail(Request $request,$room_id)
     {
 
+        $request['room_id']=$room_id;
 
         $this->validate($request,[
-           'id'=>'required'
+           'room_id'=>'required|numeric|max:10|min:1' //房间id 不能为空
         ]);
+
 
         if($data=$this->repository->find($room_id)){
             return $this->success($data);
@@ -61,6 +63,10 @@ class ExperienceRoomController extends ApiController
 
     }
 
+    /**
+     * @return mixed
+     * 常见问题
+     */
     public function question(){
         $data= ExperienceRoomCommonSetting::query()->where('type','question_tip')->value('system_tip');
         return $this->success($data);
