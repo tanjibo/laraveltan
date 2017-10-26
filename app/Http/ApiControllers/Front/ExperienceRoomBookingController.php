@@ -43,7 +43,7 @@ class ExperienceRoomBookingController extends ApiController
         $request['room_id']=$room_id;
         $this->validate($request,[
                 'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
-                'checkin'=>'date'
+                'checkin'=>'date_format:Y-m-d'
         ]);
 
         return $this->success($this->bookingRepository->RoomCheckinDisableApi());
@@ -116,8 +116,20 @@ class ExperienceRoomBookingController extends ApiController
     public function createBookingOrder( Request $request )
     {
         if (is_string($request->rooms)) {
-            $request->rooms = json_decode($request->rooms, true);
+            $request['rooms'] = json_decode($request->rooms, true);
         }
+
+        $this->validate($request,[
+            'checkin'=>'required|date_format:Y-m-d', //入住时间
+            'checkout'=>'required|date_format:Y-m-d', //退房时间
+            'customer'=>'required|max:10',           //顾客
+            'gender'=>'required',
+            'pay_mode'=>'required', //支付方式
+            'people'=>'required|max:10|min:1',//人数
+            'rooms'=>'required|array', //房间id 不能为空
+            'mobile'=>'bail|required|size:11|regex:/^1[34578][0-9]{9}$/', //电话号码
+
+        ]);
 
         //if ($model = ExperienceBooking::query()->first()) {
 

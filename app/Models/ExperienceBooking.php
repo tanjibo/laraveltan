@@ -187,7 +187,7 @@ class ExperienceBooking extends Eloquent
 
     /**
      * @param Request $request
-     * @return bool|
+     * @return
      * 数据处理放在观察者 ExperienceRoomBookingObserver 里
      */
     public static function store( Request $request )
