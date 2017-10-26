@@ -12,6 +12,8 @@
 namespace Repositories;
 
 
+use App\Models\ExperienceRoom;
+use App\Models\ExperienceSpecialPrice;
 use Illuminate\Http\Request;
 
 class MiniDateRepository
@@ -46,20 +48,38 @@ class MiniDateRepository
 
         $checkinDisableDate=$this->request->checkin?$this->booking->roomCheckoutDisableApi()->toArray():$this->booking->roomCheckinDisableApi()->toArray();
 
+        //房间特殊价格
+       $specialPrice = $this->specialPrice();
+
+       //普通价格
+        $commonPrice=$this->commonPrice();
+
+
         $week  = $this->dayofweek + 1;
         $third = [];
         for ( $i = 1; $i <= $this->dayofweek; $i++ ) {//输出1号之前的空白日期
             $_tmp[ 'date' ]      = '';
             $_tmp[ 'fullDate' ]  = date("Y-m-d", mktime(0, 0, 0, $this->month, $i, $this->year));
             $_tmp[ 'today' ]     = 0;
+            $_tmp['today_price']= 0;
             array_push($third, $_tmp);
         }
         $second = [];
         for ( $i = 1; $i <= $this->days; $i++ ) {//输出天数信息
             $_tmp[ 'date' ]      = $i;
+
             $_tmp[ 'fullDate' ]  = date("Y-m-d", mktime(0, 0, 0, $this->month, $i, $this->year));
+
+            //小于当天的时间不可用
             $_tmp['avaliable']=strtotime($_tmp['fullDate'])<strtotime(date('Y-m-d'))?0:1;
+
+            //已经下订单的日期不可用
             if(in_array($_tmp['fullDate'],$checkinDisableDate))$_tmp['avaliable']=0;
+
+            //当天价格
+            $_tmp['today_price']=isset($specialPrice[$_tmp['fullDate']])?$specialPrice[$_tmp['fullDate']]:$commonPrice;
+
+                //当天时间一个标志
             $_tmp[ 'today' ]     = $_tmp[ 'fullDate' ] == date('Y-m-d') ? 1 : 0;
 
             array_push($third, $_tmp);
@@ -100,6 +120,7 @@ class MiniDateRepository
     }
 
     public function getDate(){
+
        $date=$this->thirdDate();
 
        $arr=[];
@@ -114,5 +135,21 @@ class MiniDateRepository
 
        return $arr;
 
+    }
+
+
+    /**
+     * 房间特殊价格
+     */
+    private function specialPrice(){
+      return   ExperienceSpecialPrice::query()->where('experience_room_id',$this->request->room_id)->pluck('price','date');
+    }
+
+    /**
+     * @return mixed
+     * 房间普通价格
+     */
+    private function commonPrice(){
+        return ExperienceRoom::query()->where('id',$this->request->room_id)->value('price');
     }
 }

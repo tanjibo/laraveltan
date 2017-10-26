@@ -42,7 +42,7 @@ class ExperienceRoomResource extends Resource
         //详情的时候
         return $this->mergeWhen(
             $request->room_id, array_merge_recursive(
-                                 [
+                                  [
                                      'design_concept' => $this->design_concept,
                                      'intro'          => $this->intro,
                                  ], $this->attachUrl(), $this->sliderUrl(), $this->comment(), $this->un()
