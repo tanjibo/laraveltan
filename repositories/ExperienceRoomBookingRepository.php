@@ -260,8 +260,9 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
     public function orderListApi()
     {
         //正常订单
-        $orderStatus=isset($this->request->orderStatus)?$this->request->orderStatus:-1;
-        $model = ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->where('status', $orderStatus);
+        $model = ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->when(isset($this->request->orderStatus),function($query){
+           $query->where('status', $this->request->orderStatus);
+        });
 
         $common = ExperienceRoomBookingResource::collection($model->orderBy('created_at', 'desc')->get());
         //山云荟订单
