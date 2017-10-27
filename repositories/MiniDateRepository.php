@@ -61,7 +61,7 @@ class MiniDateRepository
             $_tmp[ 'date' ]      = '';
             $_tmp[ 'fullDate' ]  = date("Y-m-d", mktime(0, 0, 0, $this->month, $i, $this->year));
             $_tmp[ 'today' ]     = 0;
-            $_tmp['today_price']= 0;
+//            $_tmp['today_price']= 0;
             array_push($third, $_tmp);
         }
         $second = [];
@@ -77,7 +77,8 @@ class MiniDateRepository
             if(in_array($_tmp['fullDate'],$checkinDisableDate))$_tmp['avaliable']=0;
 
             //当天价格
-            $_tmp['today_price']=isset($specialPrice[$_tmp['fullDate']])?$specialPrice[$_tmp['fullDate']]:$commonPrice;
+            $_tmp['today_price']=isset($specialPrice[$_tmp['fullDate']])?
+                '￥'.$specialPrice[$_tmp['fullDate']]:'￥'.$commonPrice;
 
                 //当天时间一个标志
             $_tmp[ 'today' ]     = $_tmp[ 'fullDate' ] == date('Y-m-d') ? 1 : 0;
