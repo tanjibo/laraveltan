@@ -23,8 +23,8 @@ class ExperienceRoomRepository implements RepositoryInterface
     }
 
     public function all(){
-
-      return   ExperienceRoomResource::collection(ExperienceRoom::all());
+        $rooms=ExperienceRoom::query()->whereIn('type',[ExperienceRoom::TYPE_SINGLE,ExperienceRoom::TYPE_ALL])->get();
+      return   ExperienceRoomResource::collection($rooms);
 
     }
 
