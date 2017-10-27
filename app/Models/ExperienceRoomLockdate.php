@@ -25,7 +25,8 @@ class ExperienceRoomLockdate extends Eloquent
 	protected $table = 'experience_room_lockdate';
 
 	protected $casts = [
-		'room_id' => 'int'
+		'room_id' => 'int',
+        'lockdate'=>'array'
 	];
 
 	protected $fillable = [

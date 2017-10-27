@@ -12,13 +12,9 @@
 namespace Repositories;
 
 use App\Http\Resources\Front\ExperienceRoomBookingResource;
-use App\Http\Resources\Front\ExperienceRoomBookingSanResource;
-use App\Http\Resources\Front\ExperienceRoomBookingXingResource;
 use App\Http\Resources\Front\ExperienceRoomResource;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceRoom;
-use App\Models\ExperienceSpecialRoomBooking;
-use App\Models\ExperienceSpecialRoomBookingXinyuege;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,25 +44,26 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
      * @param $room_id
      *
      */
-    public function roomCheckinDisableApi(int $room_id=null)
+    public function roomCheckinDisableApi( int $room_id = null )
     {
 
-        return static::_roomCheckinDisable($room_id?:$this->request->room_id);
+        return static::_roomCheckinDisable($room_id ?: $this->request->room_id);
     }
 
 
     static private function _roomCheckinDisable( $room_id )
     {
         $checkinAndCheckout = static::_oneRoomOrderDate($room_id);
+        //后台锁定的时间------------------------
+        $lockDate=array_filter(ExperienceRoomLockDateRepository::initLockDate($room_id));
 
         if (!$checkinAndCheckout) return [];
 
-        return collect($checkinAndCheckout)->map(
+       return collect($checkinAndCheckout)->map(
             function( $item ) {
                 return static::_splitDate($item[ 'checkin' ], $item[ 'checkout' ]);
             }
-        )->flatten(5)->unique()
-            ;
+        )->merge(collect($lockDate))->flatten()->unique();
 
     }
 
@@ -98,8 +95,8 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
 
 
         //今天到预定开始时间段 ---- 合并 ---- 已经预定的时间
-        return  collect([])->merge($leftDisable)->merge($endDate)->unique();
-       // return collect(static::_splitDate(date('Y-m-d'), $checkin))->merge($leftDisable)->merge($endDate)->unique();
+        return collect([])->merge($leftDisable)->merge($endDate)->unique();
+        // return collect(static::_splitDate(date('Y-m-d'), $checkin))->merge($leftDisable)->merge($endDate)->unique();
     }
 
     /**
@@ -263,13 +260,16 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
     public function orderListApi()
     {
         //正常订单
-        $common = ExperienceRoomBookingResource::collection(ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->orderBy('created_at', 'desc')->get());
-        //山云荟订单
-        $san = ExperienceRoomBookingSanResource::collection(ExperienceSpecialRoomBooking::query()->where('user_id', Auth::id() ?: 165)->orderBy('created_at', 'desc')->get());
-        //星月阁订单
-        $xing = ExperienceRoomBookingXingResource::collection(ExperienceSpecialRoomBookingXinyuege::query()->where('user_id', Auth::id() ?: 165)->orderBy('created_at', 'desc')->get());
+        $orderStatus=isset($this->request->orderStatus)?$this->request->orderStatus:-1;
+        $model = ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->where('status', $orderStatus);
 
-        return $common->merge($san)->merge($xing)->sortByDesc('created_at')->values()->all();
+        $common = ExperienceRoomBookingResource::collection($model->orderBy('created_at', 'desc')->get());
+        //山云荟订单
+//        $san = ExperienceRoomBookingSanResource::collection(ExperienceSpecialRoomBooking::query()->where('user_id', Auth::id() ?: 165)->orderBy('created_at', 'desc')->get());
+        //星月阁订单
+//        $xing = ExperienceRoomBookingXingResource::collection(ExperienceSpecialRoomBookingXinyuege::query()->where('user_id', Auth::id() ?: 165)->orderBy('created_at', 'desc')->get());
+
+        return $common->sortByDesc('created_at')->values()->all();
 
     }
 
