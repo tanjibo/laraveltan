@@ -62,9 +62,10 @@ class LoginController extends ApiController
             'nickname' => $nickName,
             'union_id' => $unionId,
             'gender'   => $gender,
-            'mini_open_id'=>$openId
+            'mini_open_id'=>$openId,
+            'status'=>User::USER_STATUS_ON
         ];
-  
+
         if ($user = User::query()->where('union_id', $unionId)->first()) {
 
             $user->update($userData);
