@@ -120,7 +120,8 @@ class User extends Authenticatable
             'source',
             'status',
             'partner',
-            'mini_open_id'
+            'mini_open_id',
+            'union_id'
         ];
 
     public function account_records()
