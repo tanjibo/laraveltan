@@ -78,7 +78,7 @@ class WechatTemplate
         $params = [
             'touser'      => Auth::user() ?Auth::user()->mini_open_id:'oIu4X0aZSiZsJ0VwxzNmnW3pxxbs',
             'template_id' => 'rqPgeD210gaWSd032szu1b2SGM73Fr1pZanleCIsfJw',
-            'page'        => 'booking',
+            'page'        => 'pages/orderList?orderStatus=1',
             'form_id'     => $prepay_id,
             'data'        => [
                 //入住时间
@@ -152,7 +152,7 @@ class WechatTemplate
         $params = [
             'touser'      => Auth::user()?Auth::user()->mini_open_id : '',
             'template_id' => 'ShNkGQ8IvSzpQQofYcf87QYzkB5dT4JacErxfSQxVek',
-            'page'        => 'order',
+            'page'        => 'pages/orderList?orderStatus=-10',
             'form_id'     => $form_id,
             'data'        => [
                 //房间信息
