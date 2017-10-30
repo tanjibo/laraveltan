@@ -59,7 +59,7 @@ class MiniDateRepository
         $third = [];
         for ( $i = 1; $i <= $this->dayofweek; $i++ ) {//输出1号之前的空白日期
             $_tmp[ 'date' ]      = '';
-            $_tmp[ 'fullDate' ]  = date("Y-m-d", mktime(0, 0, 0, $this->month, $i, $this->year));
+            $_tmp[ 'fullDate' ]  ='';
             $_tmp[ 'today' ]     = 0;
 //            $_tmp['today_price']= 0;
             array_push($third, $_tmp);

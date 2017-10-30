@@ -212,7 +212,7 @@ class ExperienceRoomBookingController extends ApiController
     /**
      * @param Request $request
      * @return mixed
-     * 更改订单状态
+     *
      */
     public function orderStatusToChange( Request $request )
     {
@@ -243,15 +243,6 @@ class ExperienceRoomBookingController extends ApiController
     }
 
 
-    public function changeBookingOrder(Request $request){
-       // $booking=ExperienceBooking::query()->find($request->booking_id);
-        //Payment::refund( 'E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT),$booking->real_fee);
-
-
-       // Payment::refund('E000000000203',1);
-
-//        ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
-    }
     /**
      * @param Request $request
      * 微信支付回调
