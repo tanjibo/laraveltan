@@ -72,6 +72,7 @@ class ExperienceBooking extends Eloquent
     const STATUS_CHECKIN  = 2;    // 已入住
     const STATUS_COMPLETE = 10;   // 已完成
     const STATUS_CANCEL   = -10;  // 已取消
+    const STATUS_DEL   = -100;  // 已取消
 
     /**
      * 支付方式
@@ -240,6 +241,12 @@ class ExperienceBooking extends Eloquent
 
         if (!$booking = static::query()->find($id))
             return false;
+
+        //删除订单
+        if($status==static::STATUS_DEL){
+            static::destroy($id);
+            return true;
+        }
 
         if ($booking->status == $status){
             return true;

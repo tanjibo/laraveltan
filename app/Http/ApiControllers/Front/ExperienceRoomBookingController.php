@@ -209,6 +209,11 @@ class ExperienceRoomBookingController extends ApiController
     }
 
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * 更改订单状态
+     */
     public function orderStatusToChange( Request $request )
     {
 
@@ -225,6 +230,8 @@ class ExperienceRoomBookingController extends ApiController
     {
 
     }
+
+
 
 
     public function calendarInit(Request $request)
