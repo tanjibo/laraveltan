@@ -72,7 +72,7 @@ Route::group(
         Route::post('/booking/createBookingOrder', 'ExperienceRoomBookingController@createBookingOrder')->name('room.booking.create');
 
         Route::post('/booking/repay', 'ExperienceRoomBookingController@repay');
-        
+
         //订单列表
         Route::post('/booking/orderList', 'ExperienceRoomBookingController@orderList')->name('room.booking.orderList');
 
