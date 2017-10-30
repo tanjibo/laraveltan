@@ -17,6 +17,7 @@ Route::get('cancel','CancelOrderController@canBookingNormal');
 //发送通知短信
 Route::get('sendNotifyEmail','SendEmailController@sendNotifyEmail');
 
+Route::any('/LrssMiniProgram','MiniController@miniServe');
 
 
 
