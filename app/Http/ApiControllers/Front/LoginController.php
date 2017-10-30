@@ -63,7 +63,8 @@ class LoginController extends ApiController
             'union_id' => $unionId,
             'gender'   => $gender,
             'mini_open_id'=>$openId,
-            'status'=>User::USER_STATUS_ON
+            'status'=>User::USER_STATUS_ON,
+
         ];
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {
@@ -72,6 +73,8 @@ class LoginController extends ApiController
 
         }
         else {
+            //用户来源
+            $userData['source']=User::SOURCE_EXPERIENCEROOM;
             User::query()->create($userData);
 
         }
