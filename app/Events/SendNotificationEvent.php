@@ -21,6 +21,7 @@ class SendNotificationEvent
      * @return void
      */
     public  $booking;
+
     public function __construct(ExperienceBooking $booking)
     {
         $this->booking=$booking;

@@ -34,15 +34,5 @@ class CancelOrderController extends Controller
 
     }
 
-    public function canBookingSpecial(){
-        $date   = new Carbon('now');
-        $before = $date->addHours(8)->subMinutes(1);
-        $data   = ExperienceSpecialBooking::query()->where('created_at', '<=', $before)->where('status', 0)->orderBy('created_at', 'desc')->first();
-    }
 
-    public function canBookingSpecialXing(){
-        $date   = new Carbon('now');
-        $before = $date->addHours(8)->subMinutes(1);
-        $data   = ExperienceSpecialBookingXin::query()->where('created_at', '<=', $before)->where('status', 0)->orderBy('created_at', 'desc')->first();
-    }
 }
