@@ -25,12 +25,12 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\RefundFailNotificationEventListener',
         ],
 
-//        'Laravel\Passport\Events\AccessTokenCreated' => [
-//            'App\Listeners\Auth\RevokeOldTokens',
-//        ],
-//        'Laravel\Passport\Events\RefreshTokenCreated' => [
-//            'App\Listeners\Auth\PruneOldTokens',
-//        ],
+        'Laravel\Passport\Events\AccessTokenCreated' => [
+            'App\Listeners\Auth\RevokeOldTokens',
+        ],
+        'Laravel\Passport\Events\RefreshTokenCreated' => [
+            'App\Listeners\Auth\PruneOldTokens',
+        ],
     ];
 
     /**

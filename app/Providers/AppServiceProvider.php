@@ -21,8 +21,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //订单监听
         ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
-        ExperienceSpecialRoomBooking::observe(ExperienceRoomBookingShanObserver::class);
-        ExperienceSpecialRoomBookingXinyuege::observe(ExperienceRoomBookingXingObserver::class);
+        //ExperienceSpecialRoomBooking::observe(ExperienceRoomBookingShanObserver::class);
+        //ExperienceSpecialRoomBookingXinyuege::observe(ExperienceRoomBookingXingObserver::class);
     }
 
     /**

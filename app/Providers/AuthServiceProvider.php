@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Foundation\Auth\LrssEloquentUserProvider;
+use App\Models\ExperienceBooking;
+use App\Policies\ExperienceRoomBookingPolicy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +22,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+      //  'App\Model' => 'App\Policies\ModelPolicy',
+        ExperienceBooking::class=>ExperienceRoomBookingPolicy::class
     ];
 
     /**

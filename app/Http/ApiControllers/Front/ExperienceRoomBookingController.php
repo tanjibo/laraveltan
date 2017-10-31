@@ -185,6 +185,7 @@ class ExperienceRoomBookingController extends ApiController
 
 
     /**
+     * 暂时废弃--------------------------------
      * @param Request $request
      * @return mixed
      * 订单详情
@@ -216,6 +217,9 @@ class ExperienceRoomBookingController extends ApiController
      */
     public function orderStatusToChange( Request $request )
     {
+        //授权
+        $this->authorize('update',ExperienceBooking::query()->find($request->booking_id));
+
 
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
 
