@@ -32,7 +32,7 @@ class Payment
             'spbill_create_ip' => Request::getClientIp(),
             'nonce_str'        => static::createNoncestr(),
         ];
-
+         dd($params);
         $params[ 'sign' ] = static::createSign($params);
         $xml              = static::array2xml($params);
 
