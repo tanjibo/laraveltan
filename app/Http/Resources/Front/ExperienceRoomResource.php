@@ -21,7 +21,7 @@ class ExperienceRoomResource extends Resource
                 'id'             => $this->id,
                 'name'           => $this->name,
                 'price'          => $this->price,
-                'cover'          => $this->https($this->cover).'?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50',
+                'cover'          => $this->https($this->cover).'?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50|imageslim',
                 'type'           => $this->type,
                 'comment_counts' => $this->comments()->count(),//评价数
                 'comment_score'  => ceil($this->comments()->avg('score')),
@@ -60,11 +60,11 @@ class ExperienceRoomResource extends Resource
         $a=$this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [];
         if($a){
             $a=collect($a)->map(function($item){
-                return $this->https($item->url);
+                return $this->https($item->url)."?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50|imageslim";
             });
         }
         return [
-            'attach_url' =>$a
+            'attach_url' =>$a.'?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50|imageslim'
         ];
 
     }
@@ -79,7 +79,7 @@ class ExperienceRoomResource extends Resource
         $url = $this->experience_room_sliders()->pluck('url')->map(
             function( $item ) {
 //           if($item) return $item.'?imageView2/q/70/interlace/1|imageslim';
-                if ($item) return $this->https($item);
+                if ($item) return $this->https($item).'?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50|imageslim';
                 return;
             }
         )
