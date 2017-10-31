@@ -57,7 +57,7 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
         //后台锁定的时间------------------------
         $lockDate=array_filter(ExperienceRoomLockDateRepository::initLockDate($room_id));
 
-        if (!$checkinAndCheckout) return [];
+        if (!$checkinAndCheckout) return collect([]);
 
        return collect($checkinAndCheckout)->map(
             function( $item ) {
