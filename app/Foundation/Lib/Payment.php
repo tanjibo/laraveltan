@@ -39,7 +39,6 @@ class Payment
         // 获取预支付ID
         $data = static::post('https://api.mch.weixin.qq.com/pay/unifiedorder', $xml);
         $data = static::xml2array($data);
-        dd($data);
         if (!isset($data[ 'prepay_id' ]))
             return false;
         $prepayId = $data[ 'prepay_id' ];

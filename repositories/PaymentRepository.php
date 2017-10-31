@@ -14,6 +14,7 @@ namespace Repositories;
 
 use App\Foundation\Lib\Payment;
 use App\Models\ExperienceBooking;
+use Illuminate\Support\Facades\App;
 
 
 class PaymentRepository
@@ -27,7 +28,7 @@ class PaymentRepository
             [
                 'body'   => '了如三舍安吉体验店',
                 'fee'    => $order->real_price,
-                'number' => 'E' . str_pad($order->id, 12, '0', STR_PAD_LEFT),
+                'number' => (App::environment()=='local'||App::environment()=='test')?'E' . str_pad($order->id, 12, '0', STR_PAD_LEFT):'EP' . str_pad($order->id, 12, '0', STR_PAD_LEFT),
                 'notify' => '/api/mini/callback/' . $order->id,
             ]
         );
