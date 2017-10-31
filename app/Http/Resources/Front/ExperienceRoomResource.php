@@ -64,7 +64,7 @@ class ExperienceRoomResource extends Resource
             });
         }
         return [
-            'attach_url' =>$a.'?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50|imageslim'
+            'attach_url' =>$a
         ];
 
     }
