@@ -161,7 +161,9 @@ class ExperienceRoomBookingController extends ApiController
 
         if ($model = ExperienceBooking::query()->find($request->booking_id)) {
             //和微信支付交互
-
+            if($model->status!=0){
+                return $this->error('error');
+            }
             $data = $this->payment->unifiedorder($model);
 
             //booking_id
