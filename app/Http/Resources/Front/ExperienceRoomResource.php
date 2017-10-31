@@ -21,7 +21,7 @@ class ExperienceRoomResource extends Resource
                 'id'             => $this->id,
                 'name'           => $this->name,
                 'price'          => $this->price,
-                'cover'          => $this->https($this->cover),
+                'cover'          => $this->https($this->cover).'?imageMogr2/thumbnail/375x/format/jpg/size-limit/$(fsize)!/quality/50',
                 'type'           => $this->type,
                 'comment_counts' => $this->comments()->count(),//评价数
                 'comment_score'  => ceil($this->comments()->avg('score')),
