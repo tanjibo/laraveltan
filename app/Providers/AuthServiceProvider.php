@@ -51,13 +51,13 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes(function (RouteRegistrar $router) {
             //对于密码授权的方式只要这几个路由就可以了
-            $router->forAccessTokens();
+            $router->forAccessTokens(); 
         });
 
 
-        Passport::tokensExpireIn(Carbon::now()->addSeconds(30));
+        Passport::tokensExpireIn(Carbon::now());
 
-        Passport::refreshTokensExpireIn(Carbon::now()->addSeconds(30));
+        Passport::refreshTokensExpireIn(Carbon::now());
 
 
     }

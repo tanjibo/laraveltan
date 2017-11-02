@@ -93,8 +93,7 @@ class LoginController extends ApiController
     public function refreshToken( Request $request )
     {
 
-        $http     = new  Client();
-        $response = $request->request->add(
+       $request->request->add(
             [
                 'grant_type'    => 'refresh_token',
                 'refresh_token' => $request->refresh_token,
