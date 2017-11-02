@@ -115,7 +115,7 @@ class ExperienceRoomBookingController extends ApiController
      */
     public function createBookingOrder( Request $request )
     {
-        
+
         if (is_string($request->rooms)) {
             $request['rooms'] = json_decode($request->rooms, true);
         }
