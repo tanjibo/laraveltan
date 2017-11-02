@@ -58,7 +58,8 @@ class   ExperienceBooking extends Model
         'people',
         'requirements',
         'remark',
-        'status'
+        'status',
+        'source'
     ];
 
     /**

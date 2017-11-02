@@ -139,6 +139,7 @@ class ExperienceBooking extends Eloquent
             'status',
             'is_comment',
             'partner',
+            'source'
         ];
 
 
