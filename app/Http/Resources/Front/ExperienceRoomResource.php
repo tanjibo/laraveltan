@@ -21,7 +21,7 @@ class ExperienceRoomResource extends Resource
                 'id'             => $this->id,
                 'name'           => $this->name,
                 'price'          => $this->price,
-                'cover'          => $this->https($this->cover).'?imageMogr2/thumbnail/375x/format/png/size-limit/$(fsize)!/quality/70|imageslim',
+                'cover'          => $this->https($this->cover).'?imageMogr2/thumbnail/375x/format/png/size-limit/$(fsize)!/quality/80|imageslim',
                 'type'           => $this->type,
                 'comment_counts' => $this->comments()->count(),//评价数
                 'comment_score'  => ceil($this->comments()->avg('score')),
@@ -79,7 +79,7 @@ class ExperienceRoomResource extends Resource
         $url = $this->experience_room_sliders()->pluck('url')->map(
             function( $item ) {
 //           if($item) return $item.'?imageView2/q/70/interlace/1|imageslim';
-                if ($item) return $this->https($item).'?imageMogr2/thumbnail/375x/format/png/size-limit/$(fsize)!/quality/70|imageslim';
+                if ($item) return $this->https($item).'?imageMogr2/thumbnail/375x/format/png/size-limit/$(fsize)!/quality/80|imageslim';
                 return;
             }
         )
