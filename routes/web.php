@@ -22,3 +22,4 @@ Route::any('/LrssMiniProgram','MiniController@miniServe');
 
 
 
+

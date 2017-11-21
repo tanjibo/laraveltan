@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExperienceBooking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -18,4 +19,5 @@ class MiniController extends Controller
         );
         return $app->server->serve();
     }
+
 }

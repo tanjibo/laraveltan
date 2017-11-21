@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Api\ExperienceBooking;
-use App\Api\ExperienceSpecialBooking;
-use App\Api\ExperienceSpecialBookingXin;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 
 class CancelOrderController extends Controller
 {
