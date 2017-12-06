@@ -53,11 +53,13 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
 
     static private function _roomCheckinDisable( $room_id )
     {
+
         $checkinAndCheckout = static::_oneRoomOrderDate($room_id);
+
         //后台锁定的时间------------------------
         $lockDate=array_filter(ExperienceRoomLockDateRepository::initLockDate($room_id));
 
-        if (!$checkinAndCheckout) return collect([]);
+        $checkinAndCheckout=$checkinAndCheckout?:collect([]);
 
        return collect($checkinAndCheckout)->map(
             function( $item ) {
