@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Experience;
 
 use App\Http\Controllers\Controller;
-use App\Models\ExperienceBookingComment;
-use App\Models\ExperienceRoom;
+use App\Models\Backend\ExperienceBookingComment;
+use App\Models\Backend\ExperienceRoom;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller

@@ -12,11 +12,11 @@
 namespace App\Observer\Tearoom;
 
 
-use App\Models\AccountRecord;
+use App\Models\Backend\AccountRecord;
 use App\Models\CreditLog;
-use App\Models\TearoomBooking;
-use App\Models\TearoomPrice;
-use App\Models\TearoomSchedule;
+use App\Models\Backend\TearoomBooking;
+use App\Models\Backend\TearoomPrice;
+use App\Models\Backend\TearoomSchedule;
 use App\Models\User;
 
 class BookingObserver

@@ -93,3 +93,7 @@ Route::group(
 
 }
 );
+
+Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
+    Route::post('art/miniLogin',"LoginController@miniLogin");
+});

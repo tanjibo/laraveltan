@@ -9,8 +9,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 
 /**
@@ -53,7 +55,14 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, SoftDeletes;
+    use HasRoles{
+        hasRole as public fatherHasRole;
+    }
 
+    use Notifiable {
+        notify as protected fatherNotify;
+
+    }
     protected $table = 'user';
 
     /**
@@ -95,13 +104,16 @@ class User extends Authenticatable
 
     protected $casts
         = [
-            'gender'         => 'int',
             'total_credit'   => 'int',
             'surplus_credit' => 'int',
             'balance'        => 'int',
-            'device'         => 'int',
-            'source'         => 'int',
-            'status'         => 'int',
+            'device'         => 'string',
+            'source'         => 'string',
+            'status'         => 'string',
+            'is_lrss_staff'  => 'bool',
+            'gender'         => 'string',
+            'age'            => 'int',
+            'intention'      => 'array',
         ];
 
     protected $fillable
@@ -117,12 +129,54 @@ class User extends Authenticatable
             'balance',
             'device',
             'open_id',
+            'union_id',
             'source',
             'status',
             'partner',
             'mini_open_id',
-            'union_id'
+            'level_title',
+            'signature',
+            'password',
+            'is_receive_email',
+            'last_login_ip',
+            'is_lrss_staff',
+            'age',
+            'birthday',
+            'profession',
+            'nationality',
+            'education',
+            'id_card',
+            'qq',
+            'weibo',
+            'wechat',
+            'remark',
+            'intention',
+            'terminal',
         ];
+
+
+    protected $dates
+        = [
+            'birthday',
+        ];
+
+    protected $hidden
+        = [
+            'deleted_at',
+            'password',
+        ];
+
+
+
+
+    public function setPasswordAttribute( $value )
+    {
+        $this->attributes[ 'password' ] = bcrypt($value);
+    }
+
+
+
+
 
     public function account_records()
     {
@@ -149,10 +203,7 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\ExperienceBooking::class);
     }
 
-    public function experience_special_room_booking_xinyueges()
-    {
-        return $this->hasMany(\App\Models\ExperienceSpecialRoomBookingXinyuege::class);
-    }
+
 
     public function favorites()
     {
@@ -320,4 +371,61 @@ class User extends Authenticatable
         }
     }
 
+    public function notify( $instance )
+    {
+        // 如果要通知的人是当前用户，就不必通知了！
+        if ($this->id == auth()->id()) {
+            return;
+        }
+        $this->increment('notification_count');
+        $this->fatherNotify($instance);
+    }
+
+
+    public function markAsRead()
+    {
+        $this->notification_count = 0;
+        $this->save();
+        $this->unreadNotifications->markAsRead();
+    }
+
+    public function updateUser( Request $request )
+    {
+
+        if (!$request->password) unset($request[ 'password' ]);
+
+        return $this->update($request->all());
+    }
+
+    /**
+     * @param $ability
+     * @return bool
+     * 判断是不是超级管理员
+     */
+    public function hasPermissionTo( $ability )
+    {
+        if ($this->is_superadmin) {
+            return true;
+        }
+        return $this->getAllPermissions()->pluck('name')->contains($ability);
+    }
+
+
+    public function hasRole($roles){
+
+        if ($this->is_superadmin) {
+            return true;
+        }
+        return $this->fatherHasRole($roles);
+    }
+
+    /**
+     * 用户总订单数量
+     */
+    public function totalOrderNum(){
+        return $this->experience_bookings->count()+$this->tearoom_booking->count();
+    }
+    public function tearoom_booking(){
+        return $this->hasMany(TearoomBooking::class);
+    }
 }

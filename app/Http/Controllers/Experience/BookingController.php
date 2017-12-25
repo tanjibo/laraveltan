@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Experience;
 
 use App\Http\Controllers\Controller;
-use App\Models\ExperienceBooking;
-use App\Models\ExperienceBookingRequirement;
-use App\Models\ExperienceRoom;
-use App\Observer\Experience\ExperienceBookingObserver;
-use App\Repositories\ExperienceBookingRepository;
+use App\Models\Backend\ExperienceBooking;
+use App\Models\Backend\ExperienceBookingRequirement;
+use App\Models\Backend\ExperienceRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Repositories\ExperienceRoomBookingRepository;
 
 class BookingController extends Controller
 {
 
     private $bookingRepository;
 
-    public function __construct( ExperienceBookingRepository $bookingRepository )
+    public function __construct(ExperienceRoomBookingRepository $bookingRepository )
     {
 
         $this->bookingRepository = $bookingRepository;

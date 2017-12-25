@@ -9,8 +9,17 @@
  * Time: 3:42 PM
  */
 return [
-    'grant_type' => env('OAUTH_GRANT_TYPE'),
-    'client_id' => env('OAUTH_CLIENT_ID'),
-    'client_secret' => env('OAUTH_CLIENT_SECRET'),
-    'scope' => env('OAUTH_SCOPE', '*'),
+    'experience'=>[
+        'grant_type' => env('EXPERIENCE_OAUTH_GRANT_TYPE'),
+        'client_id' => env('EXPERIENCE_OAUTH_CLIENT_ID'),
+        'client_secret' => env('EXPERIENCE_OAUTH_CLIENT_SECRET'),
+        'scope' => env('EXPERIENCE_OAUTH_SCOPE', '*'),
+    ],
+    'art'=>[
+        'grant_type' => env('ART_OAUTH_GRANT_TYPE'),
+        'client_id' => env('ART_OAUTH_CLIENT_ID'),
+        'client_secret' => env('ART_OAUTH_CLIENT_SECRET'),
+        'scope' => env('ART_OAUTH_SCOPE', '*'),
+    ]
+
 ];

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Experience;
 
 use App\Http\Controllers\Controller;
-use App\Models\ExperienceRoomCommonSetting;
+use App\Models\Backend\ExperienceRoomCommonSetting;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller

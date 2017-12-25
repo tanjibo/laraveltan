@@ -27,37 +27,36 @@
                 </a>
             </li>
             @hasanyrole('experience_manager|admin|superAdmin')
-
-                <li class="treeview active">
-                    <a href="#">
-                        <i class="fa  fa-sort-amount-desc"></i>
-                        <span>安吉体验中心</span>
-                        <span class="pull-right-container">
+            <li class="treeview active">
+                <a href="#">
+                    <i class="fa  fa-sort-amount-desc"></i>
+                    <span>安吉体验中心</span>
+                    <span class="pull-right-container">
             </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        @can('experience_booking_show')
-                            <li @if(request()->segment(1)=='experience_bookings') class="active" @endif>
-                                <a href="{{route('experience_bookings.index')}}"><i class="fa fa-reorder"></i>订单列表</a>
-                            </li>
-                        @endcan
-
-                        <li @if(request()->segment(1)=='rooms') class="active" @endif>
-                            <a href="{{route('experience_rooms.index')}}"><i class="fa fa-institution"></i> 房间列表</a>
+                </a>
+                <ul class="treeview-menu">
+                    @can('experience_booking_show')
+                        <li @if(request()->segment(1)=='experience_bookings') class="active" @endif>
+                            <a href="{{route('experience_bookings.index')}}"><i class="fa fa-reorder"></i>订单列表</a>
                         </li>
+                    @endcan
 
-                        @can('experience_comment_show')
-                            <li @if(request()->segment(1)=='experience_comments') class="active" @endif>
-                                <a href="{{route('experience_comments.index')}}"><i class="fa fa-comments"></i> 评论列表</a>
-                            </li>
-                            @endcan
-                            @can('experience_settings_show')
-                            <li @if(request()->segment(1)=='experience_settings') class="active" @endif>
-                                <a href="{{route('experience_settings.index')}}"><i class="fa fa-cogs"></i>通用设置</a>
-                            </li>
-                                @endcan
-                    </ul>
-                </li>
+                    <li @if(request()->segment(1)=='rooms') class="active" @endif>
+                        <a href="{{route('experience_rooms.index')}}"><i class="fa fa-institution"></i> 房间列表</a>
+                    </li>
+
+                    @can('experience_comment_show')
+                        <li @if(request()->segment(1)=='experience_comments') class="active" @endif>
+                            <a href="{{route('experience_comments.index')}}"><i class="fa fa-comments"></i> 评论列表</a>
+                        </li>
+                    @endcan
+                    @can('experience_settings_show')
+                        <li @if(request()->segment(1)=='experience_settings') class="active" @endif>
+                            <a href="{{route('experience_settings.index')}}"><i class="fa fa-cogs"></i>通用设置</a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
             @endhasanyrole
 
             @hasanyrole('user_manager|admin|superAdmin')

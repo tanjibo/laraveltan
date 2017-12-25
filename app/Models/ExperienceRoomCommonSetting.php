@@ -36,6 +36,10 @@ class ExperienceRoomCommonSetting extends Eloquent
             'name',
         ];
 
+    protected $hidden
+        = [
+            'deleted_at',
+        ];
 
     /**
      * @param array $attach_url_id

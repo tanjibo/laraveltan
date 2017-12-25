@@ -48,6 +48,7 @@ class ExperienceBooking extends Eloquent
     use ExperienceRoomBookingTrait,
         \Illuminate\Database\Eloquent\SoftDeletes;
     use Notifiable;
+    use ModelTrait;
     protected $table = 'experience_booking';
 
     protected $casts
@@ -142,28 +143,7 @@ class ExperienceBooking extends Eloquent
         ];
 
 
-    public function setPriceAttribute( $value )
-    {
-        $this->attributes[ 'price' ] = intval($value * 100);
-    }
 
-
-    public function getPriceAttribute( $value )
-    {
-        return doubleval($value / 100);
-    }
-
-
-    public function setRealPriceAttribute( $value )
-    {
-        $this->attributes[ 'real_price' ] = intval($value * 100);
-    }
-
-
-    public function getRealPriceAttribute( $value )
-    {
-        return doubleval($value / 100);
-    }
 
     public function user()
     {

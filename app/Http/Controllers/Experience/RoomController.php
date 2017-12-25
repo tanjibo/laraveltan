@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Experience;
 
-use App\Models\ExperienceBooking;
-use App\Models\ExperienceRoom;
-use App\Models\ExperienceRoomCommonSetting;
-use App\Models\ExperienceRoomLockdate;
-use App\Repositories\ExperienceRoomLockDateRepository;
+use App\Models\Backend\ExperienceRoom;
+use App\Models\Backend\ExperienceRoomCommonSetting;
+use App\Models\Backend\ExperienceRoomLockdate;
+use Repositories\ExperienceRoomLockDateRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\RoomRepository;
+use Repositories\ExperienceRoomRepository;
 
 class RoomController extends Controller
 {
 
     private $roomRepository;
 
-    public function __construct( RoomRepository $roomRepository )
+    public function __construct( ExperienceRoomRepository $roomRepository )
     {
         $this->roomRepository = $roomRepository;
     }

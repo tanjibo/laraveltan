@@ -50,13 +50,18 @@ class ExperienceRoomBookingRepository
         //后台锁定的时间------------------------
         $lockDate=array_filter(ExperienceRoomLockDateRepository::initLockDate($room_id));
 
-        $checkinAndCheckout=$checkinAndCheckout?:collect([]);
+        $checkinAndCheckout = $checkinAndCheckout ?: collect([]);
 
-       return collect($checkinAndCheckout)->map(
+        return collect($checkinAndCheckout)->map(
             function( $item ) {
-                return static::_splitDate($item[ 'checkin' ], $item[ 'checkout' ]);
+                return splitDate($item[ 'checkin' ], $item[ 'checkout' ]);
             }
-        )->merge(collect($lockDate))->flatten()->unique();
+        )->merge(collect($lockDate))->flatten()->unique()->filter(
+            function( $item ) {
+                return $item >= date('Y-m-d');
+            }
+        )
+            ;
 
     }
 
@@ -83,13 +88,22 @@ class ExperienceRoomBookingRepository
 
         array_push($leftDisable, $checkin);
 
+        //把checkin 之前的时间禁用
+        $dateToSelect = [];
+        if ($checkin > date('Y-m-d'))
+            $dateToSelect = splitDate(date('Y-m-d'), $checkin);
+
         //已经有的退房时间
         $endDate = static::_oneRoomOrderEndDate();
 
 
         //今天到预定开始时间段 ---- 合并 ---- 已经预定的时间
-        return collect([])->merge($leftDisable)->merge($endDate)->unique();
-        // return collect(static::_splitDate(date('Y-m-d'), $checkin))->merge($leftDisable)->merge($endDate)->unique();
+        return collect([])->merge($leftDisable)->merge($endDate)->merge($dateToSelect)->unique()->filter(
+            function( $item ) {
+                return $item >= date('Y-m-d');
+            }
+        )
+            ;
     }
 
     /**
@@ -129,6 +143,9 @@ class ExperienceRoomBookingRepository
      */
     private static function _oneRoomOrderDate( $room_id )
     {
+        //排除订单
+        $booking_id = request()->booking_id ?: '';
+
         return ExperienceBooking::query()->leftJoin('experience_booking_room', 'id', 'experience_booking_room.experience_booking_id')
                                 ->select('checkin', 'checkout')
                                 ->where(
@@ -146,7 +163,12 @@ class ExperienceRoomBookingRepository
                                 )
                                 ->where('checkin', '>=', date('Y-m-d'))
                                 ->where('status', '<>', -10)
-                                ->groupBy('id')->get()->toArray()
+                                ->when(
+                                    $booking_id, function( $query ) use ( $booking_id ) {
+                                    return $query->where('id', "<>", $booking_id);
+                                }
+                                )
+                                ->groupBy('id')->get()
             ;
 
     }
@@ -176,7 +198,7 @@ class ExperienceRoomBookingRepository
     public function leftCheckinRoomApi()
     {
         //获取当前预订时间段
-        $list = static::_splitDate($this->request->checkin, $this->request->checkout);
+        $list = splitDate($this->request->checkin, $this->request->checkout);
 
         //获取所有剩下房间不可预订的时间段
         $all = static::_allLeftRoomDisableDate($this->request->room_id);

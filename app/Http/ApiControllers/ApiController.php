@@ -23,17 +23,15 @@ class ApiController extends Controller
 {
    use ApiResponse;
 
-    protected function token( Request $request, string $guard = 'api' )
+    protected function token( Request $request, string $client = 'experience' )
     {
 
          $user =$request->username?:$request->union_id;
-
         $request->request->add(
-            config('passport') +
+            config('passport.'.$client) +
             [
                 'username' => $user,
                 'password' => $request->password,
-                'guard'    => $guard,
             ]
         );
         $proxy = Request::create('oauth/token', 'POST');

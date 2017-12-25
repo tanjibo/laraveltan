@@ -23,6 +23,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class ExperienceSpecialPrice extends Eloquent
 {
+    use ModelTrait;
     protected $table        = 'experience_special_price';
     public    $incrementing = false;
     public    $timestamps   = false;
@@ -51,20 +52,5 @@ class ExperienceSpecialPrice extends Eloquent
         return $this->belongsTo(\App\Models\ExperienceRoom::class);
     }
 
-    /**
-     * Set attribute with price
-     *
-     * @param  string $value
-     * @return void
-     */
-    public function setPriceAttribute( $value )
-    {
-        $this->attributes[ 'price' ] = intval($value * 100);
-    }
 
-
-    public function getPriceAttribute( $value )
-    {
-        return doubleval($value / 100);
-    }
 }

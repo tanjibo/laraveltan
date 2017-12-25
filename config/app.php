@@ -177,13 +177,15 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Lord\Laroute\LarouteServiceProvider::class,
 
 
 
-//        Iwanli\Wxxcx\WxxcxServiceProvider::class,
-//
-//        Naux\Mail\SendCloudServiceProvider::class,
-//        Barryvdh\Debugbar\ServiceProvider::class,
+
+        Iwanli\Wxxcx\WxxcxServiceProvider::class,
+
+        Naux\Mail\SendCloudServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
 
 

@@ -34,9 +34,6 @@ class ExperienceRoomLockDateRepository
             case 8:
                 return self::getXingAndZhiLockDate($id);
 
-            case 10:
-                return self::getXingAndZhiLockDate($id);
-
             default:
                 return self::getCommonRoomDate($id);
 

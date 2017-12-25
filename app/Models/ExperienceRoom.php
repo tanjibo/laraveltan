@@ -36,7 +36,7 @@ class ExperienceRoom extends Eloquent
     use \Illuminate\Database\Eloquent\SoftDeletes;
     protected $table = 'experience_room';
 
-
+    use ModelTrait;
     /**
      * 类型
      */
@@ -48,13 +48,12 @@ class ExperienceRoom extends Eloquent
     const ROOM_ID_YARD = 1; //全院
     const ROOM_ID_RU   = 3;  //如
     const ROOM_ID_ZHI  = 8;  //之未庐(包含房间如和星月阁)
-    const ROOM_ID_SHAN = 9; //山云荟
-    const ROOM_ID_XING = 10; //星月阁
+
 
     protected $casts
         = [
             'price'      => 'int',
-            'type'       => 'int',
+            'type'       => 'string',
             'sort'       => 'int',
             'attach_url' => 'array',
         ];
@@ -72,28 +71,13 @@ class ExperienceRoom extends Eloquent
             'design_concept',
         ];
 
-    public function setPriceAttribute( $value )
-    {
-        $this->attributes[ 'price' ] = intval($value * 100);
-    }
+
+    protected $hidden
+        = [
+            'deleted_at',
+        ];
 
 
-    public function getPriceAttribute( $value )
-    {
-        return doubleval($value / 100);
-    }
-
-
-    public function setRealPriceAttribute( $value )
-    {
-        $this->attributes[ 'real_price' ] = intval($value * 100);
-    }
-
-
-    public function getRealPriceAttribute( $value )
-    {
-        return doubleval($value / 100);
-    }
 
     public function experience_booking_rooms()
     {
