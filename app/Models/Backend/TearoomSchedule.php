@@ -48,7 +48,7 @@ class TearoomSchedule extends Eloquent
         return $this->belongsTo(\App\Models\Tearoom::class);
     }
 
-    public static $timetable
+     static public  $timetable
         = [
             0  => '00:00',
             1  => '00:30',
