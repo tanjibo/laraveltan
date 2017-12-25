@@ -46,8 +46,7 @@ use Repositories\ExperienceRoomBookingRepository;
 class ExperienceBooking extends Eloquent
 {
     use ExperienceRoomBookingTrait,
-        \Illuminate\Database\Eloquent\SoftDeletes,
-        SearchableTrait;
+        \Illuminate\Database\Eloquent\SoftDeletes;
     use Notifiable;
     protected $table = 'experience_booking';
 
@@ -234,10 +233,10 @@ class ExperienceBooking extends Eloquent
     /**
      * @param $id
      * @param $status
+     * @param bool $systemOption 是不是系统自动操作
      * @return bool
-     * 更改订单状态
      */
-    public static function changeBookingOrder( $id, $status )
+    public static function changeBookingOrder( $id, $status,$systemOption=false )
     {
 
         if (!$booking = static::query()->find($id))
@@ -254,7 +253,7 @@ class ExperienceBooking extends Eloquent
         }
         //用户发起的取消请求，只有完成支付的订单，才能取消订单====这一步很重要的
         if($status==static::STATUS_CANCEL){
-            if($booking->status!=static::STATUS_PAID) return false;
+            if(!$systemOption &&($booking->status!=static::STATUS_PAID))return false;
         }
         $booking->status = $status;
 

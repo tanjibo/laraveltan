@@ -12,7 +12,8 @@
 
 namespace App\Foundation\Exception;
 
-use App\Foundation\Helpers\ApiResponse;
+
+use App\Http\ApiControllers\ApiResponse;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;

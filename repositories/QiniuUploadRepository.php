@@ -12,7 +12,7 @@
 namespace Repositories;
 
 
-use Illuminate\Routing\Controller;
+
 use Qiniu\Auth;
 use Qiniu\Storage\UploadManager;
 

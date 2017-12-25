@@ -11,36 +11,14 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
-/**
- * 后台api,暂时废弃
- */
-Route::group(
-    [ 'namespace' => 'Admin', 'middleware' => 'api' ], function() {
 
-    Route::post('/user/login', 'LoginController@login')->name('user.login');
-
-
-    Route::group(
-        [ 'middleware' => 'auth.api_admin' ], function() {
-        Route::get('/hello', 'HelloController@hello')->name('hello');
-        //订单搜索
-        Route::get('/experiencebooking/search', 'ExperienceBookingController@search')->name('experiencebooking.search');
-    }
-    );
-
-}
-);
 
 /**
  * 小程序api
  */
 Route::group(
-    [ 'namespace' => 'Front', 'middleware' => 'api' ], function() {
+    [ 'namespace' => 'Experience', 'middleware' => 'api' ], function() {
 
-    Route::post('/customer/login', 'LoginController@login')->name('customer.login');
-
-    Route::post('/customer/retoken', 'LoginController@refreshToken')->name('customer.refreshToken');
     //小程序登录
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
 
@@ -48,7 +26,7 @@ Route::group(
     Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
 
     Route::group(
-        [ 'middleware' => App::environment() == 'local' ?: 'auth.api_front' ], function() {
+        [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {
 
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
@@ -87,20 +65,8 @@ Route::group(
         //显示评论框
         Route::post('/comment/rooms/{booking_id}/{type?}', 'ExperienceBookingCommentController@getBookingRooms')->name('room.comment.rooms');
 
-        //显示评论框
-        Route::post('/comment/upload', 'ExperienceBookingCommentController@upload')->name('room.comment.upload');
 
-        //山云荟
-        Route::post('/specialRoom/disabledDate/{room_id}', 'ExperienceBookingSanAndXingController@RoomCheckinDisableBy')->name('specialRoom.disabledDate');
 
-        //山云荟每个时间段
-        Route::post('/specialRoom/getQuanTum', 'ExperienceBookingSanAndXingController@getQuanTum')->name('specialRoom.getQuanTum');
-
-        //山云荟总价格
-        Route::post('/specialRoom/totalFee', 'ExperienceBookingSanAndXingController@totalFee')->name('specialRoom.totalFee');
-
-        //创建特殊订单
-        Route::post('/specialRoom/booking', 'ExperienceBookingSanAndXingController@createSpecialOrder')->name('specialRoom.booking');
 
         //时间选择器初始化
         Route::post('/booking/calendarInit', 'ExperienceRoomBookingController@calendarInit')->name('booking.calendarInit');

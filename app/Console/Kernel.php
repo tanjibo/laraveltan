@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use App\Console\Commands\CancelOrder;
-use App\Console\Commands\CancelSpecialPrice;
 use App\Console\Commands\DelOrder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,7 +16,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         CancelOrder::class,  //取消订单
-        CancelSpecialPrice::class, //取消特殊价格
         DelOrder::class  //删除取消的订单
     ];
 
@@ -29,12 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
+        //取消没有立即支付的安吉订单
          $schedule->command('cancelOrder')->withoutOverlapping()
                   ->everyMinute();
-
-         $schedule->command('cancelSpecialPrice')->withoutOverlapping()->daily();
-
+         //删除取消的订单
          $schedule->command('delOrder:cancel')->withoutOverlapping()->daily();
     }
 

@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\CancelOrderController;
+use App\Models\ExperienceBooking;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CancelOrder extends Command
@@ -38,6 +40,29 @@ class CancelOrder extends Command
      */
     public function handle()
     {
-       CancelOrderController::canBookingNormal();
+//       CancelOrderController::canBookingNormal();
+        static::cancelBookingNorMal();
+    }
+
+    /**
+     * 自动取消没有支付的订单
+     */
+    private function cancelBookingNorMal()
+    {
+        $date = new Carbon('now');
+        if (\App::environment() == 'develop') {
+            $before = $date->subMinutes(1);
+        }
+        else {
+            $before = $date->subMinutes(10);
+        }
+
+        $data = ExperienceBooking::query()->where([ [ 'created_at', '<=', $before ], [ 'status', 0 ], [ 'pay_mode', '!=', ExperienceBooking::PAY_MODE_OFFLINE ] ])->orderBy('created_at', 'desc')->get();
+
+        if (count($data->toArray())) {
+            foreach ( $data as $v ) {
+                ExperienceBooking::changeBookingOrder($v->id, -10, true);
+            }
+        }
     }
 }

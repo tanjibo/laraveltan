@@ -11,15 +11,17 @@
 
 namespace App\Http\ApiControllers;
 
-use App\Foundation\Helpers\ApiResponse;
+
+
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
+
 
 
 class ApiController extends Controller
 {
-    use ApiResponse;
+   use ApiResponse;
 
     protected function token( Request $request, string $guard = 'api' )
     {

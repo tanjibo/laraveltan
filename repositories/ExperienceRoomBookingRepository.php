@@ -11,15 +11,15 @@
 
 namespace Repositories;
 
-use App\Http\Resources\Front\ExperienceRoomBookingResource;
-use App\Http\Resources\Front\ExperienceRoomResource;
+use App\Http\Resources\Experience\ExperienceRoomBookingResource;
+use App\Http\Resources\Experience\ExperienceRoomResource;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceRoom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-class ExperienceRoomBookingRepository implements RepositoryInterface
+class ExperienceRoomBookingRepository
 {
 
     public $request = null;
@@ -29,15 +29,6 @@ class ExperienceRoomBookingRepository implements RepositoryInterface
         $this->request = $request;
     }
 
-    public function find( string $id )
-    {
-
-    }
-
-    public function all()
-    {
-
-    }
 
     /**
      * 一个房间不可选的入住时间

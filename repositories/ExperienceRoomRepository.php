@@ -12,25 +12,26 @@
 namespace Repositories;
 
 
-use App\Http\Resources\Front\ExperienceRoomResource;
+use App\Http\Resources\Experience\ExperienceRoomResource;
 use App\Models\ExperienceRoom;
 
-class ExperienceRoomRepository implements RepositoryInterface
+class ExperienceRoomRepository
 {
     function model()
     {
         return ExperienceRoom::class;
     }
 
-    public function all(){
-        $rooms=ExperienceRoom::query()->whereIn('type',[ExperienceRoom::TYPE_SINGLE,ExperienceRoom::TYPE_ALL])->get();
-      return   ExperienceRoomResource::collection($rooms);
+    public function all()
+    {
+        $rooms = ExperienceRoom::query()->whereIn('type', [ ExperienceRoom::TYPE_SINGLE, ExperienceRoom::TYPE_ALL ])->get();
+        return ExperienceRoomResource::collection($rooms);
 
     }
 
-    public function find(string $id)
+    public function find( string $id )
     {
-     return new ExperienceRoomResource(ExperienceRoom::query()->find($id));
+        return new ExperienceRoomResource(ExperienceRoom::query()->find($id));
     }
 
 

@@ -178,21 +178,13 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 
-        Laravel\Passport\PassportServiceProvider::class,
 
-        \App\Providers\PassportAdminServiceProvider::class,
 
-         //repository
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+//        Iwanli\Wxxcx\WxxcxServiceProvider::class,
+//
+//        Naux\Mail\SendCloudServiceProvider::class,
+//        Barryvdh\Debugbar\ServiceProvider::class,
 
-        Iwanli\Wxxcx\WxxcxServiceProvider::class,
-
-        Naux\Mail\SendCloudServiceProvider::class,
-
-        //overtrue -- lang
-        Illuminate\Translation\TranslationServiceProvider::class,
-
-        Overtrue\LaravelWeChat\ServiceProvider::class,
 
 
     ],
@@ -243,7 +235,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
 
     ],
 

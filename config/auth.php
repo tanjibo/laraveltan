@@ -46,10 +46,6 @@ return [
             'provider' => 'users',
         ],
 
-        'admin_api' => [
-            'driver' => 'passport',
-            'provider' => 'admin_users',
-        ],
     ],
 
     /*
@@ -71,16 +67,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'lrss-eloquent',
+            'driver' => 'eloquent',
             'model' => \App\Models\User::class,
         ],
-
-
-
-         'admin_users' => [
-             'driver' => 'lrss-eloquent',
-             'model' => \App\Models\Admin::class,
-         ],
     ],
 
     /*

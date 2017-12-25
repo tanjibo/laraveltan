@@ -3,11 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ExperienceBooking;
-use App\Models\ExperienceSpecialRoomBooking;
-use App\Models\ExperienceSpecialRoomBookingXinyuege;
-use App\Observer\Front\ExperienceRoomBookingObserver;
-use App\Observer\Front\ExperienceRoomBookingShanObserver;
-use App\Observer\Front\ExperienceRoomBookingXingObserver;
+use App\Observer\Experience\ExperienceRoomBookingObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +17,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //订单监听
         ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
-        //ExperienceSpecialRoomBooking::observe(ExperienceRoomBookingShanObserver::class);
-        //ExperienceSpecialRoomBookingXinyuege::observe(ExperienceRoomBookingXingObserver::class);
     }
 
     /**
@@ -33,8 +27,14 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
 
-        if ($this->app->environment() == 'develop') {
-            $this->app->register(\Reliese\Coders\CodersServiceProvider::class);
-        }
+
+//        if (app()->environment([ 'test', 'local', 'develop' ])) {
+////            $this->app->register(\Reliese\Coders\CodersServiceProvider::class);
+//        }
+//
+//        if ($this->app->environment() !== 'production') {
+////            $this->app->register(\Way\Generators\GeneratorsServiceProvider::class);
+////            $this->app->register(\Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class);
+//        }
     }
 }

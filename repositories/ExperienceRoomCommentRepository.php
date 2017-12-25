@@ -12,7 +12,7 @@
 namespace Repositories;
 
 
-use App\Http\Resources\Front\ExperienceBookingCommentResource;
+use App\Http\Resources\Experience\ExperienceBookingCommentResource;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceBookingComment;
 use App\Models\ExperienceSpecialRoomBooking;
