@@ -46,15 +46,7 @@ class TearoomBooking extends \App\Models\TearoomBooking
     use LogsActivity;
 
 
-    public function setDateAttribute( $val )
-    {
-        $this->attributes[ 'date' ] = date('Y-m-d', strtotime($val));;
-    }
 
-    public function getDateAttribute( $val )
-    {
-        return date('Y-m-d', strtotime($val));
-    }
 
 
     public function tearoom_booking_requirements()

@@ -112,6 +112,15 @@ class TearoomBooking extends Eloquent
     }
 
 
+    public function tearoom()
+    {
+        return $this->belongsTo(\App\Models\Tearoom::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 
 
 }

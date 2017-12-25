@@ -152,7 +152,12 @@ class ExperienceBooking extends Eloquent
 
     public function experience_booking_rooms()
     {
-        return $this->hasMany(\App\Models\ExperienceBookingRoom::class);
+        return $this->belongsToMany(ExperienceRoom::class, 'experience_booking_room', 'experience_booking_id', 'experience_room_id');
+    }
+
+    public function experience_booking_requirements()
+    {
+        return $this->hasMany(ExperienceBookingRequirement::class, 'booking_id');
     }
 
     public function rooms()
