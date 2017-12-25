@@ -35,15 +35,30 @@ class Tearoom extends Eloquent
 {
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	protected $table = 'tearoom';
+    /**
+     * 时间类型
+     */
+    const TYPE_SINGLE = 0;  // 单独
+    consT TYPE_ALL    = 1;  // 全部
 
-	protected $casts = [
-		'limits' => 'int',
-		'start_point' => 'int',
-		'end_point' => 'int',
-		'sort' => 'int',
-		'type' => 'int',
-		'status' => 'int'
-	];
+    /**
+     * 状态
+     *
+     * @var integer
+     */
+    const STATUS_SHOW = 1;    // 显示
+    const STATUS_HIDE = 0;    // 隐藏
+
+
+    protected $casts
+        = [
+            'limits'      => 'int',
+            'start_point' => 'int',
+            'end_point'   => 'int',
+            'sort'        => 'string',
+            'type'        => 'string',
+            'status'      => 'string',
+        ];
 
 	protected $fillable = [
 		'name',

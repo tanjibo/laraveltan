@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Tearoom;
 
-use App\Models\Tearoom;
-use App\Models\TearoomBooking;
-use App\Models\TearoomBookingRequirement;
-use App\Models\TearoomSchedule;
-use App\Models\User;
+use App\Models\Backend\Tearoom;
+use App\Models\Backend\TearoomBooking;
+use App\Models\Backend\TearoomBookingRequirement;
+use App\Models\Backend\TearoomSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

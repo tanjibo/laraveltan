@@ -7,8 +7,7 @@
 
 namespace App\Models\Backend;
 
-use App\Models\ModelTrait;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -41,80 +40,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
  *
  * @package App\Models
  */
-class TearoomBooking extends Eloquent
+class TearoomBooking extends \App\Models\TearoomBooking
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-    protected $table = 'tearoom_booking';
+
     use LogsActivity;
-    use ModelTrait;
-    /**
-     * 订单状态
-     */
 
-    const STATUS_UNPAID   = 0;     // 待支付
-    const STATUS_PAID     = 1;     // 已支付
-    const STATUS_COMPLETE = 10;  // 已完成
-    const STATUS_CANCEL   = -10; // 已取消
-
-    /**
-     * 支付方式
-     */
-    const PAY_MODE_OFFLINE = 0;    // 线下支付
-    const PAY_MODE_WECHAT  = 1;    // 微信支付
-    const PAY_MODE_BALANCE = 10;   // 余额支付
-
-    /**
-     * 性别
-     */
-    const GENDER_UNKNOW = 0;    // 未知
-    const GENDER_MALE   = 1;    // 男
-    const GENDER_FEMALE = 2;    // 女
-
-    protected $casts
-        = [
-            'user_id'     => 'int',
-            'tearoom_id'  => 'int',
-            'start_point' => 'int',
-            'end_point'   => 'int',
-            'gender'      => 'int',
-            'peoples'     => 'int',
-            'fee'         => 'int',
-            'discount'    => 'int',
-            'real_fee'    => 'int',
-            'pay_mode'    => 'int',
-            'status'      => 'int',
-        ];
-
-    protected $dates
-        = [
-            'date',
-        ];
-
-    protected $hidden
-        = [
-            'deleted_at',
-        ];
-
-    protected $fillable
-        = [
-            'user_id',
-            'tearoom_id',
-            'date',
-            'time',
-            'start_point',
-            'end_point',
-            'customer',
-            'gender',
-            'mobile',
-            'peoples',
-            'fee',
-            'discount',
-            'real_fee',
-            'pay_mode',
-            'tips',
-            'remark',
-            'status',
-        ];
 
     public function setDateAttribute( $val )
     {
@@ -126,15 +56,6 @@ class TearoomBooking extends Eloquent
         return date('Y-m-d', strtotime($val));
     }
 
-    public function tearoom()
-    {
-        return $this->belongsTo(\App\Models\Tearoom::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(\App\Models\User::class);
-    }
 
     public function tearoom_booking_requirements()
     {
@@ -161,6 +82,7 @@ class TearoomBooking extends Eloquent
         $booking->status = request()->status;
         return $booking->save();
     }
+
 
 
 }

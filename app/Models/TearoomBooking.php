@@ -41,26 +41,45 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class TearoomBooking extends Eloquent
 {
+
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	protected $table = 'tearoom_booking';
+    use ModelTrait;
+    /**
+     * 订单状态
+     */
 
-	protected $casts = [
-		'user_id' => 'int',
-		'tearoom_id' => 'int',
-		'start_point' => 'int',
-		'end_point' => 'int',
-		'gender' => 'int',
-		'peoples' => 'int',
-		'fee' => 'int',
-		'discount' => 'int',
-		'real_fee' => 'int',
-		'pay_mode' => 'int',
-		'status' => 'int'
-	];
+    const STATUS_UNPAID   = 0;     // 待支付
+    const STATUS_PAID     = 1;     // 已支付
+    const STATUS_COMPLETE = 10;  // 已完成
+    const STATUS_CANCEL   = -10; // 已取消
 
-	protected $dates = [
-		'date'
-	];
+    /**
+     * 支付方式
+     */
+    const PAY_MODE_OFFLINE = 0;    // 线下支付
+    const PAY_MODE_WECHAT  = 1;    // 微信支付
+    const PAY_MODE_BALANCE = 10;   // 余额支付
+
+    protected $casts
+        = [
+            'user_id'     => 'int',
+            'tearoom_id'  => 'int',
+            'start_point' => 'int',
+            'end_point'   => 'int',
+            'gender'      => 'int',
+            'peoples'     => 'int',
+            'fee'         => 'int',
+            'discount'    => 'int',
+            'real_fee'    => 'int',
+            'pay_mode'    => 'int',
+            'status'      => 'int',
+        ];
+
+    protected $dates
+        = [
+            'date',
+        ];
 
 	protected $fillable = [
 		'user_id',
@@ -82,13 +101,17 @@ class TearoomBooking extends Eloquent
 		'status'
 	];
 
-	public function tearoom()
-	{
-		return $this->belongsTo(\App\Models\Tearoom::class);
-	}
+    public function setDateAttribute( $val )
+    {
+        $this->attributes[ 'date' ] = date('Y-m-d', strtotime($val));;
+    }
 
-	public function user()
-	{
-		return $this->belongsTo(\App\Models\User::class);
-	}
+    public function getDateAttribute( $val )
+    {
+        return date('Y-m-d', strtotime($val));
+    }
+
+
+
+
 }

@@ -32,66 +32,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
  *
  * @package App\Models
  */
-class Tearoom extends Eloquent
+class Tearoom extends \App\Models\Tearoom
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-    protected $table = 'tearoom';
+
     use LogsActivity;
-    /**
-     * 时间类型
-     */
-    const TYPE_SINGLE = 0;  // 单独
-    consT TYPE_ALL    = 1;  // 全部
 
-    /**
-     * 状态
-     *
-     * @var integer
-     */
-    const STATUS_SHOW = 1;    // 显示
-    const STATUS_HIDE = 0;    // 隐藏
 
-    protected $casts
-        = [
-            'limits'      => 'int',
-            'start_point' => 'int',
-            'end_point'   => 'int',
-            'sort'        => 'string',
-            'type'        => 'string',
-            'status'      => 'string',
-        ];
 
-    protected $hidden
-        = [
-            'deleted_at',
-        ];
-
-    protected $fillable
-        = [
-            'name',
-            'limits',
-            'start_point',
-            'end_point',
-            'image',
-            'sort',
-            'type',
-            'status',
-        ];
-
-    public function tearoom_bookings()
-    {
-        return $this->hasMany(\App\Models\TearoomBooking::class);
-    }
-
-    public function tearoom_prices()
-    {
-        return $this->hasMany(\App\Models\TearoomPrice::class);
-    }
-
-    public function tearoom_schedule()
-    {
-        return $this->hasMany(\App\Models\TearoomSchedule::class);
-    }
 
     /**
      * Field type to text

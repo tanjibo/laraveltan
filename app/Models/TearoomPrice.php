@@ -29,12 +29,13 @@ class TearoomPrice extends Eloquent
 {
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	protected $table = 'tearoom_price';
+	use ModelTrait;
 
 	protected $casts = [
 		'tearoom_id' => 'int',
 		'durations' => 'int',
 		'fee' => 'int',
-		'status' => 'int'
+		'status' => 'string'
 	];
 
 	protected $fillable = [

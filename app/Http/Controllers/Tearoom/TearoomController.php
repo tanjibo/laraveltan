@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Tearoom;
 
-use App\Models\Tearoom;
-use App\Models\TearoomSchedule;
+use App\Models\Backend\Tearoom;
+use App\Models\Backend\TearoomSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

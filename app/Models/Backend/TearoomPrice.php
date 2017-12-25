@@ -25,32 +25,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @package App\Models
  */
-class TearoomPrice extends Eloquent
+class TearoomPrice extends \App\Models\TearoomPrice
 {
-    use ModelTrait;
-	use \Illuminate\Database\Eloquent\SoftDeletes;
-	protected $table = 'tearoom_price';
 
-	protected $casts = [
-		'tearoom_id' => 'int',
-		'durations' => 'int',
-		'fee' => 'int',
-		'status' => 'string'
-	];
-
-	protected $hidden = [
-		'deleted_at'
-	];
-
-	protected $fillable = [
-		'tearoom_id',
-		'durations',
-		'fee',
-		'status'
-	];
-
-	public function tearoom()
-	{
-		return $this->belongsTo(\App\Models\Tearoom::class);
-	}
 }
