@@ -11,6 +11,7 @@ use App\Observer\Art\ArtShowCommentObserver;
 use App\Observer\Experience\ExperienceRoomBookingObserver;
 use App\Observer\Tearoom\BookingObserver;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         ArtShowComment::observe(ArtShowCommentObserver::class);
         ArtShowCommentLike::observe(ArtShowCommentLikeObserver::class);
         TearoomBooking::observe(BookingObserver::class);
+        Schema::defaultStringLength(191);
     }
 
     /**
