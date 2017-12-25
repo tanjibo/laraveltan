@@ -70,7 +70,7 @@ class LoginController extends ApiController
 
         $request->request->add([ 'union_id' => $unionId, 'password' => "" ]);
 
-        return $this->token($request,'api');
+        return $this->token($request);
     }
 
 
