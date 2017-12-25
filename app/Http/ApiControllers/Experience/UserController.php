@@ -18,6 +18,7 @@ class UserController extends ApiController
      */
     function userInfo(Request $request){
         if(Auth::id()){
+            dd(Auth::id());
              $request['user_id']=Auth::id();
             return $this->success(new UserResource(User::query()->find(Auth::id()?:165)));
 
