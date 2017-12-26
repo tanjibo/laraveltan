@@ -83,12 +83,12 @@ class WechatTemplate
             'data'        => [
                 //入住时间
                 'keyword1'    => [
-                    'value' => $model->checkin->toDateString(),
+                    'value' => $model->checkin,
                     'color' => '#182a68',
                 ],
                 //退房时间
                 'keyword2'    => [
-                    'value' => $model->checkout->toDateString(),
+                    'value' => $model->checkout,
                     'color' => '#182a68',
                 ],
                 //联系人姓名
