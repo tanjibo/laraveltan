@@ -28,6 +28,7 @@ class UserResource extends Resource
                                      'surplus_credit' => $this->surplus_credit,
                                      'level'          => $this->credit2level($this->credit)['name'],
                                      'balance'        => $this->balance,
+                                     'notification_count'=>$this->notification_count
                                  ]
             ),
         ];

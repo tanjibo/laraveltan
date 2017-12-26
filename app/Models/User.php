@@ -153,6 +153,7 @@ class User extends Authenticatable
             'remark',
             'intention',
             'terminal',
+            'art_open_id'
         ];
 
 

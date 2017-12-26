@@ -37,6 +37,12 @@ class LoginController extends ApiController
      */
     public function miniLogin( Request $request )
     {
+        if(app()->environment()=='local'){
+            $user=User::find(165);
+            $request->request->add([ 'union_id' =>$user->union_id , 'password' => "" ]);
+
+            return $this->token($request, 'art');
+        }
         //根据code 获取登录信息
         $this->wx->getLoginInfo($request->code);
 

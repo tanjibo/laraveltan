@@ -101,14 +101,18 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
     Route::group(
         [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {
 
+        //艺术展示
          Route::resource('art_show','ArtShowController',['only'=>['index','show']]);
-
+         //评论
          Route::resource('art_comment','CommentController',['only'=>['store','destroy','index']]);
+         //点赞
+        Route::resource('art_comment_like','LikesController',['only'=>['store','index']]);
+        //收藏
+        Route::resource('art_collection','CollectionController',['only'=>['store','index']]);
 
-         //收藏
-         Route::resource('art_collection','CollectionController',['only'=>['store','index']]);
         //用户资料
-//        Route::post('/user/userInfo', 'UserController@userInfo');
+       Route::post('art_user/userInfo', 'UserController@userInfo');
+       Route::post('art_user/unReadMsg', 'UserController@unReadMsg');
     }
     );
 });

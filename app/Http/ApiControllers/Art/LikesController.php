@@ -14,6 +14,11 @@ class LikesController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      * 点赞
      */
+    public function index(){
+
+    }
+
+
     public function store( Request $request )
     {
 
