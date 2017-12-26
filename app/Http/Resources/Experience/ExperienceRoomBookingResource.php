@@ -16,9 +16,9 @@ class ExperienceRoomBookingResource extends Resource
     public function toArray( $request )
     {
        return $this->common()+[
-            'checkin'      => $this->when($this->checkin,$this->checkin->toDateString()),
-            'checkout'     => $this->when($this->checkout,$this->checkout->toDateString()),
-            'rooms'        => ExperienceRoomResource::collection($this->rooms),
+            'checkin'      =>$this->checkin,
+            'checkout'     => $this->checkout,
+           'rooms'        => ExperienceRoomResource::collection($this->rooms),
             'price'        => $this->price,
             'real_price'   => $this->real_price,
             'type'         => 1, //默认为这个好了
