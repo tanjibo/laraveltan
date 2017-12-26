@@ -35,6 +35,7 @@ class AddColumnsToUsersTable extends Migration
             $table->string('terminal',100)->default('web');
             $table->integer('notification_count')->default(0)->comment('通知总数');
             $table->smallInteger('is_superadmin')->default(0)->comment('通知总数');
+
            $table->rememberToken();
 
         }

@@ -14,21 +14,19 @@ namespace App\Http\ApiControllers\Experience;
 
 use App\Http\ApiControllers\ApiController;
 use App\Models\User;
-use GuzzleHttp\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Iwanli\Wxxcx\Wxxcx;
+use Tanjibo\Minilrss\Minilrss;
 
 class LoginController extends ApiController
 {
     use AuthenticatesUsers;
     protected $wx;
 
-    public function __construct( Wxxcx $wxxcx )
+    public function __construct( Minilrss $minilrss )
     {
         $this->middleware('guest')->except('logout');
-        $this->wx = $wxxcx;
+        $this->wx = $minilrss;
     }
 
 

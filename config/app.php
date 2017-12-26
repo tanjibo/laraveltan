@@ -182,7 +182,6 @@ return [
 
 
 
-        Iwanli\Wxxcx\WxxcxServiceProvider::class,
 
         Naux\Mail\SendCloudServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,

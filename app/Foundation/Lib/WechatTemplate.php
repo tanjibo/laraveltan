@@ -39,8 +39,8 @@ class WechatTemplate
             $params = build_query(
                 [
                     'grant_type' => 'client_credential',
-                    'appid'      => config('wxxcx.appid'),
-                    'secret'     => config('wxxcx.secret'),
+                    'appid'      => config('minilrss.default.appid'),
+                    'secret'     => config('minilrss.default.secret'),
                 ]
             );
 

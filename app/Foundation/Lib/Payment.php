@@ -27,7 +27,7 @@ class Payment
             'notify_url'       => 'https://' . $_SERVER[ 'HTTP_HOST' ] . $notifyUrl,
             'trade_type'       => 'JSAPI',
             'openid'           => Auth::user() ? Auth::user()->mini_open_id : 'oIu4X0aZSiZsJ0VwxzNmnW3pxxbs',
-            'appid'            => config('wxxcx.appid'),
+            'appid'            => config('minilrss.default.appid'),
             'mch_id'           => config('pay.mch_id'),
             'spbill_create_ip' => Request::getClientIp(),
             'nonce_str'        => static::createNoncestr(),
@@ -46,7 +46,7 @@ class Payment
         //再次签名
         $time                    = time();
         $parameters              = [
-            'appId'     => config('wxxcx.appid'),
+            'appId'     => config('minilrss.default.appid'),
             'timeStamp' => "$time",
             'nonceStr'  => static::createNoncestr(),
             'package'   => "prepay_id=$prepayId",
@@ -86,7 +86,7 @@ class Payment
     static public function refund( $number, $fee )
     {
         $params           = [
-            'appid'         => config('wxxcx.appid'),
+            'appid'         => config('minilrss.default.appid'),
             'mch_id'        => config('pay.mch_id'),
             'nonce_str'     => static::createNoncestr(),
             'out_trade_no'  => $number,

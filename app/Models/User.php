@@ -80,6 +80,7 @@ class User extends Authenticatable
     const SOURCE_DEFAULT        = 0;   // 商城
     const SOURCE_TRAVELZOO      = 11;  // 旅游族
     const SOURCE_EXPERIENCEROOM = 1;  //安吉体验中心
+    const SOURCE_ARTSHOW = 12;  //空间展示
     const SOURCE_TEAROOM        = 2;  // 茶社
     const SOURCE_ALL            = 100;  // 全部
     const SOURCE_NOUSER         = 888888;  // 没有

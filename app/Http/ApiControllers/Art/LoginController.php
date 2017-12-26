@@ -25,10 +25,11 @@ class LoginController extends ApiController
     use AuthenticatesUsers;
     protected $wx;
 
-    public function __construct(  )
+    public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->wx = new Minilrss(config('minilrss.art.appid'),config('minilrss.art.secret'));
+
+        $this->wx = new Minilrss(config('minilrss.art.appid'), config('minilrss.art.secret'));
     }
 
     /**
@@ -41,15 +42,13 @@ class LoginController extends ApiController
 
         $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
         extract($userInfo);
-        dd($userInfo);
-
         $userData = [
-            'avatar'   => $avatarUrl,
-            'nickname' => $nickName,
-            'union_id' => $unionId,
-            'gender'   => $gender,
-            'mini_open_id'=>$openId,
-            'status'=>User::USER_STATUS_ON,
+            'avatar'      => $avatarUrl,
+            'nickname'    => $nickName,
+            'union_id'    => $unionId,
+            'gender'      => $gender,
+            'art_open_id' => $openId,
+            'status'      => User::USER_STATUS_ON,
 
         ];
 
@@ -60,14 +59,14 @@ class LoginController extends ApiController
         }
         else {
             //用户来源
-            $userData['source']=User::SOURCE_EXPERIENCEROOM;
+            $userData[ 'source' ] = User::SOURCE_ARTSHOW;
             User::query()->create($userData);
 
         }
 
         $request->request->add([ 'union_id' => $unionId, 'password' => "" ]);
 
-        return $this->token($request,'art');
+        return $this->token($request, 'art');
     }
 
 

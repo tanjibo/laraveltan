@@ -3,14 +3,11 @@
 return [
 
         'default' => [
-            /**
-             * 小程序APPID
-             */
-            'appid'            => 'your AppID',
-            /**
-             * 小程序Secret
-             */
-            'secret'           => 'your AppSecret',
+
+            'appid'            => 'wx28cb8b1d2b4514d0',
+
+            'secret'           => 'ddf1aa240a07266752638e5510aba064',
+            'grant_type' => 'authorization_code',
 
         ],
         'art' => [
@@ -22,6 +19,7 @@ return [
              * 小程序Secret
              */
             'secret'           => 'c0f6e584a17eefef7a698e0bbbf1fce0',
+            'grant_type' => 'authorization_code',
 
         ],
         /**
