@@ -17,17 +17,18 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Iwanli\Wxxcx\Wxxcx;
+use Tanjibo\Minilrss\Minilrss;
+
 
 class LoginController extends ApiController
 {
     use AuthenticatesUsers;
     protected $wx;
 
-    public function __construct( Wxxcx $wxxcx )
+    public function __construct(  )
     {
         $this->middleware('guest')->except('logout');
-        $this->wx = $wxxcx;
+        $this->wx = new Minilrss(config('minilrss.art.appid'),config('minilrss.default.secret'));
     }
 
     /**
@@ -36,26 +37,24 @@ class LoginController extends ApiController
     public function miniLogin( Request $request )
     {
         //根据code 获取登录信息
-//        $this->wx->getLoginInfo($request->code);
-//
-//        $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
-//
-//        extract($userInfo);
-//
-//        $userData = [
-//            'avatar'   => $avatarUrl,
-//            'nickname' => $nickName,
-//            'union_id' => $unionId,
-//            'gender'   => $gender,
-//            'mini_open_id'=>$openId,
-//            'status'=>User::USER_STATUS_ON,
-//
-//        ];
+        $this->wx->getLoginInfo($request->code);
+        $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
 
-        $unionId='o6xR50W46N1YHv6daSsqstGCRoIU';
+        extract($userInfo);
+
+        $userData = [
+            'avatar'   => $avatarUrl,
+            'nickname' => $nickName,
+            'union_id' => $unionId,
+            'gender'   => $gender,
+            'mini_open_id'=>$openId,
+            'status'=>User::USER_STATUS_ON,
+
+        ];
+
         if ($user = User::query()->where('union_id', $unionId)->first()) {
 
-            //$user->update($userData);
+            $user->update($userData);
 
         }
         else {

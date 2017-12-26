@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "11bb014c9c616fe621c0d064f36acb56",
+    "content-hash": "ea96fe47fb2223844889ad0c327269f1",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -3976,16 +3976,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.4.2",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "b869cbf8a15ca6261689de2c28a7d7f2d0706835"
+                "reference": "d4face19ed8002eec8280bc1c5ec18130472bf43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/b869cbf8a15ca6261689de2c28a7d7f2d0706835",
-                "reference": "b869cbf8a15ca6261689de2c28a7d7f2d0706835",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/d4face19ed8002eec8280bc1c5ec18130472bf43",
+                "reference": "d4face19ed8002eec8280bc1c5ec18130472bf43",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3995,17 +3995,17 @@
                 ]
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8"
+                "php": "^7.1.3"
             },
             "conflict": {
-                "symfony/dependency-injection": "<3.3"
+                "symfony/dependency-injection": "<3.4"
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.8|~3.0|~4.0",
-                "symfony/dependency-injection": "~3.3|~4.0",
-                "symfony/expression-language": "~2.8|~3.0|~4.0",
-                "symfony/stopwatch": "~2.8|~3.0|~4.0"
+                "symfony/config": "~3.4|~4.0",
+                "symfony/dependency-injection": "~3.4|~4.0",
+                "symfony/expression-language": "~3.4|~4.0",
+                "symfony/stopwatch": "~3.4|~4.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -4014,7 +4014,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -4041,7 +4041,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-14T19:40:10+00:00"
+            "time": "2017-12-14T19:48:22+00:00"
         },
         {
             "name": "symfony/finder",
@@ -4735,6 +4735,46 @@
                 "dump"
             ],
             "time": "2017-12-11T22:06:16+00:00"
+        },
+        {
+            "name": "tanjibo/minilrss",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tanjibo/minilrss.git",
+                "reference": "75693cc1429e6623899abd1904a3c5f8f7dc4554"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tanjibo/minilrss/zipball/75693cc1429e6623899abd1904a3c5f8f7dc4554",
+                "reference": "75693cc1429e6623899abd1904a3c5f8f7dc4554",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "illuminate/support": "~5",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tanjibo\\Minilrss\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "tanjibo",
+                    "email": "tantanjibo@gmail.com"
+                }
+            ],
+            "description": "miniProgram for laravel5",
+            "time": "2017-12-26 04:13:48"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -7216,7 +7256,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "tanjibo/minilrss": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

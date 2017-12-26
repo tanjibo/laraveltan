@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //订单监听
-        ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
+       \App\Models\Backend\ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
         Carbon::setLocale("zh");
 
         //观察者模式

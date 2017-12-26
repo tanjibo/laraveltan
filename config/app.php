@@ -187,6 +187,7 @@ return [
         Naux\Mail\SendCloudServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        \Tanjibo\Minilrss\MinilrssServiceProvider::class
 
 
     ],

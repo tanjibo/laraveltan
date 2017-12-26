@@ -69,6 +69,7 @@ class ExperienceRoomBookingObserver
         $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
         $booking->status   = $booking::STATUS_UNPAID;
 
+
     }
 
 
