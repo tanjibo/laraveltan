@@ -93,8 +93,8 @@ class Sm extends Eloquent
             }
         )->implode('和')
         ;
-        $checkin     = $booking->checkin->toDateString();
-        $checkout    = $booking->checkout->toDateString();
+        $checkin     = $booking->checkin;
+        $checkout    = $booking->checkout;
         $price       = $booking->real_price;
         $mobile      = '13051747151'; //客服电话
         $customer    = $booking->customer;
