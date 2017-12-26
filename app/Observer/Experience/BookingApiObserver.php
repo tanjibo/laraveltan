@@ -15,9 +15,9 @@ namespace App\Observer\Experience;
 use App\Events\RefundFailNotificationEvent;
 use App\Events\SendNotificationEvent;
 use App\Foundation\Lib\Payment;
+use App\Jobs\SendBookingEmail;
+use App\Jobs\SendRefundFailEmail;
 use App\Models\AccountRecord;
-use App\Models\Backend\ExperienceRoom;
-use App\Models\Backend\ExperienceSpecialPrice;
 use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
 
@@ -69,17 +69,15 @@ class BookingApiObserver
         $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
         $booking->status   = $booking::STATUS_UNPAID;
 
-
     }
 
 
     public function updating( ExperienceBooking $booking )
     {
 
-        switch ( $this->request->status ?: '' ) {
+        switch ( $this->request->status ) {
             // 已支付
             case $booking::STATUS_PAID:
-                $booking->real_price = $this->request->real_price;
                 static::statusToPaid($booking);
                 break;
             // 已完成
@@ -88,19 +86,10 @@ class BookingApiObserver
                 break;
             // 已取消
             case $booking::STATUS_CANCEL:
-                static::statusToCancel($booking, $this->request);
+                static::statusToCancel($booking,$this->request);
                 break;
 
         }
-    }
-
-    public function saving( ExperienceBooking $booking )
-    {
-        if (!$this->request->status) {
-            $booking->real_price = $booking->price = $total = static::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms);
-        }
-
-
     }
 
     /**
@@ -166,7 +155,7 @@ class BookingApiObserver
      * @param $booking
      * 取消订单
      */
-    public static function statusToCancel( $booking, $request )
+    public static function statusToCancel( $booking,$request )
     {
         // 账户记录
         if ($booking->balance > 0) {
@@ -199,12 +188,11 @@ class BookingApiObserver
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-            $result = App::environment() == 'local' ? [ 'result_code' => '' ] : Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+            $result =App::environment()=='local'?['result_code'=>'']:Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
 
-            if ($result[ 'result_code' ] == 'SUCCESS') {
+            if ($result['result_code']=='SUCCESS') {
                 ExperienceRefund::query()->create($result);
-            }
-            else {
+            }else{
                 //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
                 event(new RefundFailNotificationEvent($booking));
                 //队列发送--------------有点问题-------------放弃了
@@ -226,31 +214,4 @@ class BookingApiObserver
         event(new SendNotificationEvent($booking));
         // SendBookingEmail::dispatch($booking);
     }
-
-    /**
-     * @param $checkin
-     * @param $checkout
-     * @param array $room
-     * @return int|mixed
-     * 计算订单价格
-     */
-    private static function calculateFee( $checkin, $checkout, $room = [] )
-    {
-        $total = 0;
-        $ds    = splitDate($checkin, $checkout);
-
-        // 房间金额
-        foreach ( $room as $v ) {
-            $r = ExperienceRoom::query()->select('id', 'price', 'type')->find($v);
-
-            foreach ( $ds as $date ) {
-                // 节日价
-                $special = ExperienceSpecialPrice::query()->where('experience_room_id', $r->id)->where('date', $date)->value('price');
-                $total   += $special === null ? $r->price : $special;
-            }
-        }
-
-        return $total;
-    }
-
 }

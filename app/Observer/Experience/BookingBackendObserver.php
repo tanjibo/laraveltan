@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-class ExperienceBookingObserver
+class BookingBackendObserver
 {
     public $request;
 
