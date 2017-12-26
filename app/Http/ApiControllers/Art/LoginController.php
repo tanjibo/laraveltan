@@ -41,6 +41,7 @@ class LoginController extends ApiController
 
         $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
         extract($userInfo);
+        dd($userInfo);
 
         $userData = [
             'avatar'   => $avatarUrl,
