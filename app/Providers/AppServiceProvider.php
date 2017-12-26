@@ -8,7 +8,7 @@ use App\Models\ExperienceBooking;
 use App\Models\TearoomBooking;
 use App\Observer\Art\ArtShowCommentLikeObserver;
 use App\Observer\Art\ArtShowCommentObserver;
-use App\Observer\Experience\ExperienceRoomBookingObserver;
+use App\Observer\Experience\BookingApiObserver;
 use App\Observer\Tearoom\BookingObserver;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //订单监听
-       \App\Models\Backend\ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
-       ExperienceBooking::observe(ExperienceRoomBookingObserver::class);
+       \App\Models\Backend\ExperienceBooking::observe(BookingApiObserver::class);
+       ExperienceBooking::observe(BookingApiObserver::class);
         Carbon::setLocale("zh");
 
         //观察者模式
