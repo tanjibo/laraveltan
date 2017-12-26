@@ -95,5 +95,20 @@ Route::group(
 );
 
 Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
+
     Route::post('art/miniLogin',"LoginController@miniLogin");
+
+    Route::group(
+        [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {
+
+         Route::resource('art_show','ArtShowController',['only'=>['index','show']]);
+
+         Route::resource('art_comment','CommentController',['only'=>['store','destroy','index']]);
+
+         //收藏
+         Route::resource('art_collection','CollectionController',['only'=>['store','index']]);
+        //用户资料
+//        Route::post('/user/userInfo', 'UserController@userInfo');
+    }
+    );
 });

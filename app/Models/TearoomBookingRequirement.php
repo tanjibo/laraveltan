@@ -5,7 +5,7 @@
  * Date: Wed, 06 Dec 2017 15:59:04 +0800.
  */
 
-namespace App\Models\Backend;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 

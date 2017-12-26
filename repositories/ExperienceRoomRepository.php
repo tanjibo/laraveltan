@@ -13,7 +13,7 @@ namespace Repositories;
 
 
 use App\Http\Resources\Experience\ExperienceRoomResource;
-use App\Models\Backend\ExperienceRoom;
+use App\Models\ExperienceRoom;
 use Qiniu\Http\Request;
 use Carbon\Carbon;
 
@@ -28,6 +28,7 @@ class ExperienceRoomRepository
     public function all()
     {
         $rooms = ExperienceRoom::query()->whereIn('type', [ ExperienceRoom::TYPE_SINGLE, ExperienceRoom::TYPE_ALL ])->get();
+
         return ExperienceRoomResource::collection($rooms);
 
     }

@@ -18,6 +18,10 @@ use App\Notifications\ArtShowCommentReply;
 class ArtShowCommentObserver
 {
 
+    public  function creating(ArtShowComment $comment){
+        //过滤
+        $comment->comment=clean($comment->comment,'user_topic_body')?:'您输入的内容违规,请注意。如有下次，我们将采取一定的措施';
+    }
 
     public function created( ArtShowComment $comment )
     {

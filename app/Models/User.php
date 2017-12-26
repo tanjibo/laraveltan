@@ -429,4 +429,12 @@ class User extends Authenticatable
     public function tearoom_booking(){
         return $this->hasMany(TearoomBooking::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * 个人收藏的中式空间
+     */
+    public function art_show(){
+        return $this->belongsToMany(ArtShow::class,'art_show_collection');
+    }
 }

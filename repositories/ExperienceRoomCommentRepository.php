@@ -15,8 +15,6 @@ namespace Repositories;
 use App\Http\Resources\Experience\ExperienceBookingCommentResource;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceBookingComment;
-use App\Models\ExperienceSpecialRoomBooking;
-use App\Models\ExperienceSpecialRoomBookingXinyuege;
 use Illuminate\Support\Facades\Auth;
 
 class ExperienceRoomCommentRepository
@@ -82,12 +80,6 @@ class ExperienceRoomCommentRepository
         switch ( $type ) {
             case 1:
                 return ExperienceBooking::class;
-
-            case 3:
-                return ExperienceSpecialRoomBooking::class;
-
-            case 4:
-                return ExperienceSpecialRoomBookingXinyuege::class;
 
         }
 

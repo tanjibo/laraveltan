@@ -8,6 +8,7 @@
 namespace App\Models\Backend;
 
 
+use App\Models\TearoomBookingRequirement;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
