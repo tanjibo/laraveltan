@@ -28,7 +28,7 @@ class LoginController extends ApiController
     public function __construct(  )
     {
         $this->middleware('guest')->except('logout');
-        $this->wx = new Minilrss(config('minilrss.art.appid'),config('minilrss.default.secret'));
+        $this->wx = new Minilrss(config('minilrss.art.appid'),config('minilrss.art.secret'));
     }
 
     /**
@@ -38,8 +38,8 @@ class LoginController extends ApiController
     {
         //根据code 获取登录信息
         $this->wx->getLoginInfo($request->code);
-        $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
 
+        $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
         extract($userInfo);
 
         $userData = [
