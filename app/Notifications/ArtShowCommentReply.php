@@ -43,6 +43,8 @@ class ArtShowCommentReply extends Notification
            'user_avatar'=>auth()->user()->avatar,
            'user_name'=>auth()->user()->nickname,
            'art_show'=>$this->reply->art_show->name,
+           'art_show_cover'=>$this->reply->art_show->cover,
+           'art_show_id'=>$this->reply->art_show->id,
            'art_show_url'=>route('art.show',$this->reply->art_show->id),
            'reply'=>$this->reply->comment,
            'type'=>'reply'
