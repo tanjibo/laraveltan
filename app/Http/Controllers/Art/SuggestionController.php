@@ -43,8 +43,8 @@ class SuggestionController extends ApiController
 //                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
 //            }
 
-           $model = ArtShowSuggestion::find(1);
-           
+           $model = ArtShowSuggestion::query()->with('user')->paginate();
+
             return response()->json($model);
         }
     }
