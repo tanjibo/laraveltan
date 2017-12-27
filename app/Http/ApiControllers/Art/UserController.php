@@ -13,14 +13,16 @@ namespace App\Http\ApiControllers\Art;
 
 
 use App\Http\ApiControllers\ApiController;
+use App\Http\Resources\Art\NotificationResource;
 use App\Http\Resources\Experience\UserResource;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\Resource;
 use Qiniu\Http\Request;
 
 class UserController extends ApiController
 {
 
-    function userInfo(Request $request){
+   public function userInfo(Request $request){
 
         if($user_id=auth()->id()){
             $request['user_id']=$user_id;
@@ -31,14 +33,20 @@ class UserController extends ApiController
         }
     }
 
-    function unReadMsg(){
+   public function unReadMsg()
+    {
 
-          $user=app()->environment()=='local'?User::find(5):auth()->user();
+        $user = app()->environment() == 'local' ? User::find(165) : auth()->user();
 
-         $notifications = $user->notifications()->paginate(20);
+        $data=$user->notifications()->paginate(2);
+
+        $links=['current_page'=>$data->currentPage(),'total'=>$data->lastPage()];
+
+        $notifications = NotificationResource::collection($data);
         // 标记为已读，未读数量清零
-          $user->markAsRead();
+        $user->markAsRead();
 
-          return $this->success($notifications);
+        return  $this->success(['data'=>$notifications,'link'=>$links]);
+
     }
 }
