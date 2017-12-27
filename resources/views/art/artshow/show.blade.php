@@ -55,7 +55,7 @@
                                                     @<span>{{$v->replies->owner->nickname}}
                                                         :</span>
                                                 @endif
-                                                <span>{{$v->comment}}</span>
+                                                <span>{!! $v->comment !!}</span>
                                             </p>
                                         </div>
                                         <div>
