@@ -37,7 +37,6 @@ class SuggestionController extends ApiController
     public function store(Request $request)
     {
         $request['user_id']=auth()->id();
-
        $model= ArtShowSuggestion::query()->create($request->all());
 
        if($model){

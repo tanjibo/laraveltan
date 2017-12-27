@@ -67,12 +67,12 @@ class LoginController extends Controller
 
                 $this->guard()->logout();
                 $request->session()->invalidate();
-                flash('您账号被禁用或者不是内部员工')->error();
+                flash('您账号被禁用或者不是内部员工')->overlay();
                 return redirect('/login');
 
 
             }
-            flash('您账号被禁用或者不是内部员工')->overlay();
+
             return $this->sendLoginResponse($request);
         }
 
