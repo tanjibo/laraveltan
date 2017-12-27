@@ -16,9 +16,13 @@ class ArtShowController extends ApiController
 
     public function index()
     {
-        $data=ArtShow::query()->orderBy('created_at','DESC')->limit(10)->get();
+        $data=ArtShow::query()->orderBy('created_at','DESC')->paginate(10);
 
-        return $this->success(ArtShowResource::collection($data));
+        $links=['current_page'=>$data->currentPage(),'total'=>$data->lastPage()];
+
+        $artList = ArtShowResource::collection($data);
+        // 标记为已读，未读数量清零
+        return  $this->success(['data'=>$artList,'link'=>$links]);
     }
 
     /**
