@@ -23,10 +23,16 @@ class CollectionController extends ApiController
 
     public function index( Request $request )
     {
-
         $user = app()->environment() == 'local' ? User::query()->find(165) : auth()->user();
 
-        return $this->success(ArtShowResource::collection($user->art_show()->get()));
+        $data=$user->art_show()->paginate(12);
+
+        $links=['current_page'=>$data->currentPage(),'total'=>$data->lastPage()];
+
+        $collections = ArtShowResource::collection($data);
+        // 标记为已读，未读数量清零
+        return  $this->success(['data'=>$collections,'link'=>$links]);
+
     }
 
     /**

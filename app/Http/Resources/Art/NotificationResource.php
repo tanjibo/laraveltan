@@ -31,7 +31,7 @@ class NotificationResource extends Resource
     static function filterData( $data )
     {
         $data[ 'user_avatar' ] = static::https($data[ 'user_avatar' ]);
-     
+
         $data['reply']=htmlspecialchars_decode($data['reply']);
         return $data;
     }
