@@ -11,6 +11,7 @@ use App\Models\TearoomBooking;
 use App\Observer\Art\ArtShowCommentLikeObserver;
 use App\Observer\Art\ArtShowCommentObserver;
 use App\Observer\Art\ArtShowObserver;
+use App\Observer\Art\ArtShowSuggestionObserver;
 use App\Observer\Experience\BookingApiObserver;
 use App\Observer\Experience\BookingBackendObserver;
 use App\Observer\Tearoom\BookingObserver;
@@ -36,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         ArtShowComment::observe(ArtShowCommentObserver::class);
         ArtShowCommentLike::observe(ArtShowCommentLikeObserver::class);
         TearoomBooking::observe(BookingObserver::class);
-        ArtShowSuggestion::observe(ArtShowSuggestion::class);
+        ArtShowSuggestion::observe(ArtShowSuggestionObserver::class);
         ArtShow::observe(ArtShowObserver::class);
 
         Schema::defaultStringLength(191);
