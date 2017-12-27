@@ -43,7 +43,7 @@ class SuggestionController extends ApiController
 //                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
 //            }
 
-//            $model = $model->paginate($request->prePage ?: 10);
+           $model = $model->paginate($request->prePage ?: 10);
             return response()->json($model);
         }
     }
