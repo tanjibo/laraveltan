@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Art;
 
 use App\Http\ApiControllers\ApiController;
+use App\Models\ArtShow;
 use App\Models\ArtShowSuggestion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -42,8 +43,8 @@ class SuggestionController extends ApiController
 //            if ($search = $request->search) {
 //                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
 //            }
-
-           $model = ArtShowSuggestion::all();
+$model=ArtShow::all();
+//           $model = ArtShowSuggestion::all();
 
           return $model;
         }
