@@ -11,6 +11,7 @@ class ArtShowSuggestion extends Model
     protected $table='art_show_suggestion';
 
     protected $fillable=[
+        'user_id',
         'content',
         'mobile'
     ];
