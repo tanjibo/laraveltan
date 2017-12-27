@@ -25,23 +25,23 @@ class SuggestionController extends ApiController
      * @return \Illuminate\Http\Response
      */
 
-    public function indexApi( Request $request)
+    public function indexApi(Request $request)
     {
         if ($request->expectsJson()) {
-            $model = ArtShowSuggestion::query()->with('user');
-//            //排序
-//            if ($order = $request->columns ?: 'id') {
-//                $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
-//            }
-//
-//            //选择框的检索
-//            if ($select = $request->select) {
-//                $model->orWhere($select);
-//            }
-//            //输入框的检索
-//            if ($search = $request->search) {
-//                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
-//            }
+            $model = ArtShowSuggestion::query()->with(['user'])->orderBy('created_at','DESC');
+            //排序
+            if ($order = $request->columns ?: 'id') {
+                $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
+            }
+
+            //选择框的检索
+            if ($select = $request->select) {
+                $model->orWhere($select);
+            }
+            //输入框的检索
+            if ($search = $request->search) {
+                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
+            }
 
            $model = $model->paginate($request->prePage ?: 10);
             return response()->json($model);
