@@ -25,10 +25,10 @@ class SuggestionController extends ApiController
      * @return \Illuminate\Http\Response
      */
 
-    public function indexApi( Request $request, ArtShowSuggestion $art_suggestion )
+    public function indexApi( Request $request)
     {
         if ($request->expectsJson()) {
-            $model = $art_suggestion::with('user');
+            $model = ArtShowSuggestion::with('user');
             //排序
             if ($order = $request->columns ?: 'id') {
                 $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
