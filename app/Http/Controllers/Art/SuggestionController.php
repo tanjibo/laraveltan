@@ -28,7 +28,7 @@ class SuggestionController extends ApiController
     public function indexApi( Request $request)
     {
         if ($request->expectsJson()) {
-//            $model = ArtShowSuggestion::query()->with('user');
+            $model = ArtShowSuggestion::query()->with('user');
 //            //排序
 //            if ($order = $request->columns ?: 'id') {
 //                $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
@@ -42,9 +42,9 @@ class SuggestionController extends ApiController
 //            if ($search = $request->search) {
 //                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
 //            }
-//
+
 //            $model = $model->paginate($request->prePage ?: 10);
-//            return response()->json($model);
+            return response()->json($model);
         }
     }
 
