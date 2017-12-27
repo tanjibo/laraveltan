@@ -21,6 +21,7 @@ class ArtShowResource extends Resource
            'created_at'=>$this->created_at->toDateString(),
            'name'=>$this->name,
            'like_count'=>$this->like_count,
+           'desc'=>$this->desc,
            'comment_count'=>$this->comment_count
        ];
     }
