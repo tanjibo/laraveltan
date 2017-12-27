@@ -36,9 +36,9 @@ class UserController extends ApiController
    public function unReadMsg()
     {
 
-        $user = app()->environment() == 'local' ? User::find(165) : auth()->user();
+        $user = app()->environment() == 'local' ? User::find(5) : auth()->user();
 
-        $data=$user->notifications()->paginate(2);
+        $data=$user->notifications()->paginate(10);
 
         $links=['current_page'=>$data->currentPage(),'total'=>$data->lastPage()];
 
