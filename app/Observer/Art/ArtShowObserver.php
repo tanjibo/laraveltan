@@ -11,10 +11,17 @@
  */
 namespace App\Observer\Art;
 
+use App\Models\ArtShow;
+
 class ArtShowObserver
 {
 
     function saving(){
+
+    }
+
+    function deleting(ArtShow $artShow){
+
 
     }
 

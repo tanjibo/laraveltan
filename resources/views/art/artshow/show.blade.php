@@ -9,7 +9,7 @@
                     <div class="box box-widget">
 
                         <div class="box-body">
-                            <img class="img-responsive pad" src="{{$art->cover}}" alt="Photo">
+                            <div style="text-align: center"><img style="display: inline-block" class="img-responsive pad" src="{{$art->cover}}?imageView2/2/w/300/h/300" alt="Photo"></div>
 
                             <p>{{$art->attr}}</p>
                             <section

@@ -94,8 +94,7 @@
                         if (!valid)return false;
 
                         this.$http.post(url, this.form).then(res => {
-                            console.log(res);
-                           // reload();
+                            window.location.href="{{route('art.index')}}";
                         }).catch(err=>{
                             this.$message.error(err.message)
                         })

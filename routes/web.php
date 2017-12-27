@@ -89,6 +89,9 @@ Route::middleware([ "auth" ])->group(
 
                 Route::resource('art_comment_like', 'LikesController', [ 'only' => [ "store" ] ]);
 
+                Route::resource('art_suggestion', 'SuggestionController',['only'=>['index','destroy']]);
+                Route::post('art_suggestion/index_api', 'SuggestionController@indexApi')->name('art_suggestion.index_api');
+                Route::post('art_suggestion/reply/{art_suggestion}','SuggestionController@reply')->name('art_suggestion.reply');
             }
         )
         ;

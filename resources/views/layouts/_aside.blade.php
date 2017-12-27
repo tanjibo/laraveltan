@@ -93,6 +93,9 @@
                                     class="fa fa-file-image-o"></i>展示列表</a></li>
                     <li @if(request()->segment(1)=='art_comment') class="active" @endif ><a
                                 href="{{route('art_comment.index')}}"><i class="fa fa-comments-o"></i>评论列表</a></li>
+                    <li @if(request()->segment(1)=='art_suggestion') class="active" @endif ><a
+                                href="{{route('art_suggestion.index')}}"><i class="fa fa-comments-o"></i>用户建议</a></li>
+
                 </ul>
             </li>
             @endhasanyrole

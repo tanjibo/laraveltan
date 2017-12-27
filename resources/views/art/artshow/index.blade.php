@@ -12,17 +12,17 @@
             </div>
 
             <div class="box-body">
-                <el-row>
+                <el-row :gutter="20">
                     <el-col :span="4" v-for="(item, index) in tableData" :key="item.id">
                         <el-card :body-style="{ padding: '0px' }">
-                            <img :src="item.cover" class="image">
+                            <img :src="item.cover+'?imageView2/1/w/200'" class="image">
                             <div style="padding: 14px;">
                                 <span>@{{ item.name }}</span>
-                                <time class="time pull-right">@{{ item.created_at }}</time>
+                                <time class="time pull-right">@{{ item.created_at}}</time>
 
                                 <div class="bottom clearfix">
                                     <div>
-                                        {{--<a @click="option('del',item.id)" class="btn btn-danger btn-xs">删除</a>--}}
+                                        <a @click="option('del',item.id)" class="btn btn-danger btn-xs">删除</a>
                                         <a @click="option('show',item.id)" class="btn btn-primary btn-xs">详情</a>
                                         <a @click="option('edit',item.id)" class="btn btn-info btn-xs">编辑</a>
                                     </div>
@@ -86,6 +86,7 @@
 
 @section('javascript')
     <script>
+
         new Vue({
             el: '#app',
             data: {
@@ -108,6 +109,7 @@
                 searchStatus: ''//检索订单状态
             },
             mounted(){
+
                 let url= laroute.route('art.index_api');
                 this.$http.post(url,this.querys).then(res => {
                     this.tableData = res.data;  //分页数据
@@ -123,6 +125,14 @@
                             break;
                         case "edit":
                             window.location.href=laroute.route('art.edit',{art:id});
+                            break;
+                        case "del":
+                            let url = laroute.route('art.destroy', {art: id});
+                            delModal(() => {
+                                this.$http.post(url, {_method: "DELETE"}).then(res => {
+                                    window.location.reload();
+                                })
+                            })
                             break;
                     }
                 },

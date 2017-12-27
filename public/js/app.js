@@ -1609,6 +1609,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/art_suggestion_reply.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['suggestion', 'admin'],
+    data: function data() {
+        return {
+            replyData: '',
+            suggestionData: this.suggestion,
+            token: window.axios.defaults.headers.common['X-CSRF-TOKEN']
+        };
+    },
+
+    methods: {
+        reply: function reply() {
+            if (!this.replyData) {
+                this.$message.error('回复内容不能为空');
+                return false;
+            }
+            var url = laroute.route('art_suggestion.reply', { art_suggestion: this.suggestion.id });
+            this.$http.post(url, {
+                reply: this.replyData
+            }).then(function (res) {
+                reload();
+            });
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/comment.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -19754,6 +19830,101 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-52510862\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/art_suggestion_reply.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "el-form",
+    { staticClass: "demo-table-expand", attrs: { inline: "" } },
+    [
+      _c("div", { staticClass: "box box-widget" }, [
+        _c("div", { staticClass: "box-header with-border" }, [
+          _c("div", { staticClass: "user-block" }, [
+            _c("img", {
+              staticClass: "img-circle",
+              attrs: { src: _vm.suggestionData.user.avatar, alt: "User Image" }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "username" }, [
+              _c("a", [_vm._v(_vm._s(_vm.suggestionData.user.nickname))])
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "description" }, [
+              _vm._v(_vm._s(_vm.suggestionData.created_at))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-body" }, [
+          _c("div", [_vm._v(_vm._s(_vm.suggestionData.content))])
+        ]),
+        _vm._v(" "),
+        _vm.suggestionData.reply
+          ? _c("div", { staticClass: "box-footer box-comments" }, [
+              _c("div", { staticClass: "box-comment" }, [
+                _c("div", { staticClass: "comment-text" }, [
+                  _c("span", { staticClass: "text-muted" }, [
+                    _vm._v("回复内容:" + _vm._s(_vm.suggestionData.reply))
+                  ])
+                ])
+              ])
+            ])
+          : _c("div", { staticClass: "box-footer" }, [
+              _c("form", { attrs: { action: "#", method: "post" } }, [
+                _c("img", {
+                  staticClass: "img-responsive img-circle img-sm",
+                  attrs: { src: _vm.admin.avatar, alt: "Alt Text" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "img-push" },
+                  [
+                    _c("el-input", {
+                      attrs: { type: "input", placeholder: "请回复。。。" },
+                      model: {
+                        value: _vm.replyData,
+                        callback: function($$v) {
+                          _vm.replyData = $$v
+                        },
+                        expression: "replyData"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        staticStyle: { "margin-top": "10px" },
+                        attrs: { type: "success", size: "mini" },
+                        on: { click: _vm.reply }
+                      },
+                      [_vm._v("回复")]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-52510862", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-570bc5e0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/art_show_comment.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20725,6 +20896,7 @@ Vue.component('art-show-comment', __webpack_require__("./resources/assets/js/com
 Vue.component('tearoom-price', __webpack_require__("./resources/assets/js/components/tearoom_price.vue"));
 
 Vue.component('tearoom-lock-time-select', __webpack_require__("./resources/assets/js/components/tearoom_lock_time_select.vue"));
+Vue.component('art-suggestion-reply', __webpack_require__("./resources/assets/js/components/art_suggestion_reply.vue"));
 
 /***/ }),
 
@@ -20824,6 +20996,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-570bc5e0", Component.options)
   } else {
     hotAPI.reload("data-v-570bc5e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/art_suggestion_reply.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/art_suggestion_reply.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-52510862\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/components/art_suggestion_reply.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/art_suggestion_reply.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-52510862", Component.options)
+  } else {
+    hotAPI.reload("data-v-52510862", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

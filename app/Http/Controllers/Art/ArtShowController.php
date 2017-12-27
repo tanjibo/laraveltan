@@ -118,8 +118,14 @@ class ArtShowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ArtShow $art,Request $request)
     {
-        //
+        if($request->expectsJson()){
+
+           $flag= $art->delete();
+
+           return response()->json([]);
+
+        }
     }
 }

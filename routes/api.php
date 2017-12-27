@@ -110,6 +110,8 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
         //收藏
         Route::resource('art_collection','CollectionController',['only'=>['store','index']]);
 
+        Route::resource('art_suggestion','SuggestionController',['only'=>['store']]);
+
         //用户资料
        Route::post('art_user/userInfo', 'UserController@userInfo');
        Route::post('art_user/unReadMsg', 'UserController@unReadMsg');

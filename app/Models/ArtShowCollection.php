@@ -13,8 +13,10 @@ class ArtShowCollection extends Model
 
     function art_show()
     {
-       // return $this->belongsTo(ArtShowComment::class,'art_show_comment_id');
+        return $this->belongsTo(ArtShow::class,'art_show_id');
     }
+
+
 
 
     /**
@@ -30,4 +32,6 @@ class ArtShowCollection extends Model
         return $model? $model->delete() : static::query()->create($data);
 
     }
+
+
 }
