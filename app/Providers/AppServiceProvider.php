@@ -38,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         TearoomBooking::observe(BookingObserver::class);
         ArtShowSuggestion::observe(ArtShowSuggestion::class);
         ArtShow::observe(ArtShowObserver::class);
+
         Schema::defaultStringLength(191);
     }
 

@@ -16,7 +16,7 @@ use App\Models\ArtShow;
 class ArtShowObserver
 {
 
-    function saving(){
+    function saving(ArtShow $artShow){
 
     }
 
