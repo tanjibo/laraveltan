@@ -28,7 +28,7 @@ class SuggestionController extends ApiController
     public function indexApi( Request $request)
     {
         if ($request->expectsJson()) {
-            $model = ArtShowSuggestion::with('user');
+            $model = ArtShowSuggestion::query()->with('user');
             //排序
             if ($order = $request->columns ?: 'id') {
                 $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
