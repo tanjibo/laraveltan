@@ -45,7 +45,7 @@ class SuggestionController extends ApiController
 
            $model = ArtShowSuggestion::query()->with('user')->get();
 
-            return response()->json($model);
+          return $model;
         }
     }
 
