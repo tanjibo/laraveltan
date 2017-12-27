@@ -16,8 +16,8 @@ use App\Http\ApiControllers\ApiController;
 use App\Http\Resources\Art\NotificationResource;
 use App\Http\Resources\Experience\UserResource;
 use App\Models\User;
-use Illuminate\Http\Resources\Json\Resource;
-use Qiniu\Http\Request;
+use Illuminate\Http\Request;
+
 
 class UserController extends ApiController
 {
@@ -26,7 +26,7 @@ class UserController extends ApiController
 
         if($user_id=auth()->id()){
             $request['user_id']=$user_id;
-            return $this->success(new UserResource(User::query()->find($user_id?:165)));
+            return $this->success(new UserResource(User::query()->find($user_id?:5)));
 
         }else{
             return $this->failed('error');
