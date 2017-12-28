@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Auth;
 
+use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,9 @@ class PruneOldTokens
     public function handle(RefreshTokenCreated $event)
     {
         DB::table('oauth_refresh_tokens')
-          ->where('access_token_id', '!=', $event->accessTokenId)
-          ->where('revoked', true)->delete();
+//          ->where('access_token_id', '!=', $event->accessTokenId)
+          ->where('expires_at', '<=', Carbon::now()->toDateTimeString())->orWhere('revoked', true)->delete();
+
+
     }
 }

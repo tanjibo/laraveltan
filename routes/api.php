@@ -21,6 +21,7 @@ Route::group(
 
     //小程序登录
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
+    Route::post('/room/refreshToken',"LoginController@refreshToken");
 
     //房间列表
     Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
@@ -97,6 +98,7 @@ Route::group(
 Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
 
     Route::post('art/miniLogin',"LoginController@miniLogin");
+    Route::post('art/refreshToken',"LoginController@refreshToken");
 
     Route::group(
         [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {

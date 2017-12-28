@@ -45,9 +45,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
 
-        $this->app['auth']->provider('lrss-eloquent',function($app,$config){
-            return new LrssEloquentUserProvider($this->app['hash'],$config['model']);
-        });
+//        $this->app['auth']->provider('lrss-eloquent',function($app,$config){
+//            return new LrssEloquentUserProvider($this->app['hash'],$config['model']);
+//        });
 
         Passport::routes(function (RouteRegistrar $router) {
             //对于密码授权的方式只要这几个路由就可以了
@@ -55,9 +55,9 @@ class AuthServiceProvider extends ServiceProvider
         });
 
 
-        Passport::tokensExpireIn(Carbon::now()->addDays(3650));
+        Passport::tokensExpireIn(Carbon::now()->addMinutes(1));
 
-        Passport::refreshTokensExpireIn(Carbon::now()->addDays(3650));
+        Passport::refreshTokensExpireIn(Carbon::now()->addMinutes(1));
 
 
     }

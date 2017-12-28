@@ -25,11 +25,12 @@ class LoginController extends ApiController
     use AuthenticatesUsers;
     protected $wx;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('guest')->except('logout');
 
         $this->wx = new Minilrss(config('minilrss.art.appid'), config('minilrss.art.secret'));
+
     }
 
     /**
@@ -37,6 +38,9 @@ class LoginController extends ApiController
      */
     public function miniLogin( Request $request )
     {
+        if($request->bearerToken()){
+            return  $this->success(['message'=>'已经登录']);
+        }
         if(app()->environment()=='local'){
             $user=User::find(165);
             $request->request->add([ 'union_id' =>$user->union_id , 'password' => "" ]);
@@ -47,7 +51,7 @@ class LoginController extends ApiController
         $this->wx->getLoginInfo($request->code);
 
         $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
-        extract($userInfo);
+       extract($userInfo);
         $userData = [
             'avatar'      => $avatarUrl,
             'nickname'    => $nickName,
@@ -57,6 +61,7 @@ class LoginController extends ApiController
             'status'      => User::USER_STATUS_ON,
 
         ];
+
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {
 
@@ -73,6 +78,40 @@ class LoginController extends ApiController
         $request->request->add([ 'union_id' => $unionId, 'password' => "" ]);
 
         return $this->token($request, 'art');
+    }
+
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * refresh token
+     */
+    public function refreshToken( Request $request )
+    {
+
+        $request->request->add(
+            [
+                'grant_type'    => 'refresh_token',
+                'refresh_token' => $request->refresh_token,
+                'client_id'     => config('passport.art.client_id'),
+                'client_secret' => config('passport.art.client_secret'),
+                'scope'         => '',
+            ]
+
+        );
+
+        $proxy = Request::create('oauth/token', 'POST');
+
+        $response = \Route::dispatch($proxy);
+
+        $data = json_decode($response->getContent(), true);
+        if ($response->getStatusCode() == $this->statusCode) {
+            return $this->success($data);
+        }
+        else {
+            return $this->notFound($data);
+        }
+
     }
 
 

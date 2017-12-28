@@ -13,7 +13,7 @@ class AddIndexToUnionIdToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('user', function (Blueprint $table) {
             $table->unique('union_id');
         });
     }
@@ -25,7 +25,7 @@ class AddIndexToUnionIdToUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('user', function (Blueprint $table) {
             $table->dropUnique('union_id');
         });
     }

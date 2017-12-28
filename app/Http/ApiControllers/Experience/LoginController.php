@@ -23,10 +23,13 @@ class LoginController extends ApiController
     use AuthenticatesUsers;
     protected $wx;
 
-    public function __construct( Minilrss $minilrss )
+    public function __construct( Minilrss $minilrss,Request $request )
     {
+
         $this->middleware('guest')->except('logout');
         $this->wx = $minilrss;
+
+
     }
 
 
@@ -37,6 +40,9 @@ class LoginController extends ApiController
      */
     public function miniLogin( Request $request )
     {
+        if($request->bearerToken()){
+            return  $this->success(['message'=>'已经登录']);
+        }
         //根据code 获取登录信息
         $this->wx->getLoginInfo($request->code);
 
@@ -84,9 +90,9 @@ class LoginController extends ApiController
             [
                 'grant_type'    => 'refresh_token',
                 'refresh_token' => $request->refresh_token,
-                'client_id'     => config('passport.client_id'),
-                'client_secret' => config('passport.client_secret'),
-                'scope'         => '',
+                'client_id'     => config('passport.experience.client_id'),
+                'client_secret' => config('passport.experience.client_secret'),
+                'scope'         => '*',
             ]
 
         );
@@ -103,7 +109,6 @@ class LoginController extends ApiController
             return $this->notFound($data);
         }
 
-        return json_decode((string)$response->getBody(), true);
     }
 
 }
