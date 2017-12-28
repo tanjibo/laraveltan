@@ -65,10 +65,16 @@ class ExperienceRoomCommonSetting extends \App\Models\ExperienceRoomCommonSettin
     {
         //图片
         if (request()->type == static::IMG) {
-            static::query()->where('type', static::IMG)->forceDelete();
+
+           static::query()->where('type', static::IMG)->delete();
+
             collect(request()->input('data'))->map(
                 function( $item ) {
-                    static::create($item);
+                    if($item['id']){
+                        static::query()->where('id',$item['id'])->restore();
+                    }else{
+                        static::create($item);
+                    }
                 }
             );
             return true;

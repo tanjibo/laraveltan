@@ -8,6 +8,7 @@
 namespace App\Models;
 
 use Reliese\Database\Eloquent\Model as Eloquent;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class TearoomBooking
@@ -45,6 +46,7 @@ class TearoomBooking extends Eloquent
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	protected $table = 'tearoom_booking';
     use ModelTrait;
+    use LogsActivity;
     /**
      * 订单状态
      */
@@ -120,6 +122,34 @@ class TearoomBooking extends Eloquent
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);
+    }
+
+
+
+    public function tearoom_booking_requirements()
+    {
+        return $this->hasMany(TearoomBookingRequirement::class, 'booking_id');
+    }
+
+
+    public static function changeStatus( TearoomBooking $booking )
+    {
+        if (!$booking)
+            return false;
+
+        //删除订单
+//        if (request()->status == static::STATUS_CANCEL) {
+//            $booking->delete();
+//            return true;
+//        }
+
+        if ($booking->status == request()->status) {
+            return true;
+        }
+
+
+        $booking->status = request()->status;
+        return $booking->save();
     }
 
 

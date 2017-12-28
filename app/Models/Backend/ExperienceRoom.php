@@ -39,6 +39,7 @@ class ExperienceRoom extends \App\Models\ExperienceRoom
 
 
 
+
     public function experience_booking_rooms()
     {
         return $this->hasMany(\App\Models\ExperienceBookingRoom::class);

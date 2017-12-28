@@ -14,8 +14,8 @@ namespace Repositories;
 
 use App\Http\Resources\Experience\ExperienceRoomResource;
 use App\Models\ExperienceRoom;
-use Qiniu\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 
 class ExperienceRoomRepository

@@ -34,6 +34,7 @@
 return [
 
     'experience' => explode(',',env('NOTIFY_MOBILE')),
+    'tearoom' =>env('TEAROOM_NOTIFY_MOBILE'),
     'wechatSms'  => [
         'app_id'                  => env('WECHAT_NOTIFY_APPID'),
         'secret_id'               => env('WECHAT_NOTIFY_SECRET'),

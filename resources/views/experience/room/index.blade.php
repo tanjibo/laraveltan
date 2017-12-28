@@ -2,6 +2,22 @@
 
 @section("content")
     <div class="content">
+
+      @can('experience_room_create')
+        <div class="row">
+            <div class="col-md-3 pull-right">
+                <div class="box box-success" style="text-align: center">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                       <a href="{{route('experience_rooms.create')}}"  style="margin:0 auto" class="btn btn-success">添加房间</a>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+        @endcan
+
         <div class="row">
 
             <!-- /.col -->

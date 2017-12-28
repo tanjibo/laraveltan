@@ -8,6 +8,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class TearoomBookingRequirement
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class TearoomBookingRequirement extends Eloquent
 {
 	use \Illuminate\Database\Eloquent\SoftDeletes;
+	use LogsActivity;
 
 	protected $casts = [
 		'booking_id' => 'int',

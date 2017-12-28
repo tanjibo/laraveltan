@@ -22,7 +22,7 @@ class RoomController extends Controller
 
     public function index()
     {
-        userHasAccess(['experience_room_show']);
+        userHasAccess([ 'experience_room_show' ]);
         $model = ExperienceRoom::query()->active()->get();
         return view('experience.room.index', compact("model"));
     }
@@ -32,18 +32,46 @@ class RoomController extends Controller
 
     }
 
+    public function create()
+    {
+        userHasAccess([ 'experience_room_create' ]);
+
+        $attachUrl = ExperienceRoomCommonSetting::query()->where('type', 'supporting_url')->get();
+
+        return view('experience.room.create_and_edit', compact('attachUrl'));
+    }
+
+    /**
+     * @param Request $request
+     * 添加房间
+     */
+    public function store( Request $request )
+    {
+        if ($request->expectsJson()) {
+            $model = ExperienceRoom::query()->create($request->all());
+            if ($model) {
+                if ($request->sliders) {
+                    $model->sliders()->createMany($request->sliders);
+                }
+                return response()->json($model);
+            }
+            return response()->json([],501);
+        }
+
+    }
+
     public function edit( ExperienceRoom $experience_room )
     {
-        userHasAccess(['experience_room_update']);
+        userHasAccess([ 'experience_room_update' ]);
         if (!$experience_room) abort(401);
         $model = $experience_room;
         //配套设施图片
 
-        $attachUrl = ExperienceRoomCommonSetting::query()->where('type', 'supporting_url')->get();
-
+        $attachUrl = ExperienceRoomCommonSetting::query()->where('type', 'supporting_url')->select('url','id')->get();
         $specialPrice = $model->experience_special_price;
 
-        return view('experience.room.edit', compact('model', 'attachUrl', 'specialPrice'));
+
+        return view('experience.room.create_and_edit', compact('model', 'attachUrl', 'specialPrice'));
     }
 
     /**
@@ -54,7 +82,6 @@ class RoomController extends Controller
     public function update( Request $request, ExperienceRoom $experience_room )
     {
         if ($request->expectsJson()) {
-
             return response()->json($this->roomRepository->updateRoom($request, $experience_room));
 
         }
@@ -76,30 +103,34 @@ class RoomController extends Controller
     /**
      * 锁定时间
      */
-    public function lockDate(Request $request, $id )
+    public function lockDate( Request $request, $id )
     {
-        userHasAccess(['experience_room_date_lock']);
+        userHasAccess([ 'experience_room_date_lock' ]);
 
-        if($request->method()=='POST'){
+        if ($request->method() == 'POST') {
 
-           $lockDate= collect($request->lockDate)->merge($request->selfDate)->flatten(2)->filter(function($item){
-               return $item>=date('Y-m-d');
-           });
+            $lockDate = collect($request->lockDate)->merge($request->selfDate)->flatten(2)->filter(
+                function( $item ) {
+                    return $item >= date('Y-m-d');
+                }
+            )
+            ;
 
-          $model= ExperienceRoomLockdate::query()->updateOrCreate(['room_id'=>$request->room_id],['lockdate'=>$lockDate]);
+            $model = ExperienceRoomLockdate::query()->updateOrCreate([ 'room_id' => $request->room_id ], [ 'lockdate' => $lockDate ]);
 
-          return response()->json($model);
+            return response()->json($model);
         }
 
-        $lockDate =collect( ExperienceRoomLockDateRepository::initLockDate($id));
+        $lockDate = collect(ExperienceRoomLockDateRepository::initLockDate($id));
 
         return view('experience.room.lockDate', compact('lockDate', 'id'));
     }
 
 
-    public function makeDate(Request $request){
+    public function makeDate( Request $request )
+    {
 
-        return  collect(splitDateMore($request->startDate,$request->endDate));
+        return collect(splitDateMore($request->startDate, $request->endDate));
     }
 
 }

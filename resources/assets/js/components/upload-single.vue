@@ -80,6 +80,7 @@
         methods: {
 
             handleAvatarSuccess(res) {
+                this.loading=false;
                 this.imgUrl = res.url;
                 //这一步必须
                 this.$emit('update:imgurl', this.imgUrl);

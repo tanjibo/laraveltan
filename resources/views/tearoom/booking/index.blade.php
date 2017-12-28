@@ -85,7 +85,7 @@
                 <el-table-column label="操作" fixed="right" width="120">
                     <template slot-scope="scope">
                         @can('tearoom_booking_update')
-                        <el-button type="text" size="small" @click="editBooking(scope.row.id)">编辑</el-button>
+                        {{--<el-button type="text" size="small" @click="editBooking(scope.row.id)">编辑</el-button>--}}
                         @endcan
                         @can('tearoom_booking_del')
                         <el-button type="text" size="small" @click="delBooking(scope.row.id)">删除</el-button>
@@ -143,13 +143,10 @@
                 })
             },
             methods: {
-                editBooking(id){
-                    window.location.href = laroute.route('experience.booking.edit', {booking: id});
 
-                },
                 delBooking(id){
-                    let url = laroute.route('experience.booking.destroy', {booking: id});
-                    console.log(url);
+                    let url = laroute.route('tearoom_booking.destroy', {tearoom_booking: id});
+
                     delModal(()=>{
                         this.$http.post(url, {_method: "DELETE"}).then(res => {
                             window.location.reload();

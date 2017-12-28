@@ -14,10 +14,19 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        //发送通知
+        //发送安吉用户下单通知
         'App\Events\SendNotificationEvent' => [
             'App\Listeners\SendNotificationEventListener',
         ],
+        //发送安吉后台下单通知
+        'App\Events\SendExperienceBackendNotificationEvent' => [
+            'App\Listeners\SendExperienceBackendNotificationEventListener',
+        ],
+        //发送茶社后台下单通知
+        'App\Events\SendTearoomBackendNotificationEvent' => [
+            'App\Listeners\SendTearoomBackendNotificationEventListener',
+        ],
+
         'Illuminate\Database\Events\QueryExecuted'=>[
             QueryListener::class
         ],

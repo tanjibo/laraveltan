@@ -8,6 +8,7 @@
 namespace App\Models;
 
 use Reliese\Database\Eloquent\Model as Eloquent;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class TearoomPrice
@@ -30,6 +31,7 @@ class TearoomPrice extends Eloquent
 	use \Illuminate\Database\Eloquent\SoftDeletes;
 	protected $table = 'tearoom_price';
 	use ModelTrait;
+	use LogsActivity;
 
 	protected $casts = [
 		'tearoom_id' => 'int',

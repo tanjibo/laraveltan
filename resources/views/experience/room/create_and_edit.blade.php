@@ -5,7 +5,7 @@
 
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">[{{$model->name}}]简介</h3>
+                <h3 class="box-title">@if(isset($model))[{{$model->name}}]简介@else 添加房间 @endif</h3>
             </div>
             <!-- /.box-header -->
             <el-form ref="form" :model="form" label-width="80px">
@@ -45,7 +45,7 @@
                                     </el-form-item>
 
                                     <el-form-item label="排序">
-                                        <el-input v-model="form.sort"></el-input>
+                                        <el-input v-model="@if(isset($model)) form.sort @else sorted @endif "></el-input>
                                     </el-form-item>
 
                                     <el-form-item label="类型">
@@ -87,6 +87,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if(isset($model))
                         <div class="panel box box-success">
                             <div class="box-header with-border">
                                 <h4 class="box-title">
@@ -133,9 +134,15 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         <div class="box-footer">
                             <el-form-item>
-                                <el-button type="primary" @click="submitForm('form')">更新房间数据</el-button>
+                                @if(isset($model))
+                                <el-button type="primary"  @click="submitForm('edit')">保存数据</el-button>
+                                    @else
+                                    <el-button type="primary"  @click="submitForm('add')">添加数据</el-button>
+
+                                @endif
 
                             </el-form-item>
                         </div>
@@ -163,16 +170,16 @@
         //iCheck for checkbox and radio inputs
 
 
-        let data = {!! $model->toJson() !!}, sliders = {!! $model->sliders->toJson() !!};
-        let attachUrl ={!! $attachUrl !!};
-        let specialPrice = {!! $specialPrice->toJson() !!}
-      console.log(data.attach_url)
-            let
-        vm = new Vue({
+        let data = {!! isset($model)?$model->toJson():'[]' !!}, sliders = {!! isset($model)? $model->sliders->toJson():'[]' !!};
+        let attachUrl ={!! isset($attachUrl)?$attachUrl:'[]' !!};
+        let specialPrice = {!! isset($specialPrice)?$specialPrice->toJson():'[]' !!}
+
+            let vm = new Vue({
             el: '#app',
             data: {
                 defautPrice: 12000,
                 defaultType: '淡季',
+                sorted:1,
                 dateSelect: [],
                 createSpecialPrice:[],
                 form: {
@@ -181,8 +188,8 @@
                     attach: data.attach, //配置
                     intro: data.intro,
                     design_concept: data.design_concept,
-                    sort: data.sort,
-                    type: data.type,
+                    'sort':data?data['sort']:1,
+                    type: data.type?data.type:'1',
                     sliders: sliders,
                     attach_url: data.attach_url?data.attach_url:[],
                     attach_url_arr: attachUrl,
@@ -192,15 +199,27 @@
                 },
 
             },
-
+           watch:{
+               sorted:function(){
+                   this.form.sort=this.sorted;
+               }
+           },
             methods: {
-                submitForm(){
-                   this.form._method = 'PUT';
-                   this.form.newSpecialPrice=this.createSpecialPrice;
-                    this.$http.post('{{route('experience_rooms.update',$model)}}', this.form).then(res => {
+                submitForm(type='edit'){
+                   if(!(this.form.cover && this.form.name && this.form.price)){
+                       this.$message.error('请完成房间信息');return false;
+                   }
+
+                   if(type=='edit'){
+                       this.form._method = 'PUT';
+                       this.form.newSpecialPrice=this.createSpecialPrice;
+                   }
+
+                   let url=type=='edit'?laroute.route('experience_rooms.update',{'experience_room':data['id']}):'{{route("experience_rooms.store")}}';
+                    this.$http.post(url, this.form).then(res => {
                         swal({
                             title: "温馨提示！",
-                            text: "成功更新房间内容。",
+                            text: "保存成功。",
                             timer: 1000,
                             type: "success",
                             showConfirmButton: false,
@@ -215,8 +234,8 @@
                         price: this.defautPrice,
                         dateSelect: this.dateSelect
                     }
-
-                    this.$http.post('{{route('experience_rooms.makePrice',$model)}}', data).then(res => {
+                    let url=laroute.route('experience_rooms.makePrice',{experience_room:data['id']})
+                    this.$http.post(url, data).then(res => {
 
                        this.createSpecialPrice=res;
 

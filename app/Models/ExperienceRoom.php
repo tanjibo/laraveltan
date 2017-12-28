@@ -6,8 +6,8 @@
  */
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
 
-use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class ExperienceRoom
@@ -31,7 +31,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  *
  * @package App\Models
  */
-class ExperienceRoom extends Eloquent
+class ExperienceRoom extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
     protected $table = 'experience_room';

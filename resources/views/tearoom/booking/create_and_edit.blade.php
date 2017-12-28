@@ -89,8 +89,7 @@
                         <div class="box-footer">
                             <el-form-item>
                                 <el-button type="primary" @if(!isset($tearoom)) @click="submit('create')"
-                                           @else @click="submit('edit')" @endif >@if(!isset($tearoom))添加数据@else
-                                        修改数据@endif</el-button>
+                                           @else @click="submit('edit')" @endif >保存</el-button>
 
                             </el-form-item>
                         </div>
@@ -188,7 +187,7 @@
                     this.form.price_id = this.price_id;
                     this.form.date = this.date;
                     this.$http.post(url, this.form).then(res => {
-                       reload();
+                     window.location.href="{{route('tearoom_booking.index')}}"
                     })
 
 

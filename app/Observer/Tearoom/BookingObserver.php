@@ -12,11 +12,12 @@
 namespace App\Observer\Tearoom;
 
 
-use App\Models\Backend\AccountRecord;
+use App\Events\SendTearoomBackendNotificationEvent;
+use App\Models\AccountRecord;
 use App\Models\CreditLog;
-use App\Models\Backend\TearoomBooking;
-use App\Models\Backend\TearoomPrice;
-use App\Models\Backend\TearoomSchedule;
+use App\Models\TearoomBooking;
+use App\Models\TearoomPrice;
+use App\Models\TearoomSchedule;
 use App\Models\User;
 
 class BookingObserver
@@ -62,28 +63,8 @@ class BookingObserver
 
         // 锁定时间
         TearoomSchedule::lockTime($booking->tearoom_id, $booking->date, $booking->start_point, $booking->end_point);
-
-//          // 发送用户短信
-//          $params = [
-//              'datetime' => date('n月j日', strtotime($booking->date)) . ' ' . TearoomSchedule::$timetable[$booking->start_point] . ' - ' . TearoomSchedule::$timetable[$booking->end_point],
-//              'name' => $booking->tearoom->name,
-//              'fee'  => $booking->real_fee
-//          ];
-//          $msg = SMSModel::template(SMSModel::TYPE_TEAROOM_BOOKING_WITH_USER, $params);
-//          SMSModel::send($booking->mobile, $msg);
-//
-//          // 发送店员短信
-//          $params = [
-//              'customer' => $booking->customer,
-//              'gender'   => self::gender2text($booking->gender),
-//              'mobile'   => $booking->mobile,
-//              'datetime' => date('n月j日', strtotime($booking->date)) . ' ' . TearoomScheduleModel::$timetable[$booking->start_point] . ' - ' . TearoomScheduleModel::$timetable[$booking->end_point],
-//              'name' => $booking->tearoom->name,
-//              'fee'  => $booking->real_fee
-//          ];
-//          $msg = SMSModel::template(SMSModel::TYPE_TEAROOM_BOOKING_WITH_OPERATOR, $params);
-//          $mobile = \Helper::config('notify_mobile')->tearoom;
-//          SMSModel::send($mobile, $msg);
+       //发送短信
+//       event(new SendTearoomBackendNotificationEvent($booking));
     }
 
 
@@ -184,9 +165,10 @@ class BookingObserver
 
 
 
-    public function updated()
+    public function updated(TearoomBooking $booking)
     {
      //发送短信通知没有完成
+//        event(new SendTearoomBackendNotificationEvent($booking));
     }
 
 }

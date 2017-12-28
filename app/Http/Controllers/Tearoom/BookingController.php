@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Tearoom;
 
-use App\Models\Backend\Tearoom;
-use App\Models\Backend\TearoomBooking;
-use App\Models\Backend\TearoomBookingRequirement;
-use App\Models\Backend\TearoomSchedule;
+use App\Models\Tearoom;
+use App\Models\TearoomBooking;
+use App\Models\TearoomBookingRequirement;
+use App\Models\TearoomSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +94,7 @@ class BookingController extends Controller
         if ($request->expectsJson()) {
 
             $request[ 'date' ] = date('Y-m-d', strtotime($request->date));
+            var_dump($request->all());return response()->json([],501);exit;
             return response()->json(TearoomBooking::query()->create($request->all()));
         }
 
@@ -141,9 +142,12 @@ class BookingController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id )
+    public function destroy( TearoomBooking $tearoom_booking,Request $request )
     {
-        //
+        if($request->expectsJson()){
+            $tearoom_booking->delete();
+            return response()->json([]);
+        }
     }
 
 
