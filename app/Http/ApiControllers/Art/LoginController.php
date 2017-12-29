@@ -101,7 +101,6 @@ class LoginController extends ApiController
         );
 
         $proxy = Request::create('oauth/token', 'POST');
-
         $response = \Route::dispatch($proxy);
 
         $data = json_decode($response->getContent(), true);

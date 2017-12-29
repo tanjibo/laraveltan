@@ -40,7 +40,7 @@ class ApiController extends Controller
 
         $data = json_decode($response->getContent(), true);
         if ($response->getStatusCode() == $this->statusCode) {
-
+           $data['time']=time();
             return $this->success($data);
         }
         else {
