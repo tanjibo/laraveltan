@@ -28,10 +28,12 @@ class PruneOldTokens
      */
     public function handle(RefreshTokenCreated $event)
     {
+//        DB::table('oauth_refresh_tokens')
+//          ->where('access_token_id', '!=', $event->accessTokenId)
+//          ->where('expires_at', '>=', Carbon::now()->toDateTimeString())->orWhere('revoked', true)->delete();
         DB::table('oauth_refresh_tokens')
           ->where('access_token_id', '!=', $event->accessTokenId)
-          ->where('expires_at', '>=', Carbon::now()->toDateTimeString())->orWhere('revoked', true)->delete();
-
+          ->where('revoked', true)->delete();
 
     }
 }
