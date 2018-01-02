@@ -209,13 +209,14 @@ class ExperienceBooking extends Eloquent
 
             foreach ( $ds as $date ) {
                 // 节日价
+                //预付金
+                $prepay=$r->prepay_percent/100;
                 $special = ExperienceSpecialPrice::query()->where('experience_room_id', $r->id)->where('date', $date)->value('price');
-                $total   += $special === null ? $r->price : $special;
+                //加上预付金
+                $total   += $special === null ? $r->price*$prepay : $special*$prepay;
             }
         }
-         if($isPrepay){
-            return $total/2;
-         }
+
         return $total;
     }
 
