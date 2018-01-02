@@ -51,4 +51,35 @@ class UserController extends ApiController
     }
 
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * refresh token
+     */
+    public function refreshToken( Request $request )
+    {
+
+        $request->request->add(
+            [
+                'grant_type'    => 'refresh_token',
+                'refresh_token' => $request->refresh_token,
+                'client_id'     => config('passport.art.client_id'),
+                'client_secret' => config('passport.art.client_secret'),
+                'scope'         => '',
+            ]
+
+        );
+
+        $proxy = Request::create('oauth/token', 'POST');
+        $response = \Route::dispatch($proxy);
+
+        $data = json_decode($response->getContent(), true);
+        if ($response->getStatusCode() == $this->statusCode) {
+            return $this->success($data);
+        }
+        else {
+            return $this->notFound($data);
+        }
+
+    }
 }

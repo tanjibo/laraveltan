@@ -98,7 +98,7 @@ Route::group(
 Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
 
     Route::post('art/miniLogin',"LoginController@miniLogin");
-    Route::post('art/refreshToken',"LoginController@refreshToken");
+
 
     Route::group(
         [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {
@@ -117,6 +117,7 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
         //用户资料
        Route::post('art_user/userInfo', 'UserController@userInfo');
        Route::post('art_user/unReadMsg', 'UserController@unReadMsg');
+        Route::post('art_user/refreshToken',"LoginController@refreshToken");
     }
     );
 });
