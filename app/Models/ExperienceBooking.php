@@ -213,7 +213,7 @@ class ExperienceBooking extends Eloquent
                 $prepay=$r->prepay_percent/100;
                 $special = ExperienceSpecialPrice::query()->where('experience_room_id', $r->id)->where('date', $date)->value('price');
                 //加上预付金
-                $total   += $special === null ? $r->price*$prepay : $special*$prepay;
+                $total   += $special === null ? $r->price : $special;
             }
         }
 
