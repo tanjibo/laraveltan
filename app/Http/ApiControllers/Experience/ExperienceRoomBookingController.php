@@ -102,7 +102,7 @@ class ExperienceRoomBookingController extends ApiController
             'rooms'=>'required|array', //房间id 不能为空
 
         ]);
-        return $this->success([ 'total' => ExperienceBooking::calculateFee($request->checkin, $request->checkout, $request->rooms) ]);
+        return $this->success([ 'total' => ExperienceBooking::calculateFee($request->checkin, $request->checkout, $request->rooms,$request->isPrepay) ]);
     }
 
 

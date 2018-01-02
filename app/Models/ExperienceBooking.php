@@ -192,10 +192,11 @@ class ExperienceBooking extends Eloquent
      *
      * @param  [type] $checkin  [description]
      * @param  [type] $checkout [description]
+     * @param  [type] $isPrepay [是否是使用预付金]
      * @param  array $room [description]
      * @return [type]           [description]
      */
-    public static function calculateFee( $checkin, $checkout, $room = [] )
+    public static function calculateFee( $checkin, $checkout, $room = [],$isPrepay=false)
     {
         $total = 0;
         $ds    = ExperienceRoomBookingRepository::_splitDate($checkin, $checkout);
@@ -210,7 +211,9 @@ class ExperienceBooking extends Eloquent
                 $total   += $special === null ? $r->price : $special;
             }
         }
-
+         if($isPrepay){
+            return $total/2;
+         }
         return $total;
     }
 
