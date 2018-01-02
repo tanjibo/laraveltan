@@ -56,6 +56,7 @@ class ExperienceRoom extends Model
             'type'       => 'string',
             'sort'       => 'int',
             'attach_url' => 'array',
+            'is_prepay'=>'int'
         ];
 
     protected $fillable
@@ -69,6 +70,8 @@ class ExperienceRoom extends Model
             'sort',
             'attach_url',
             'design_concept',
+            'is_prepay',
+            'prepay_percent'
         ];
 
 

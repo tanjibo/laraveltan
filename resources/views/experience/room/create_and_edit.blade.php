@@ -55,6 +55,18 @@
                                         </el-radio-group>
                                     </el-form-item>
 
+                                    <el-form-item label="是否支持预付金">
+                                        <el-switch v-model="form.is_prepay"></el-switch>
+                                    </el-form-item>
+
+                                    <el-form-item v-show="form.is_prepay" label-width="100px"   label="预付金百分比">
+                                        <el-slider
+                                                v-model="form.prepay_percent"
+                                                :step="10"
+                                                show-stops>
+                                        </el-slider>
+                                    </el-form-item>
+
                                 </div>
                             </div>
                         </div>
@@ -171,6 +183,7 @@
 
 
         let data = {!! isset($model)?$model->toJson():'[]' !!}, sliders = {!! isset($model)? $model->sliders->toJson():'[]' !!};
+        console.log(data.is_prepay)
         let attachUrl ={!! isset($attachUrl)?$attachUrl:'[]' !!};
         let specialPrice = {!! isset($specialPrice)?$specialPrice->toJson():'[]' !!}
 
@@ -194,7 +207,9 @@
                     attach_url: data.attach_url?data.attach_url:[],
                     attach_url_arr: attachUrl,
                     cover: data.cover,
-                    specialPrice: specialPrice
+                    specialPrice: specialPrice,
+                    prepay_percent:data.prepay_percent?data.prepay_percent:100,
+                    is_prepay:!!data.is_prepay
 
                 },
 
@@ -202,6 +217,11 @@
            watch:{
                sorted:function(){
                    this.form.sort=this.sorted;
+               },
+               'form.is_prepay':function(){
+                  if(!this.form.is_prepay){
+                      this.form.prepay_percent=100;
+                  }
                }
            },
             methods: {
@@ -214,6 +234,7 @@
                        this.form._method = 'PUT';
                        this.form.newSpecialPrice=this.createSpecialPrice;
                    }
+
 
                    let url=type=='edit'?laroute.route('experience_rooms.update',{'experience_room':data['id']}):'{{route("experience_rooms.store")}}';
                     this.$http.post(url, this.form).then(res => {

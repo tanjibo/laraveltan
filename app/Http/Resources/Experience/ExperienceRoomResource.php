@@ -22,6 +22,7 @@ class ExperienceRoomResource extends Resource
                 'price'          => $this->price,
                 'cover'          => $this->https($this->cover),
                 'type'           => $this->type,
+                'is_prepay'      => $this->is_prepay,
                 'comment_counts' => $this->comments()->count(),//评价数
                 'comment_score'  => ceil($this->comments()->avg('score')),
                 'attach'         => array_filter(
@@ -41,7 +42,7 @@ class ExperienceRoomResource extends Resource
         //详情的时候
         return $this->mergeWhen(
             $request->room_id, array_merge_recursive(
-                                  [
+                                 [
                                      'design_concept' => $this->design_concept,
                                      'intro'          => $this->intro,
                                  ], $this->attachUrl(), $this->sliderUrl(), $this->comment(), $this->un()
@@ -56,14 +57,16 @@ class ExperienceRoomResource extends Resource
     protected function attachUrl()
     {
 
-        $a=$this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [];
-        if($a){
-            $a=collect($a)->map(function($item){
-                return $this->https($item->url);
-            });
+        $a = $this->attach_url ? ExperienceRoomCommonSetting::attachUrl($this->attach_url) : [];
+        if ($a) {
+            $a = collect($a)->map(
+                function( $item ) {
+                    return $this->https($item->url);
+                }
+            );
         }
         return [
-            'attach_url' =>$a
+            'attach_url' => $a,
         ];
 
     }
@@ -113,7 +116,7 @@ class ExperienceRoomResource extends Resource
     {
         preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
 
-        if ($data[1] && $data[ 1 ] == 'http')
+        if ($data[ 1 ] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
         else
             return $url;
