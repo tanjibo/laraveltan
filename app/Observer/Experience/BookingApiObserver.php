@@ -68,6 +68,7 @@ class BookingApiObserver
         $booking->checkin  = date('Y-m-d', strtotime($this->request->checkin));
         $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
         $booking->status   = $booking::STATUS_UNPAID;
+        $booking->is_prepay=$this->request->isPrepay;
 
     }
 

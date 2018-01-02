@@ -62,6 +62,7 @@ class ExperienceBooking extends Eloquent
             'people'     => 'int',
             'status'     => 'int',
             'is_comment' => 'int',
+            'is_prepay'=>'int'
         ];
 
     /**
@@ -139,7 +140,8 @@ class ExperienceBooking extends Eloquent
             'status',
             'is_comment',
             'partner',
-            'source'
+            'source',
+            'is_prepay'
         ];
 
 
