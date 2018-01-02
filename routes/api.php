@@ -21,7 +21,7 @@ Route::group(
 
     //小程序登录
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
-    Route::post('/room/refreshToken',"LoginController@refreshToken");
+    Route::post('/customer/refreshToken',"LoginController@refreshToken");
 
     //房间列表
     Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
@@ -105,6 +105,7 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
 
         //艺术展示
          Route::resource('art_show','ArtShowController',['only'=>['index','show']]);
+         Route::get('art_show/comment/{art_show}','ArtShowController@getArtShowComment');
          //评论
          Route::resource('art_comment','CommentController',['only'=>['store','destroy','index']]);
          //点赞

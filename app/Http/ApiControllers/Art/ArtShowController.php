@@ -65,9 +65,28 @@ class ArtShowController extends ApiController
     public function show(Request $request,$id)
     {
        $art=ArtShow::query()->findOrFail($id);
-       $comments=$art->Comments()->with(['owner','replies'])->get();
-       return $this->success(CommentResource::collection($comments));
 
+
+//       return $this->success(CommentResource::collection($comments));
+
+    }
+
+    /**
+     * @param Request $request
+     * @param ArtShow $art_show
+     * @return mixed
+     * 获取详情评论
+     */
+    public function getArtShowComment(Request $request,ArtShow $art_show){
+
+        $comments=$art_show->Comments()->with(['owner','replies'])->paginate(10);
+
+        $links=['current_page'=>$comments->currentPage(),'total'=>$comments->lastPage()];
+
+        $data = CommentResource::collection($comments);
+
+
+        return  $this->success(['data'=>$data,'link'=>$links]);
     }
 
 
