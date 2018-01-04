@@ -8,6 +8,7 @@ use App\Http\Resources\Art\ArtShowResource;
 use App\Http\Resources\Art\CommentResource;
 use App\Models\ArtShow;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -64,10 +65,25 @@ class ArtShowController extends ApiController
      */
     public function show(Request $request,$id)
     {
-       $art=ArtShow::query()->findOrFail($id);
+       //展品信息
+       $art=ArtShow::query()->with(['likes'=>function($query){
+
+           $query->where('user_id',auth()->id())->count();
+
+       },'collections'=>function($query){
+
+           $query->where('user_id',auth()->id())->count();
+
+       }])->findOrFail($id);
+
+       //评论信息
+        $comments=$art->comments()->where('parent_id',0)->with(['owner','likes'=>function($query){
+            $query->where('user_id',auth()->id());
+        }])->get();
 
 
-//       return $this->success(CommentResource::collection($comments));
+
+       return $this->success(CommentResource::collection($comments));
 
     }
 

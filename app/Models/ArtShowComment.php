@@ -17,6 +17,7 @@ class ArtShowComment extends Model
             'art_show_id',
             'parent_id',
             'like_count',
+            'to_be_reply_id'
         ];
 
     public function art_show()
@@ -30,23 +31,58 @@ class ArtShowComment extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->select('nickname','id','avatar','mobile');
+    }
+
+    public function replies_to_user()
+    {
+        return $this->belongsTo(ArtShowComment::class, 'to_be_reply_id')->with('owner');
     }
 
     public function replies()
     {
-        return $this->belongsTo(ArtShowComment::class, 'parent_id')->withTrashed()->with('owner');
+        return $this->belongsTo(ArtShowComment::class, 'parent_id')->with('owner');
     }
 
+    public function childs(){
+        return $this->hasMany(ArtShowComment::class,'parent_id')->with(['replies_to_user','owner','likes'=>function($query){
+            $query->where('user_id',auth()->id());
+        }])->orderBy('like_count','desc');
+    }
+
+    /**
+     * 限制查询两
+     */
+    public function childs2limit(){
+        return $this->hasMany(ArtShowComment::class,'parent_id')->with(['replies_to_user','owner','likes'=>function($query){
+            $query->where('user_id',auth()->id());
+        }])->orderBy('like_count','desc')->limit(2);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * 点赞
+     */
     public function  likes(){
-       return $this->hasManyThrough(ArtShowCommentLike::class,User::class,'id');
+          return $this->morphMany(ArtShowLike::class, 'likable');
 }
 
-    public function isLikeBy( $user)
+
+
+    protected static function boot()
     {
-        return ArtShowCommentLike::where('art_show_comment_id',$this->id)->where('user_id',auth()->id())->first();
+        parent::boot();
+        static::deleting(function ($model) {
+            //顶级评论
+//            if(!$model->parent_id){
+//                ArtShowComment::where('parent_id',$model->id)->delete();
+//            }else{
+//                ArtShowComment::where('_to_be_reply_id',$model->id)->delete();
+//            }
+
+           // $model->owner->notifications()->delete();
+//            $model->notifications()->delete();
+        });
     }
-
-
 
 }

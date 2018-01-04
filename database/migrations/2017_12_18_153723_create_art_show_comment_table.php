@@ -20,7 +20,9 @@ class CreateArtShowCommentTable extends Migration
             $table->integer('parent_id')->index()->default(0);
             $table->text('comment')->default('')->comment('正文内容');
             $table->boolean('status')->default(1)->comment('状态');
-            $table->integer('like_count')->default(0)->comment('点赞总数');
+            $table->integer('like_count')->index()->default(0)->comment('点赞总数');
+            $table->integer('reply_count')->index()->default(0)->comment('回复总数');
+            $table->integer('to_be_reply_id')->default(0)->comment('被回复id');
             $table->timestamps();
             $table->softDeletes();
         });

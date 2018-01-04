@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\ArtShow;
 use App\Models\ArtShowComment;
-use App\Models\ArtShowCommentLike;
 use App\Models\ArtShowSuggestion;
 use App\Models\ExperienceBooking;
 use App\Models\TearoomBooking;
@@ -35,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
 
         //观察者模式
         ArtShowComment::observe(ArtShowCommentObserver::class);
-        ArtShowCommentLike::observe(ArtShowCommentLikeObserver::class);
         TearoomBooking::observe(BookingObserver::class);
         ArtShowSuggestion::observe(ArtShowSuggestionObserver::class);
         ArtShow::observe(ArtShowObserver::class);

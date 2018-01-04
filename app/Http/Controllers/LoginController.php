@@ -63,6 +63,7 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             //判断用户是否锁定，是否为内部用户
+
             if (!auth()->user()->is_lrss_staff || !auth()->user()->status) {
 
                 $this->guard()->logout();

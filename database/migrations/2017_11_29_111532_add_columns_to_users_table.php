@@ -34,7 +34,8 @@ class AddColumnsToUsersTable extends Migration
             $table->string('intention',50)->default('');
             $table->string('terminal',100)->default('web');
             $table->integer('notification_count')->default(0)->comment('通知总数');
-            $table->smallInteger('is_superadmin')->default(0)->comment('通知总数');
+            $table->smallInteger('is_superadmin')->default(0)->comment('是不是超级管理员');
+            $table->integer('comment_count')->index()->default(0)->comment('评论总数');
 
            $table->rememberToken();
 
@@ -51,7 +52,7 @@ class AddColumnsToUsersTable extends Migration
     {
         Schema::table(
             'user', function( Blueprint $table ) {
-            $table->dropColumn([ 'level_title', 'signature', 'password','is_receive_email','is_lrss_staff','last_login_ip','age','qq','weibo','wechat','remark','intention','id_card','education','nationality','profession','birthday','terminal','notification_count','remember_token','is_superadmin']);
+            $table->dropColumn([ 'level_title', 'signature', 'password','is_receive_email','is_lrss_staff','last_login_ip','age','qq','weibo','wechat','remark','intention','id_card','education','nationality','profession','birthday','terminal','notification_count','remember_token','is_superadmin','comment_count']);
         }
         );
     }

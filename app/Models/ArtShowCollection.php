@@ -16,22 +16,10 @@ class ArtShowCollection extends Model
         return $this->belongsTo(ArtShow::class,'art_show_id');
     }
 
-
-
-
-    /**
-     * @param $data
-     * @return bool|mixed|null
-     * 点赞
-     */
-    public static  function toggle( $data )
-    {
-
-        $model = static::query()->where($data)->first();
-
-        return $model? $model->delete() : static::query()->create($data);
-
+    public function scopeByWho($query,$user_id){
+        return $query->where('user_id','=',$user_id);
     }
+
 
 
 }

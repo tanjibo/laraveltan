@@ -16,56 +16,34 @@
                                     style="text-align: center;border:1px solid #dedede;border-radius: 3px;box-shadow: 3px 3px 5px #ddd;overflow: hidden;height:auto;padding:10px;">
                                 <span>{!!$art->introduction !!}</span>
                                 <span class="pull-right text-muted">  {{$art->comment_count}} 个评论</span>
+
+                            </section>
+                            <section
+                                    style="text-align: center;border:1px solid #dedede;border-radius: 3px;box-shadow: 3px 3px 5px #ddd;overflow: hidden;height:auto;padding:10px;margin-top:10px;">
+                               @if($isAuthUserLike)
+                                <button @click="like({{$art->id}},'art_show')" class="btn btn-success">已点赞</button>
+                                @else
+                                <button @click="like({{$art->id}},'art_show')" class="btn btn-default">点个赞啊</button>
+                                @endif
+                                @if($isAuthUserCollect)
+                                       <button @click="collect({{$art->id}})" class="btn btn-success">{{$art->collection_count}}人已收藏</button>
+
+                                   @else
+                                       <button @click="collect({{$art->id}})" class="btn btn-default">{{$art->collection_count}}人收藏</button>
+
+                                   @endif
+                                <div style="margin-top:10px;">
+                                    @foreach($userLike as $v)
+                                    <img  class="img-circle" style="width:50px;height:50px;" src="{{$v}}" alt="">
+                                        @endforeach
+                                </div>
                             </section>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer box-comments">
+
                             @if($art->comment_count>0)
-                                @foreach($comments as  $key=>$v)
-                                    <div class="box-comment"
-                                         style="border:1px solid #dedede;margin-bottom:5px;padding:10px;background:white;">
-                                        <img class="img-circle img-sm" src="{{$v->owner->avatar}}" alt="User Image">
-
-                                        <div class="comment-text">
-                                            <div class="username">
-                                                <span>{{$v->owner->nickname}}</span>
-                                                <span class="text-muted pull-right">{{$v->created_at}}</span>
-                                                @if(auth()->id()!=$v->owner->id)
-
-
-                                                    @if($v->isLikeBy(auth()->id()))
-                                                        <button @click="like({{$v->id}})" type="button"
-                                                                class="btn btn-success btn-xs"><i
-                                                                    class="fa fa-thumbs-o-up"></i> 已点赞
-                                                        </button>
-                                                    @else
-                                                        <button @click="like({{$v->id}})" type="button"
-                                                                class="btn btn-default btn-xs"><i
-                                                                    class="fa fa-thumbs-o-up"></i> 点个赞吧
-                                                        </button>
-                                                    @endif
-
-                                                @endif
-                                                <div class="btn btn-xs btn-danger" @click="del({{$v->id}})">删除评论</div>
-                                                <span class="pull-right text-muted"
-                                                      style="margin-right:7px;"> {{$v->like_count}}个赞</span>
-                                            </div><!-- /.username -->
-                                            <p>
-                                                @if($v->parent_id)
-                                                    @<span>{{$v->replies->owner->nickname}}
-                                                        :</span>
-                                                @endif
-                                                <span>{!! $v->comment !!}</span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            @includeWhen(auth()->id()!=$v->owner->id,'art.artshow._comment_form',['art'=>$art,'parent_id'=>$v->id])
-                                        </div>
-
-                                        <!-- /.comment-text -->
-                                    </div>
-
-                                @endforeach
+                                @include('art.artshow._comment_list',['comments'=>$comments,'art'=>$art])
                             @else
                                 <div class="box-comment">
                                     <p style="text-align: center">暂无评论</p>
@@ -94,9 +72,22 @@
             el: '#app',
             data: {},
             methods: {
-                like(id){
-                    console.log(id);
-                    this.$http.post('{{route("art_comment_like.store")}}', {art_show_comment_id: id}).then(res => {
+                like(id,type){
+                     let params={};
+                    if(type=='art_show'){
+                        params={id: id,type:'art_show'}
+                    }else{
+                        params={id: id,type:'art_show_comment'}
+                    }
+                    this.$http.post('{{route("art_comment_like.store")}}', params).then(res => {
+                        reload();
+                    })
+                },
+                collect(id){
+                    let url=laroute.route('art_show_collect.store',{art_show:id});
+
+
+                    this.$http.post(url).then(res => {
                         reload();
                     })
                 },
@@ -105,9 +96,11 @@
                     form._method = "DELETE";
                     form.art_show_comment_id = id;
                     let url = laroute.route('art_comment.destroy', {art_comment: id});
-                    this.$http.post(url, form).then(res => {
 
-                    })
+                    delModal(()=>{this.$http.post(url, form).then(res => {
+                     reload();
+                    })})
+
                 }
             }
         })

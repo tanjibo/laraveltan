@@ -4,15 +4,34 @@ namespace App\Http\ApiControllers\Art;
 
 use App\Http\ApiControllers\ApiController;
 use App\Http\Requests\ArtCommentRequest;
+use App\Models\ArtShow;
 use App\Models\ArtShowComment;
 use Illuminate\Http\Request;
+use Repositories\ArtShowCommentRepository;
 
 class CommentController extends ApiController
 {
 
-    function index(){
+    protected $repository;
 
+    public function __construct( ArtShowCommentRepository $repository )
+    {
+        $this->repository = $repository;
     }
+
+
+    public function commentList( ArtShow $art_show )
+    {
+       $this->repository->commentList($art_show);
+    }
+
+
+    public function commentDetail(ArtShowComment $art_comment){
+
+        $this->repository->commentDetail($art_comment);
+    }
+
+
     /**
      * art_show_id
      * comment

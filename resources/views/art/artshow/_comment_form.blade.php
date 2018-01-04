@@ -2,6 +2,9 @@
     {!! csrf_field() !!}
     <input type="hidden" name="art_show_id" value="{{$art->id}}">
     <input type="hidden" name="user_id" value="{{auth()->id()}}">
+    @if(isset($to_be_reply_id))
+        <input type="hidden" name="to_be_reply_id" value="{{$to_be_reply_id}}">
+    @endif
     <img class="img-responsive img-circle img-sm" src="{{auth()->user()->avatar}}"
          alt="Alt Text">
     <!-- .img-push is used to add margin to elements next to floating images -->

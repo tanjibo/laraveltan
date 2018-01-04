@@ -16,4 +16,14 @@ class ArtShow extends Model
         return $this->hasMany(ArtShowComment::class);
     }
 
+    public function likes(){
+        return $this->morphMany(ArtShowLike::class, 'likable');
+    }
+
+    public function collections(){
+        return $this->hasMany(ArtShowCollection::class);
+    }
+
+
+
 }

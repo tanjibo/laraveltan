@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Art;
 use App\Http\Requests\ArtRequest;
 use App\Models\ArtShow;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -81,9 +82,21 @@ class ArtShowController extends Controller
     public function show(ArtShow $art,Request $request)
     {
         userHasAccess(['art_show']);
-       $comments=$art->Comments()->with(['owner','replies'])->get();
+       $comments=$art->comments()->where('parent_id',0)->with(['owner','childs','likes'=>function($query){
+           $query->where('user_id',auth()->id());
+       }])->get();
 
-       return view('art.artshow.show',compact('art','comments'));
+
+
+
+       $userLike=User::query()->whereIn('id',$art->likes()->pluck('user_id'))->pluck('avatar','id');
+
+      $isAuthUserLike=$userLike->has(auth()->id());
+
+      $userCollect=User::query()->whereIn('id',$art->collections()->pluck('user_id'))->pluck('avatar','id');
+        $isAuthUserCollect=$userCollect->has(auth()->id());
+
+       return view('art.artshow.show',compact('comments','art','userLike','isAuthUserLike','isAuthUserCollect'));
     }
 
     /**

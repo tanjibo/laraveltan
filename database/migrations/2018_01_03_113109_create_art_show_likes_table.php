@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArtShowCommentLikeTable extends Migration
+class CreateArtShowLikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateArtShowCommentLikeTable extends Migration
      */
     public function up()
     {
-        Schema::create('art_show_comment_like', function (Blueprint $table) {
+        Schema::create('art_show_likes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->index();
-            $table->integer('art_show_comment_id')->index();
+            $table->integer('user_id')->index()->unsigned()->default(0);
+            $table->integer('likable_id')->unsigned()->default(0);
+            $table->string('likable_type')->index();
+            $table->string('is')->index();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateArtShowCommentLikeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('art_show_comment_like');
+        Schema::dropIfExists('art_show_likes');
     }
 }

@@ -23,6 +23,8 @@ class CreateArtShowTable extends Migration
             $table->string('desc')->default('')->comment('简介');
             $table->integer('comment_count')->default(0)->comment('评论总数');
             $table->integer('like_count')->default(0)->comment('点赞总数');
+            $table->integer('collection_count')->default(0)->comment('收藏总数');
+            $table->integer('view_count')->index()->default(0)->comment('查看总数');
             $table->timestamps();
             $table->softDeletes();
         });

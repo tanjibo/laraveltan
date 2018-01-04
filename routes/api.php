@@ -101,13 +101,16 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
     Route::post('art/refreshToken',"LoginController@refreshToken");
 
     Route::group(
-        [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {
+//        [ 'middleware' => App::environment() == 'local' ?: 'auth.api' ], function() {
+        [ 'middleware' =>'auth.api' ], function() {
 
         //艺术展示
          Route::resource('art_show','ArtShowController',['only'=>['index','show']]);
          Route::get('art_show/comment/{art_show}','ArtShowController@getArtShowComment');
          //评论
-         Route::resource('art_comment','CommentController',['only'=>['store','destroy','index']]);
+         Route::resource('art_comment','CommentController',['only'=>['store','destroy']]);
+         Route::post('art_comment_list/{art_show}','CommentController@commentList');
+         Route::post('art_comment_detail/{art_comment}','CommentController@commentDetail');
          //点赞
         Route::resource('art_comment_like','LikesController',['only'=>['store','index']]);
         //收藏

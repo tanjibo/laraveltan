@@ -42,7 +42,7 @@ class LoginController extends ApiController
             return  $this->success(['message'=>'已经登录']);
         }
         if(app()->environment()=='local'){
-            $user=User::find(5);
+            $user=User::find(165);
             $request->request->add([ 'union_id' =>$user->union_id , 'password' => "" ]);
 
             return $this->token($request, 'art');
