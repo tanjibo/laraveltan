@@ -22,9 +22,16 @@ class CommentController extends ApiController
     }
 
 
-    public function commentList( ArtShow $art_show )
+    public function commentList( ArtShow $art_show)
     {
-       $this->repository->commentList($art_show);
+
+       $p= $this->repository->commentList($art_show);
+
+        $links=['current_page'=>$p->currentPage(),'total'=>$p->lastPage()];
+
+        $data= CommentResource::collection($p);
+        // 标记为已读，未读数量清零
+        return  $this->success(['data'=>$data,'link'=>$links]);
     }
 
 

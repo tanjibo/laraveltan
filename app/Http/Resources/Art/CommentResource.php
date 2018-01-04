@@ -39,6 +39,7 @@ class CommentResource extends Resource
             'avatar'=>$this->owner?$this->owner->avatar:'avatar',
 
             //是否有子楼层
+
             'childs2limit'=>$this->mergeWhen(count($this->childs2limit),static::collection($this->childs2limit)),
             //是否@某人
             'reply_to_user'=>$this->when($this->parent_id!=$this->to_be_reply_id,$this->filterReplyToUser($this->replies_to_user)?:[])

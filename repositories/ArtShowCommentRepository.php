@@ -12,6 +12,7 @@
 namespace Repositories;
 
 
+use App\Http\Resources\Art\CommentResource;
 use App\Models\ArtShow;
 use App\Models\ArtShowComment;
 
@@ -23,10 +24,13 @@ class ArtShowCommentRepository
      */
     public function commentList(ArtShow $artShow){
 
-       $comment= $artShow->comments()->with(['limit2Childs','owner'])->where('parent_id',0)
-        ->orderBy('like_count','desc')->orderBy('created_at','desc')->paginate(10);
 
-       return $comment;
+        //评论信息
+      return  $artShow->comments()->where('parent_id',0)->with(['owner','likes'=>function($query){
+            $query->where('user_id',auth()->id());
+
+        }])->paginate(10);
+
 
     }
 
