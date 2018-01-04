@@ -23,6 +23,7 @@ class ArtShowResource extends Resource
            'like_count'=>$this->like_count,
            'desc'=>$this->desc,
            'comment_count'=>$this->comment_count,
+           'collection_count'=>$this->collection_count,
            'is_auth_user_liked'=>count($this->likes),
            'is_auth_user_collected'=>count($this->collections),
        ];
