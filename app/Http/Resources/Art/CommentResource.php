@@ -23,6 +23,8 @@ class CommentResource extends Resource
     {
       return  [
             'user_id'    => $this->user_id,
+            //是否可以删除
+            'is_can_del'=>$this->user_id==auth()->id()?1:0,
             'parent_id'  => $this->parent_id,
             'comment'    => $this->comment,
             'created_at' => $this->created_at->diffForHumans(),
