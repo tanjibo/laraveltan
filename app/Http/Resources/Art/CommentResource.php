@@ -22,6 +22,7 @@ class CommentResource extends Resource
     function toArray( $request )
     {
       return  [
+             'id'=>$this->id,
             'user_id'    => $this->user_id,
             //是否可以删除
             'is_can_del'=>$this->user_id==auth()->id()?1:0,

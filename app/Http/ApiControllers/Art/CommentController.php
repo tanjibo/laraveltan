@@ -37,7 +37,7 @@ class CommentController extends ApiController
 
     public function commentDetail(ArtShowComment $art_comment){
 
-        $this->repository->commentDetail($art_comment);
+      return   $this->success($this->repository->commentDetail($art_comment));
     }
 
 
