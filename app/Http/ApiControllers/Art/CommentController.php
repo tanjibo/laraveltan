@@ -5,6 +5,7 @@ namespace App\Http\ApiControllers\Art;
 use App\Http\ApiControllers\ApiController;
 use App\Http\Requests\ArtCommentRequest;
 use App\Http\Resources\Art\ArtShowResource;
+use App\Http\Resources\Art\CommentResource;
 use App\Models\ArtShow;
 use App\Models\ArtShowComment;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class CommentController extends ApiController
         $request[ 'user_id' ] = auth()->id() ?: 5;
         $model   = ArtShowComment::query()->create($request->all());
 
-        return $model ? $this->success(new ArtShowResource($model)) : $this->error('添加评论错误');
+        return $model ? $this->success(new CommentResource($model)) : $this->error('添加评论错误');
 
     }
 
