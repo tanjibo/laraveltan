@@ -25,7 +25,7 @@ class CommentResource extends Resource
             'user_id'    => $this->user_id,
             'parent_id'  => $this->parent_id,
             'comment'    => $this->comment,
-            'created_at' => $this->created_at->toDateString()->diffForHumans(),
+            'created_at' => $this->created_at->diffForHumans(),
             'reply_count'=>$this->reply_count,
             'like_count' => $this->count?:0,
             'is_auth_user_liked'=>count($this->likes)?1:0,
