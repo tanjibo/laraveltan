@@ -47,8 +47,8 @@ class CommentController extends ApiController
 
         $comment = CommentResource::collection($data);
         // 标记为已读，未读数量清零
-        $c=['data'=>$comment,'link'=>$links,'comment'=>$data];
-        
+        $c=['data'=>$comment,'link'=>$links,'comment'=>new CommentResource($art_comment)];
+
          return   $this->success($c);
     }
 
