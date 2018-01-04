@@ -75,15 +75,16 @@ class ArtShowController extends ApiController
            $query->where('user_id',auth()->id())->count();
 
        }])->findOrFail($id);
+//       dd($art->toArray());
 
        //评论信息
         $comments=$art->comments()->where('parent_id',0)->with(['owner','likes'=>function($query){
             $query->where('user_id',auth()->id());
         }])->get();
 
+         $data=['art'=>new ArtShowResource($art),'comment'=>CommentResource::collection($comments)];
 
-
-       return $this->success(CommentResource::collection($comments));
+       return $this->success($data);
 
     }
 
