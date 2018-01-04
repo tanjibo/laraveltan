@@ -4,8 +4,11 @@ namespace App\Http\ApiControllers\Art;
 
 
 use App\Http\ApiControllers\ApiController;
+use App\Models\ArtShow;
+use App\Models\ArtShowComment;
 use App\Models\ArtShowCommentLike;
 use Illuminate\Http\Request;
+use Repositories\ArtShowLikeAndCollectionRepository;
 
 class LikesController extends ApiController
 {
@@ -14,23 +17,30 @@ class LikesController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      * 点赞
      */
-    public function index(){
+    protected $repository;
 
+    public function __construct( ArtShowLikeAndCollectionRepository $repository )
+    {
+        $this->repository = $repository;
     }
 
-
+    /**
+     * @param Request $request
+     *
+     */
     public function store( Request $request )
     {
 
-        $request[ 'user_id' ] = app()->environment() == 'local' ? 165 : auth()->id();
-
-        $model = ArtShowCommentLike::toggle($request->all());
-
-        if (is_bool($model)) {
-            return $this->success([ 'message' => '取消点赞成功' ]);
+        if ($request->type == 'art_show') {
+            $model = ArtShow::query()->find($request->id);
+            return $this->success($this->repository->artShowLike($model));
         }
-        return $this->success($model);
+        else {
 
+            $model = ArtShowComment::query()->find($request->id);
 
+            return $this->success($this->repository->artShowCommentLike($model));
+
+        }
     }
 }

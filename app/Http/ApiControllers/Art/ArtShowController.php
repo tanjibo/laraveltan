@@ -26,34 +26,6 @@ class ArtShowController extends ApiController
         return  $this->success(['data'=>$artList,'link'=>$links]);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     *
-     */
-    public function indexApi(Request $request,ArtShow $art){
-        if($request->expectsJson()){
-            if(!$art) return [];
-            $model = ArtShow::query()->with('comments');
-
-            //排序
-            if ($order = $request->columns ?: 'id') {
-                $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
-            }
-
-            //选择框的检索
-            if ($select = $request->select) {
-                $model->orWhere($select);
-            }
-            //输入框的检索
-            if ($search = $request->search) {
-                $model->orWhere('id', 'like', "%{$search}%")->orWhere('name', 'like', "%{$search}%");
-            }
-
-            $model = $model->paginate($request->prePage ?: 10);
-            return response()->json($model);
-        }
-    }
 
 
 

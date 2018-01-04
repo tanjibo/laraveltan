@@ -112,7 +112,7 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
          Route::post('art_comment_list/{art_show}','CommentController@commentList');
          Route::post('art_comment_detail/{art_comment}','CommentController@commentDetail');
          //点赞
-        Route::resource('art_comment_like','LikesController',['only'=>['store','index']]);
+        Route::resource('art_like','LikesController',['only'=>['store']]);
         //收藏
         Route::resource('art_collection','CollectionController',['only'=>['store','index']]);
 
