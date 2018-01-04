@@ -35,6 +35,7 @@ class CommentResource extends Resource
             'like_count' => $this->count?:0,
             'is_auth_user_liked'=>count($this->likes)?1:0,
             'to_be_reply_id'=>$this->to_be_reply_id,
+             'art_show_id'=>$this->art_show_id,
             //评论人
             'nickname'=>$this->owner?$this->owner->nickname:'错误',
             'avatar'=>$this->owner?$this->owner->avatar:'avatar',
