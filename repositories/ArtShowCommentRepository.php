@@ -41,12 +41,7 @@ class ArtShowCommentRepository
      */
     public function commentDetail(ArtShowComment $artShowComment){
 
-        $data=$artShowComment->childs()->paginate(2);
+        return $artShowComment->childs()->paginate(30);
 
-        $links=['current_page'=>$data->currentPage(),'total'=>$data->lastPage()];
-
-        $comment = CommentResource::collection($data);
-        // 标记为已读，未读数量清零
-        return['data'=>$comment,'link'=>$links];
     }
 }

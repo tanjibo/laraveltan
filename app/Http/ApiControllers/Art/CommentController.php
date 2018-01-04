@@ -35,9 +35,21 @@ class CommentController extends ApiController
     }
 
 
+    /**
+     * @param ArtShowComment $art_comment
+     * @return mixed
+     */
     public function commentDetail(ArtShowComment $art_comment){
 
-      return   $this->success($this->repository->commentDetail($art_comment));
+        $data=$this->repository->commentDetail($art_comment);
+
+        $links=['current_page'=>$data->currentPage(),'total'=>$data->lastPage()];
+
+        $comment = CommentResource::collection($data);
+        // 标记为已读，未读数量清零
+        $c=['data'=>$comment,'link'=>$links,'comment'=>$data];
+        
+         return   $this->success($c);
     }
 
 
@@ -52,7 +64,7 @@ class CommentController extends ApiController
     public function store( ArtCommentRequest $request )
     {
         //获取登录用户的id
-        $request[ 'user_id' ] = auth()->id() ?: 5;
+        $request[ 'user_id' ] = auth()->id();
         $model   = ArtShowComment::query()->create($request->all());
 
         return $model ? $this->success(new CommentResource($model)) : $this->error('添加评论错误');
