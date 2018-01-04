@@ -14,12 +14,21 @@ namespace App\Http\ApiControllers\Art;
 
 use App\Http\ApiControllers\ApiController;
 use App\Http\Resources\Art\ArtShowResource;
+use App\Models\ArtShow;
 use App\Models\ArtShowCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Repositories\ArtShowLikeAndCollectionRepository;
 
 class CollectionController extends ApiController
 {
+
+
+    protected $repository;
+
+    public function __construct(ArtShowLikeAndCollectionRepository $repository) {
+        $this->repository=$repository;
+    }
 
     public function index( Request $request )
     {
@@ -35,21 +44,15 @@ class CollectionController extends ApiController
 
     }
 
+
     /**
-     * 收藏喜欢的艺术品
+     * @param Request $request
+     * @param ArtShow $art_show
+     * @return mixed 收藏
      */
-    public function store( Request $request )
-    {
+    function store(Request $request,ArtShow $art_show){
 
-        $request[ 'user_id' ] = app()->environment() == 'local' ? 165 : auth()->id();
-
-        $model = ArtShowCollection::toggle($request->all());
-
-        if (is_bool($model)) {
-            return $this->success([ 'message' => '取消关注成功' ]);
-        }
-
-        return $this->success($model);
+        return $this->success($this->repository->artShowCollection($art_show));
     }
 
 }
