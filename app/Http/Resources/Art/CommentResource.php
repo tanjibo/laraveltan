@@ -26,7 +26,7 @@ class CommentResource extends Resource
             //是否可以删除
             'is_can_del'=>$this->user_id==auth()->id()?1:0,
              //是否可以回复，去掉自己回复自己的情况
-             'is_can_reply'=>$this->user_id==auth()->id()?1:0,
+             'is_can_reply'=>$this->user_id!=auth()->id()?1:0,
             'parent_id'  => $this->parent_id,
             'comment'    => $this->comment,
             'created_at' => $this->created_at->diffForHumans(),
