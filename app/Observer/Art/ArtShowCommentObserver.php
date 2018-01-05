@@ -50,8 +50,8 @@ class ArtShowCommentObserver
            $model= ArtShowComment::where('to_be_reply_id', $comment->id);
 
         }
-
-        $comment->art_show->decrement('comment_count', $model->count());
+        $count=$model->count()+1;
+        $comment->art_show->decrement('comment_count', $count);
         $model->delete();
 
     }
