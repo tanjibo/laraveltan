@@ -17,7 +17,7 @@ class ArtShowResource extends Resource
        return [
            'id'=>$this->id,
            'big_img'=>$this->cover,
-           'small_img'=>$this->cover,
+           'small_img'=>$this->cover.'?imageView2/2/h/300/format/jpg/q/60|imageslim',
            'created_at'=>$this->created_at->toDateString(),
            'name'=>$this->name,
            'like_count'=>$this->like_count,
