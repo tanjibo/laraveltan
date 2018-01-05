@@ -36,7 +36,7 @@ class ArtShowComment extends Model
 
     public function replies_to_user()
     {
-        return $this->belongsTo(ArtShowComment::class, 'to_be_reply_id')->with('owner');
+        return $this->belongsTo(ArtShowComment::class, 'to_be_reply_id')->with('owner')->withTrashed();
     }
 
     public function replies()
