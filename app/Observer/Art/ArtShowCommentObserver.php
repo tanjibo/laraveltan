@@ -44,15 +44,18 @@ class ArtShowCommentObserver
     {
         //顶级评论
         if (!$comment->parent_id) {
+            //查找顶级下的所有回复
             $model= ArtShowComment::where('parent_id', $comment->id);
+            $count=$model->count()+1;
+            $comment->art_show->decrement('comment_count', $count);
+            $model->delete();
         }
         else {
-           $model= ArtShowComment::where('to_be_reply_id', $comment->id);
-
+            //不是顶级
+           $model= ArtShowComment::where('id', $comment->parent_id);
+           $model->decrement('reply_count');
         }
-        $count=$model->count()+1;
-        $comment->art_show->decrement('comment_count', $count);
-        $model->delete();
+
 
     }
 }
