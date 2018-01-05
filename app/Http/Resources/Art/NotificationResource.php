@@ -26,6 +26,7 @@ class NotificationResource extends Resource
             'type'       => class_basename($this->type),
             'created_at' => $this->created_at->toDateTimeString(),
             'data'       => static::filterData($this->data),
+            'read_at'=>$this->read_at?true:false
         ];
     }
 
