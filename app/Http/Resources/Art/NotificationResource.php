@@ -12,6 +12,7 @@
 namespace App\Http\Resources\Art;
 
 
+use App\Models\ArtShowComment;
 use Illuminate\Http\Resources\Json\Resource;
 
 class NotificationResource extends Resource
@@ -33,6 +34,8 @@ class NotificationResource extends Resource
         $data[ 'user_avatar' ] = static::https($data[ 'user_avatar' ]);
 
         $data['reply']=htmlspecialchars_decode($data['reply']);
+        $data['is_del_comment']=ArtShowComment::query()->where('id',$data['comment_id'])->count();
+        $data['is_del_father_comment']=ArtShowComment::query()->where('id',$data['parent_comment_id'])->count();
         return $data;
     }
 

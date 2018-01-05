@@ -47,7 +47,9 @@ class ArtShowCommentReply extends Notification
            'art_show_id'=>$this->reply->art_show->id,
            'art_show_url'=>route('art.show',$this->reply->art_show->id),
            'reply'=>$this->reply->comment,
-           'type'=>'reply'
+           'type'=>'reply',
+           'comment_id'=>$this->reply->id,
+           'parent_comment_id'=>$this->reply->parent_id
         ];
     }
 

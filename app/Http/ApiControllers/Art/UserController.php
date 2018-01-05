@@ -26,7 +26,7 @@ class UserController extends ApiController
 
         if($user_id=auth()->id()){
             $request['user_id']=$user_id;
-            return $this->success(new UserResource(User::query()->find($user_id?:5)));
+            return $this->success(new UserResource(User::query()->find($user_id)));
 
         }else{
             return $this->failed('error');
@@ -36,7 +36,7 @@ class UserController extends ApiController
    public function unReadMsg()
     {
 
-        $user = app()->environment() == 'local' ? User::find(5) : auth()->user();
+        $user = auth()->user();
 
         $data=$user->notifications()->paginate(10);
 
