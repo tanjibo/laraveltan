@@ -27,7 +27,7 @@ class ExperienceRoomRepository
 
     public function all()
     {
-        $rooms = ExperienceRoom::query()->whereIn('type', [ ExperienceRoom::TYPE_SINGLE, ExperienceRoom::TYPE_ALL ])->get();
+        $rooms = ExperienceRoom::query()->whereIn('type', [ ExperienceRoom::TYPE_SINGLE, ExperienceRoom::TYPE_ALL ])->orderBy('sort')->get();
 
         return ExperienceRoomResource::collection($rooms);
 
