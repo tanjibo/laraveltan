@@ -33,6 +33,3 @@ mix.scripts([
     'public/adminLTEcomponents/sweetalert/sweetalert2.min.js',
 ], 'public/js/all.js');
 
-if (mix.config.inProduction) {
-    mix.version();
-}

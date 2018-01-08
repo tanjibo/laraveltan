@@ -55,7 +55,7 @@
 <!-- AdminLTE App -->
 <!-- AdminLTE for demo purposes -->
 <script src="{{mix('js/manifest.js')}}"></script>
-{{--<script src="{{mix('js/vendor.js')}}"></script>--}}
+<script src="{{mix('js/vendor.js')}}"></script>
 <script src="{{mix('js/app.js')}}"></script>
 <script src="/js/laroute.js"></script>
 {{--<script src="/adminLTEcomponents/dist/js/demo.js"></script>--}}
