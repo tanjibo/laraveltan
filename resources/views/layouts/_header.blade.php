@@ -38,7 +38,7 @@
                             <img src="{{Auth::user()->avatar?:icon(Auth::user()->nickname)}}" class="img-circle" alt="User Image">
 
                             <p>
-                                {{Auth::user()->nickname}} - {{Auth::user()->level_title}}
+                                {{Auth::user()->nickname}}
                                 <small>注册于 {{Auth::user()->created_at->diffForHumans()}}</small>
                                 <small>正在使用 {{Auth::user()->terminal}} 登录</small>
                             </p>

@@ -2,7 +2,7 @@
 
     <!-- Box Comment -->
     @foreach($comments as $key=>$v)
-    <div class="box box-widget">
+    <div style="border:1px solid #ccc" class="box box-widget">
         <div class="box-header with-border">
             <div class="user-block">
                 <img class="img-circle" src="{{$v->owner->avatar}}" alt="User Image">
@@ -30,7 +30,7 @@
         </div>
         <!-- /.box-body -->
         @foreach($v->childs as $m=>$n)
-        <div class="box-footer box-comments">
+        <div  class="box-footer box-comments">
             <div class="box-comment">
                 <!-- User image -->
                 <img class="img-circle img-sm" src="{{$n->owner->avatar}}" alt="User Image">
@@ -61,8 +61,9 @@
                        {{$n->comment}}
                    </p>
                     <span class="pull-right text-muted">{{$n->like_count}} 个赞 </span>
-
-                    @include('art.artshow._comment_form',['comment'=>$n,'parent_id'=>$v->id,'art'=>$art,'to_be_reply_id'=>$n->id])
+                   @if($n->user_id!=auth()->id())
+                    @include('art.artshow._comment_form',['comment'=>$n,'parent_id'=>$v->id,'art'=>$art,'to_be_reply_id'=>$n->id,'user_id'=>$n->user_id])
+                       @endif
 
                 </div>
                 <!-- /.comment-text -->
@@ -73,7 +74,9 @@
         @endforeach
         <!-- /.box-footer -->
         <div class="box-footer">
+            @if($v->user_id!=auth()->id())
             @include('art.artshow._comment_form',['comment'=>$v,'parent_id'=>$v->id,'art'=>$art,'to_be_reply_id'=>$v->id])
+                @endif
         </div>
         <!-- /.box-footer -->
     </div>

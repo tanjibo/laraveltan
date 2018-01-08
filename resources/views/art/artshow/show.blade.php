@@ -68,6 +68,10 @@
 @stop
 @section('javascript')
     <script>
+        function show(obj){
+           $(obj).siblings('div').show();
+           $(obj).hide();
+        }
         let vm = new Vue({
             el: '#app',
             data: {},
@@ -101,7 +105,8 @@
                      reload();
                     })})
 
-                }
+                },
+
             }
         })
     </script>
