@@ -6,6 +6,7 @@ use App\Http\Requests\ArtRequest;
 use App\Models\ArtShow;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -47,6 +48,7 @@ class ArtShowController extends Controller
             }
 
             $model = $model->paginate($request->prePage ?: 10);
+
             return response()->json($model);
         }
     }

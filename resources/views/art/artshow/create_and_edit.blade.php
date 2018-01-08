@@ -8,7 +8,7 @@
                     <h4>添加展示</h4>
                 </div>
                 <div class="box-body">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-10 col-md-offset-1">
                         <el-form-item label="展品名称" prop="name">
                             <el-input type="name" v-model="form.name"></el-input>
                         </el-form-item>
@@ -24,6 +24,14 @@
                         </el-form-item>
                         <el-form-item label="图片" prop="cover">
                             <uploader-single :imgurl.sync="form.cover"></uploader-single>
+                        </el-form-item>
+
+                        <el-form-item label="是否显示" prop="status">
+                            <el-radio v-model="form.status" label="1">显示</el-radio>
+                            <el-radio v-model="form.status" label="0">隐藏</el-radio>
+                        </el-form-item>
+                        <el-form-item label="排序" prop="sorting">
+                            <el-input v-model="form.sorting" type="number" placeholder="排序"></el-input>
                         </el-form-item>
 
 
@@ -58,6 +66,8 @@
                     cover: model.cover ? model.cover : '',
                     attr: model.attr ? model.attr : '',
                     introduction: model.introduction ? model.introduction : '',
+                    status:model.status?model.status:'1',
+                    sorting:model.sorting?model.sorting:100
                 },
                 rules: {
                     name: [

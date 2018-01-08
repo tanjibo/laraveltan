@@ -2,5 +2,7 @@
     "/js/vendor.js": "/js/vendor.js?id=79e743634a83acaef582",
     "/js/app.js": "/js/app.js?id=451c529398bacc1ce8b8",
     "/css/app.css": "/css/app.css?id=b9cb5c393f3dcc0fb457",
-    "/js/manifest.js": "/js/manifest.js?id=49e9efd09f217fa21a3d"
+    "/js/manifest.js": "/js/manifest.js?id=49e9efd09f217fa21a3d",
+    "/css/all.css": "/css/all.css?id=a06c1f7dc9e17319f48d",
+    "/js/all.js": "/js/all.js?id=c2437bb20c8d73d35c48"
 }

@@ -12,13 +12,15 @@
 namespace App\Observer\Art;
 
 use App\Models\ArtShow;
+use Illuminate\Support\Facades\DB;
 
 class ArtShowObserver
 {
 
-    function saving(ArtShow $artShow){
-
+    function saved(ArtShow $artShow){
+        DB::table('art_show')->update(['mini_route'=>'pages/detail?art_show_id='.$artShow->id]);
     }
+
 
     function deleting(ArtShow $artShow){
 

@@ -8,19 +8,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="/adminLTEcomponents/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/adminLTEcomponents/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="/adminLTEcomponents/Ionicons/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/adminLTEcomponents/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="/adminLTEcomponents/dist/css/skins/_all-skins.min.css">
-
+    <link rel="stylesheet" href="/css/all.css">
     <link href="https://cdn.bootcss.com/element-ui/2.0.5/theme-chalk/index.css" rel="stylesheet">
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -58,23 +47,15 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="/adminLTEcomponents/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/adminLTEcomponents/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/all.js"></script>
 <!-- SlimScroll -->
 {{--<script src="/adminLTEcomponents/jquery-slimscroll/jquery.slimscroll.min.js"></script>--}}
 <!-- FastClick -->
 {{--<script src="/adminLTEcomponents/fastclick/lib/fastclick.js"></script>--}}
 <!-- AdminLTE App -->
-<script src="/adminLTEcomponents/dist/js/adminlte.js"></script>
-<script src="/adminLTEcomponents/dist/js/demo.js"></script>
-
-<link href="https://cdn.bootcss.com/limonte-sweetalert2/6.6.6/sweetalert2.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://cdn.bootcss.com/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{mix('js/manifest.js')}}"></script>
-<script src="{{mix('js/vendor.js')}}"></script>
+{{--<script src="{{mix('js/vendor.js')}}"></script>--}}
 <script src="{{mix('js/app.js')}}"></script>
 <script src="/js/laroute.js"></script>
 {{--<script src="/adminLTEcomponents/dist/js/demo.js"></script>--}}
