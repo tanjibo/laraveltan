@@ -32,6 +32,7 @@ class NotificationResource extends Resource
 
     static function filterData( $data )
     {
+        var_dump($data);exit;
         if(!count($data)) return [];
         $data[ 'user_avatar' ] = static::https($data[ 'user_avatar' ]);
 
