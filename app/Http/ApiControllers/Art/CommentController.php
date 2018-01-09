@@ -79,7 +79,7 @@ class CommentController extends ApiController
             'art_show_name'=>$model->art_show->name,
             'date'=>$model->created_at->toDateTimeString()
         ];
-       dd($reply);
+       dd($data);
         (new ArtShowWechatNotify)->commentReply($data);
 
         return $model ? $this->success(new CommentResource($model)) : $this->error('添加评论错误');
