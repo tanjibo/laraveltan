@@ -107,6 +107,8 @@ Route::group(['namespace'=>'Art', 'middleware' => 'api' ],function(){
         //艺术展示
          Route::resource('art_show','ArtShowController',['only'=>['index','show']]);
          Route::get('art_show/comment/{art_show}','ArtShowController@getArtShowComment');
+         //分享
+         Route::get('art_show/share/{art_show}','ArtShowController@shareArtShow');
          //评论
          Route::resource('art_comment','CommentController',['only'=>['store','destroy']]);
          Route::post('art_comment_list/{art_show}','CommentController@commentList');

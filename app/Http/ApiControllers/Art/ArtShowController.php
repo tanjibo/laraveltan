@@ -56,6 +56,7 @@ class ArtShowController extends ApiController
 
          $data=['art'=>new ArtShowResource($art),'comment'=>CommentResource::collection($comments)];
 
+         $art->increment('view_count',1);
        return $this->success($data);
 
     }
@@ -76,6 +77,17 @@ class ArtShowController extends ApiController
 
 
         return  $this->success(['data'=>$data,'link'=>$links]);
+    }
+
+    /**
+     * @param Request $request
+     * @param ArtShow $art_show
+     * @return mixed
+     * 分享
+     */
+    public function shareArtShow(Request $request,ArtShow $art_show){
+       $model=$art_show->increment('share_count',1);
+        return $this->success(['data'=>$model]);
     }
 
 

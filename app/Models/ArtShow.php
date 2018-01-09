@@ -9,7 +9,7 @@ class ArtShow extends Model
 {
     use SoftDeletes;
     protected $table    = 'art_show';
-    protected $fillable = [ 'name', 'desc', 'cover', 'attr', 'introduction','status','mini_route','sorting' ];
+    protected $fillable = [ 'name', 'desc', 'cover', 'attr', 'introduction','status','mini_route','sorting','share_count','view_count','collection_count'];
 
     protected $casts=[
         'status'=>'string'
