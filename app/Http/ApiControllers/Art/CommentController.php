@@ -69,7 +69,7 @@ class CommentController extends ApiController
         $model   = ArtShowComment::query()->create($request->all());
 
         $data=[
-           'art_open_id'=>(string)$model->replies_to_user()->owner->art_open_id,
+           'art_open_id'=>(string)$model->replies_to_user()->owner()->art_open_id,
             //'art_open_id'=>auth()->user()->art_open_id,
             'form_id'=>request()->form_id,
             'reply_user'=>auth()->user()->nickname,
