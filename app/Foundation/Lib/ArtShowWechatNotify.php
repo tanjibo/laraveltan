@@ -104,6 +104,7 @@ class ArtShowWechatNotify
 
             ],
         ];
+        dd($params);exit;
         $this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
 
     }
