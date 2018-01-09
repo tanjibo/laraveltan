@@ -70,7 +70,6 @@ class ArtShowWechatNotify
 
         $params = [
            'touser'      => $data['art_open_id'],
-//            'touser'      =>'oKsQH0ftd9h1aDzDuRf4PkPpUiSE',
             'template_id' => 'xTFBxJx7usPgTUb715BFLV0oiGgF-PBGwr5-4_x66Q4',
             'page'        => 'pages/userComment?comment_id='.$data['parent_comment_id'],
             'form_id'     => $data['form_id'],
@@ -99,9 +98,7 @@ class ArtShowWechatNotify
                 'keyword5'    => [
                     'value' => '请关注小程序关联公众号"了如三舍"或"茶边求"以便收到最新资讯😊',
                     'color' => '#182a68',
-                ],
-
-
+                ]
             ],
         ];
 
