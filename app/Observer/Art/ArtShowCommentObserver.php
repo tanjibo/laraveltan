@@ -39,7 +39,7 @@ class ArtShowCommentObserver
             //通知
             $parent->owner->notify(new ArtShowCommentReply($comment));
             //微信通知
-//            event(new ArtShowNotificationEvent(auth()->user(),$comment));
+          event(new ArtShowNotificationEvent(auth()->user(),$comment));
         }
     }
 

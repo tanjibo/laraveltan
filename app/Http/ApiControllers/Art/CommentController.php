@@ -68,21 +68,6 @@ class CommentController extends ApiController
         //获取登录用户的id
         $request[ 'user_id' ] = auth()->id();
         $model   = ArtShowComment::query()->create($request->all());
-        $user=ArtShowComment::query()->where('id',$request->to_be_reply_id)->value('user_id');
-
-        $data=[
-//           'art_open_id'=>(string)$model->replies_to_user->owner->art_open_id,
-            'open_id'=>User::where('id',$user)->value('art_open_id'),
-//            'open_id'=>auth()->user()->art_open_id,
-            'form_id'=>request()->form_id,
-            'reply_user'=>auth()->user()->nickname,
-            'parent_comment_id'=>$model->parent_id,
-            'reply_comment'=>$model->comment,
-            'art_show_name'=>$model->art_show->name,
-            'date'=>$model->created_at->toDateTimeString()
-        ];
-        
-        (new ArtShowWechatNotify)->commentReply($data);
 
         return $model ? $this->success(new CommentResource($model)) : $this->error('添加评论错误');
 
