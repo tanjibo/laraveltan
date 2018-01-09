@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 
+use Illuminate\Support\Facades\Log;
 use Jenssegers\Agent\Facades\Agent;
 
 class HomeController extends Controller

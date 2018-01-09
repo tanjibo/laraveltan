@@ -14,6 +14,7 @@ namespace App\Foundation\Lib;
 
 use GuzzleHttp\Client;
 use function GuzzleHttp\Psr7\build_query;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class ArtShowWechatNotify
@@ -115,6 +116,7 @@ class ArtShowWechatNotify
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // 传输数据
         $responseText = curl_exec($curl);
         curl_close($curl);
+        Log::info($responseText);
         return $responseText;
     }
 
