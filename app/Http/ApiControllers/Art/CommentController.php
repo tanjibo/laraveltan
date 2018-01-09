@@ -71,7 +71,7 @@ class CommentController extends ApiController
         $reply=ArtShowComment::query()->with('owner')->find($request->to_be_reply_id);
         $data=[
 //           'art_open_id'=>(string)$model->replies_to_user->owner->art_open_id,
-            'art_open_id'=>$reply->owner->art_open_id,
+            'open_id'=>$reply->owner->art_open_id,
 //            'open_id'=>auth()->user()->art_open_id,
             'form_id'=>request()->form_id,
             'reply_user'=>auth()->user()->nickname,
