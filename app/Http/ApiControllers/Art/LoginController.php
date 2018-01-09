@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Tanjibo\Minilrss\Minilrss;
 
 
@@ -52,6 +53,7 @@ class LoginController extends ApiController
 
         $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
        extract($userInfo);
+        Log::info($userInfo);
         $userData = [
             'avatar'      => $avatarUrl,
             'nickname'    => $nickName,
@@ -61,7 +63,7 @@ class LoginController extends ApiController
             'status'      => User::USER_STATUS_ON,
 
         ];
-
+         dd($userData);
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {
 
