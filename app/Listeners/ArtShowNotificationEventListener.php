@@ -41,6 +41,7 @@ class ArtShowNotificationEventListener
             'art_show_name'=>$event->comment->art_show->name,
             'date'=>$event->comment->created_at->toDateTimeString()
         ];
+        dd($data);
         $this->notify->commentReply($data);
     }
 }
