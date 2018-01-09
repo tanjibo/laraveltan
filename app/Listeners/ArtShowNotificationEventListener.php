@@ -33,8 +33,8 @@ class ArtShowNotificationEventListener
     {
 
         $data=[
-//            'art_open_id'=>$event->comment->replies_to_user->owner->art_open_id,
-            'art_open_id'=>'oKsQH0ftd9h1aDzDuRf4PkPpUiSE',
+           'open_id'=>$event->comment->replies_to_user->owner->art_open_id,
+//            'art_open_id'=>'oKsQH0ftd9h1aDzDuRf4PkPpUiSE',
             'form_id'=>$this->request->form_id,
             'reply_user'=>$event->user->nickname,
             'parent_comment_id'=>$event->comment->parent_id,
