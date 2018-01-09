@@ -65,7 +65,7 @@ class ArtShowWechatNotify
      */
     public  function commentReply( $data )
     {
-
+       dd($data);exit;
         if(!$data['art_open_id'] || !$data['form_id']) return false;
 
         $params = [
@@ -104,7 +104,7 @@ class ArtShowWechatNotify
 
             ],
         ];
-        dd($params);exit;
+
         $this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
 
     }
