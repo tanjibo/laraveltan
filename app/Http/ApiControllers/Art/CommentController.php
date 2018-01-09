@@ -69,7 +69,7 @@ class CommentController extends ApiController
         $model   = ArtShowComment::query()->create($request->all());
 
         $data=[
-            'art_open_id'=>string($model->replies_to_user->owner->art_open_id),
+            'art_open_id'=>(string)$model->replies_to_user->owner->art_open_id,
 //            'art_open_id'=>'oKsQH0ftd9h1aDzDuRf4PkPpUiSE',
             'form_id'=>request()->form_id,
             'reply_user'=>auth()->user()->nickname,
@@ -78,7 +78,6 @@ class CommentController extends ApiController
             'art_show_name'=>$model->art_show->name,
             'date'=>$model->created_at->toDateTimeString()
         ];
-        dd($data);exit;
         (new ArtShowWechatNotify)->commentReply($data);
 
         return $model ? $this->success(new CommentResource($model)) : $this->error('添加评论错误');

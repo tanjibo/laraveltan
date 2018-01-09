@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Redis;
 
 class ArtShowWechatNotify
 {
-    const TOKEN                   = 'wechat_art_show_access_token';
+    const TOKEN                   = 'art_show_access_token';
     const ACCESS_TOKEN_URL_PREFIX = 'https://api.weixin.qq.com/cgi-bin/token?';
     const WECHAT_TEMPLATE_URL     = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?';
 
@@ -101,7 +101,7 @@ class ArtShowWechatNotify
                 ]
             ],
         ];
-
+           dd($this->accessToken());
         $this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
 
     }
