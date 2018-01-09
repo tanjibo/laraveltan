@@ -31,7 +31,7 @@ class ArtShowComment extends Model
      */
     public function owner()
     {
-        return $this->belongsTo(User::class, 'user_id')->select('nickname','id','avatar','mobile');
+        return $this->belongsTo(User::class, 'user_id')->select('nickname','id','avatar','mobile','art_open_id');
     }
 
     public function replies_to_user()

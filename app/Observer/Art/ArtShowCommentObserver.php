@@ -12,6 +12,7 @@
 namespace App\Observer\Art;
 
 
+use App\Events\ArtShowNotificationEvent;
 use App\Models\ArtShowComment;
 use App\Notifications\ArtShowCommentReply;
 
@@ -37,6 +38,8 @@ class ArtShowCommentObserver
             ArtShowComment::find($comment->parent_id)->increment('reply_count', 1);
             //通知
             $parent->owner->notify(new ArtShowCommentReply($comment));
+            //微信通知
+            event(new ArtShowNotificationEvent(auth()->user(),$comment));
         }
     }
 

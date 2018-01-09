@@ -53,7 +53,6 @@ class LoginController extends ApiController
 
         $userInfo = json_decode($this->wx->getUserInfo($request->encryptedData, $request->iv), true);
        extract($userInfo);
-        Log::info($userInfo);
         $userData = [
             'avatar'      => $avatarUrl,
             'nickname'    => $nickName,
@@ -63,7 +62,7 @@ class LoginController extends ApiController
             'status'      => User::USER_STATUS_ON,
 
         ];
-    
+
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {
 

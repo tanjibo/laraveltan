@@ -46,8 +46,7 @@
     @includeIf("layouts._footer")
 </div>
 <!-- ./wrapper -->
-
-<script src="js/all.js"></script>
+<script src="/js/all.js"></script>
 <!-- SlimScroll -->
 {{--<script src="/adminLTEcomponents/jquery-slimscroll/jquery.slimscroll.min.js"></script>--}}
 <!-- FastClick -->

@@ -26,6 +26,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SendTearoomBackendNotificationEvent' => [
             'App\Listeners\SendTearoomBackendNotificationEventListener',
         ],
+          //中式空间
+        'App\Events\ArtShowNotificationEvent' => [
+            'App\Listeners\ArtShowNotificationEventListener',
+        ],
 
         'Illuminate\Database\Events\QueryExecuted'=>[
             QueryListener::class
