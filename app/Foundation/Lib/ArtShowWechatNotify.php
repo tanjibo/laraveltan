@@ -66,9 +66,9 @@ class ArtShowWechatNotify
      */
     public  function commentReply( $data )
     {
-        file_put_contents('./1.txt',$data);
-        if(!$data['open_id'] || !$data['form_id']) return false;
 
+        if(!$data['open_id'] || !$data['form_id']) return false;
+        file_put_contents('./3.txt',$data);
         $params = [
            'touser'      => $data['open_id'],
             'template_id' => 'xTFBxJx7usPgTUb715BFLV0oiGgF-PBGwr5-4_x66Q4',
