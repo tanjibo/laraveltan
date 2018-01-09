@@ -34,8 +34,8 @@ class ArtShowNotificationEventListener
     {
 
         $data=[
-             'open_id'=>auth()->user()->art_open_id,
-//           'open_id'=>$event->comment->replies_to_user->owner->art_open_id,
+            // 'open_id'=>auth()->user()->art_open_id,
+           'open_id'=>$event->comment->replies_to_user->owner->art_open_id,
 //            'art_open_id'=>'oKsQH0ftd9h1aDzDuRf4PkPpUiSE',
             'form_id'=>$this->request->form_id,
             'reply_user'=>$event->user->nickname,
