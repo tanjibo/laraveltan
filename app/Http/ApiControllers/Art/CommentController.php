@@ -70,7 +70,7 @@ class CommentController extends ApiController
 
         $data=[
 //            'art_open_id'=>(string)$model->replies_to_user->owner->art_open_id,
-            'art_open_id'=>'oKsQH0ftd9h1aDzDuRf4PkPpUiSE',
+            'art_open_id'=>auth()->user()->art_open_id,
             'form_id'=>request()->form_id,
             'reply_user'=>auth()->user()->nickname,
             'parent_comment_id'=>$model->parent_id,
