@@ -9,6 +9,7 @@ use App\Http\Resources\Art\ArtShowResource;
 use App\Http\Resources\Art\CommentResource;
 use App\Models\ArtShow;
 use App\Models\ArtShowComment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Repositories\ArtShowCommentRepository;
 
@@ -67,11 +68,11 @@ class CommentController extends ApiController
         //获取登录用户的id
         $request[ 'user_id' ] = auth()->id();
         $model   = ArtShowComment::query()->create($request->all());
+        $user=ArtShowComment::query()->where('id',$request->to_be_reply_id)->value('user_id');
 
-        $reply=ArtShowComment::query()->with('owner')->find($request->to_be_reply_id);
         $data=[
 //           'art_open_id'=>(string)$model->replies_to_user->owner->art_open_id,
-            'open_id'=>$reply->owner->art_open_id,
+            'open_id'=>User::where('id',$user)->value('art_open_id'),
 //            'open_id'=>auth()->user()->art_open_id,
             'form_id'=>request()->form_id,
             'reply_user'=>auth()->user()->nickname,
