@@ -116,7 +116,7 @@ class ArtShowWechatNotify
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params); // 传输数据
         $responseText = curl_exec($curl);
         curl_close($curl);
-        Log::info($responseText);
+       file_put_contents('./1.txt',$responseText);
         return $responseText;
     }
 
