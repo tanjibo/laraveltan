@@ -63,46 +63,46 @@ class ArtShowWechatNotify
     /**
      * 发送支付模板通知
      */
-    public  function commentReply( $data )
+    public function commentReply( $data )
     {
 
-        if(!$data['art_open_id'] || !$data['form_id']) return false;
+        if (!$data[ 'art_open_id' ] || !$data[ 'form_id' ]) return false;
 
         $params = [
-           'touser'      => $data['art_open_id'],
+            'touser'      => $data[ 'art_open_id' ],
             'template_id' => 'xTFBxJx7usPgTUb715BFLV0oiGgF-PBGwr5-4_x66Q4',
-            'page'        => 'pages/userComment?comment_id='.$data['parent_comment_id'],
-            'form_id'     => $data['form_id'],
+            'page'        => 'pages/userComment?comment_id=' . $data[ 'parent_comment_id' ],
+            'form_id'     => $data[ 'form_id' ],
             'data'        => [
                 //回复者
-                'keyword1'    => [
-                    'value' => $data['reply_user'],
+                'keyword1' => [
+                    'value' => $data[ 'reply_user' ],
                     'color' => '#182a68',
                 ],
                 //回复内容
-                'keyword2'    => [
-                    'value' =>$data['reply_comment'],
+                'keyword2' => [
+                    'value' => $data[ 'reply_comment' ],
                     'color' => '#182a68',
                 ],
                 //回复时间
-                'keyword3'    => [
-                    'value' => $data['date'],
+                'keyword3' => [
+                    'value' => $data[ 'date' ],
                     'color' => '#182a68',
                 ],
                 //讨论话题
-                'keyword4'    => [
-                    'value' => $data['art_show_name'],
+                'keyword4' => [
+                    'value' => $data[ 'art_show_name' ],
                     'color' => '#182a68',
                 ],
                 //温馨提示
-                'keyword5'    => [
+                'keyword5' => [
                     'value' => '请关注小程序关联公众号"了如三舍"或"茶边求"以便收到最新资讯😊',
                     'color' => '#182a68',
-                ]
+                ],
             ],
         ];
-           dd($this->accessToken());
-        $this->post(static::WECHAT_TEMPLATE_URL.'access_token='.$this->accessToken(),json_encode($params));
+
+      dd($this->post(static::WECHAT_TEMPLATE_URL . 'access_token=' . $this->accessToken(), json_encode($params)));
 
     }
 
