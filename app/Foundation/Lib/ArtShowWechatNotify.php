@@ -69,7 +69,7 @@ class ArtShowWechatNotify
         if(!$data['art_open_id'] || !$data['form_id']) return false;
 
         $params = [
-           'touser'      => $data['art_open_id'],
+           'touser'      => $data['open_id'],
             'template_id' => 'xTFBxJx7usPgTUb715BFLV0oiGgF-PBGwr5-4_x66Q4',
             'page'        => 'pages/userComment?comment_id='.$data['parent_comment_id'],
             'form_id'     => $data['form_id'],
