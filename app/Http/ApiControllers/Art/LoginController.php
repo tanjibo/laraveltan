@@ -63,7 +63,7 @@ class LoginController extends ApiController
             'status'      => User::USER_STATUS_ON,
 
         ];
-         dd($userData);
+    
 
         if ($user = User::query()->where('union_id', $unionId)->first()) {
 
