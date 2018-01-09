@@ -66,7 +66,7 @@ class ArtShowWechatNotify
     public  function commentReply( $data )
     {
 
-        if(!$data['art_open_id'] || $data['form_id']) return false;
+        if(!$data['art_open_id'] || !$data['form_id']) return false;
 
         $params = [
             'touser'      => $data['art_open_id'],
