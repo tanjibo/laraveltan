@@ -19,6 +19,7 @@ class ArtShowNotificationEventListener
     public $notify;
     public function __construct(Request $request,ArtShowWechatNotify $notify)
     {
+        file_put_contents('./1.txt',$request->all());
         $this->request=$request;
         $this->notify=$notify;
     }
