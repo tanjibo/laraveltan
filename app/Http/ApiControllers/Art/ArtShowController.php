@@ -86,7 +86,9 @@ class ArtShowController extends ApiController
      * 分享
      */
     public function shareArtShow(Request $request,ArtShow $art_show){
+
        $model=$art_show->increment('share_count',1);
+
         return $this->success(['data'=>$model]);
     }
 
