@@ -13,12 +13,13 @@
 
             <div class="box-body">
                 <el-row :gutter="20">
-                    <el-col :span="4" v-for="(item, index) in tableData" :key="item.id">
+                    <el-col :span="5" v-for="(item, index) in tableData" :key="item.id">
                         <el-card :body-style="{ padding: '0px' }">
                             <img :src="item.cover+'?imageView2/1/w/200'" class="image">
                             <div style="padding: 14px;">
                                 <span>@{{ item.name }}</span>
-                                <time class="time pull-right">@{{ item.created_at}}</time>
+                                <p>时间：@{{ item.created_at}}</p>
+                                <p>分享路径：@{{ item.mini_route}}</p>
 
                                 <div class="bottom clearfix">
                                     <div>
@@ -86,6 +87,8 @@
 
 @section('javascript')
     <script>
+
+
 
         new Vue({
             el: '#app',

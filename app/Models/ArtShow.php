@@ -15,6 +15,8 @@ class ArtShow extends Model
         'status'=>'string'
     ];
 
+
+
     public function comments()
     {
         return $this->hasMany(ArtShowComment::class);
