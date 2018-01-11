@@ -34,6 +34,12 @@ class UserController extends Controller
                 $model->orWhere('id', 'like', "%{$search}%")->orWhere('mobile', 'like', "%{$search}%")->orWhere('nickname', 'like', "%{$search}%");
             }
 
+            //选择框的检索
+            if ($select = $request->select) {
+                if(isset($select['source']))
+                $model->orWhere($select);
+            }
+
             $model = $model->paginate($request->prePage ?: 10);
             return response()->json($model);
 

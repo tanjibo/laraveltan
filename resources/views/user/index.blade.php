@@ -7,6 +7,14 @@
             <div class="box-header with-border">
                 <h3 class="box-title">用户列表</h3>
                 <div class="pull-right">
+                    <el-select v-model="searchStatus" @change="status" placeholder="检索订单状态">
+                        <el-option
+                                v-for="item in filters"
+                                :key="item.value"
+                                :label="item.text"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
                     <el-autocomplete
                             v-model="searchData"
                             :fetch-suggestions="querySearchAsync"
@@ -83,6 +91,16 @@
                         <div v-else>否</div>
                     </template>
                 </el-table-column>
+                <el-table-column  label="来源">
+                    <template slot-scope="scope">
+
+                        <el-tag size="mini" v-if="scope.row.source==0">商城</el-tag>
+                        <el-tag size="mini" type="primary" v-if="scope.row.source==11">旅游族</el-tag>
+                        <el-tag size="mini" type="info" v-if="scope.row.source==1">安吉</el-tag>
+                        <el-tag size="mini" type="success" v-if="scope.row.source==12">空间展示</el-tag>
+                        <el-tag size="mini" type="danger" v-if="scope.row.source==2">茶舍</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="created_at" label="注册时间" sortable="custom">
 
                 </el-table-column>
@@ -136,6 +154,14 @@
         new Vue({
             el: '#app',
             data: {
+                filters: [
+                    {text: '全部', value: ""},
+                    {text: '商城', value: "0"},
+                    {text: '旅游族', value: "11"},
+                    {text: '安吉', value: "1"},
+                    {text: '中式空间', value: "12"},
+                    {text: '茶舍', value: "2"}
+                ],
                 tableData: [],
                 multipleSelection: [],
                 querys: {'columns': 'id', 'order': 'descending'},
@@ -143,7 +169,8 @@
                 perPage: 10,
                 total: 0,
                 pageSizes: [10, 20, 30, 40],
-                searchData: ''
+                searchData: '',
+                searchStatus: ''//检索订单状态
 
 
             },
@@ -156,6 +183,20 @@
                 })
             },
             methods: {
+
+                status(val){
+                    this.querys.select = val ? {"source": this.searchStatus} : "";
+                    this.searchStatus = val;
+                    let url = laroute.route('user.index_api', {page: this.currentPage});
+
+                    this.$http.post(url, this.querys).then(res => {
+                        this.tableData = res.data;
+                        this.perPage = res.pre_page; //每页数量
+                        this.total = res.total; //总数量
+                    }).catch(res => {
+
+                    })
+                },
 
                 sortChange(column){
                     let url = laroute.route('user.index_api', {page: this.currentPage});
