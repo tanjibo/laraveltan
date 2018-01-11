@@ -84,6 +84,8 @@
                         <el-tag size="mini" type="info" v-if="scope.row.status==2">已入住</el-tag>
                         <el-tag size="mini" type="success" v-if="scope.row.status==10">已完成</el-tag>
                         <el-tag size="mini" type="danger" v-if="scope.row.status==-10">已取消</el-tag>
+                        <el-tag size="mini" type="success" v-if="scope.row.is_prepay==1">预付金</el-tag>
+
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" fixed="right" width="120">
