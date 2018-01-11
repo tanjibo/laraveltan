@@ -5,7 +5,6 @@ $breadcrumb[ 0 ] = config('breadcrumb.' . $action . '/' . 'index');
 if (count(request()->segments()) > 1)
     $breadcrumb[ 1 ] =config('breadcrumb.' . $action . '/' . $method);
 
-
 ?>
 
 <section class="content-header" style="padding: 15px 15px 15px 15px;">
