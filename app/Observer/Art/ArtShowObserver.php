@@ -18,7 +18,7 @@ class ArtShowObserver
 {
 
     function saved(ArtShow $artShow){
-        DB::table('art_show')->update(['mini_route'=>'pages/detail?art_show_id='.$artShow->id]);
+        DB::table('art_show')->where('id',$artShow->id)->update(['mini_route'=>'pages/detail?art_show_id='.$artShow->id]);
     }
 
 
