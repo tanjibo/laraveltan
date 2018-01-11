@@ -186,7 +186,10 @@ return [
         Naux\Mail\SendCloudServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
-        \Tanjibo\Minilrss\MinilrssServiceProvider::class
+        \Tanjibo\Minilrss\MinilrssServiceProvider::class,
+
+
+        Yankewei\LaravelSensitive\SensitiveServiceProvider::class,
 
 
     ],
@@ -237,6 +240,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Sensitive' => Yankewei\LaravelSensitive\Facades\Sensitive::class,
 
     ],
 

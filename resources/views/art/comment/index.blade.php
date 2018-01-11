@@ -24,7 +24,7 @@
 
                 <el-table-column label="ID" prop="id" sortable="custom">
                     <template slot-scope="scope">
-                        <a :href="'/experience/booking/'+scope.row.id">@{{ scope.row.id }}</a>
+                        <a>@{{ scope.row.id }}</a>
                     </template>
                 </el-table-column>
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e99bc81e84cc4184e95ee881057ecd18",
+    "content-hash": "373283928cf7e0a04b0116f2622e0907",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4841,6 +4841,48 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
+        },
+        {
+            "name": "yankewei/laravel-sensitive",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yankewei/laravel-sensitive.git",
+                "reference": "f1eb1bf119a368baa34303d72e73f50d57cbdb4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yankewei/laravel-sensitive/zipball/f1eb1bf119a368baa34303d72e73f50d57cbdb4d",
+                "reference": "f1eb1bf119a368baa34303d72e73f50d57cbdb4d",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yankewei\\LaravelSensitive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yankewei",
+                    "email": "15833997749@163.com"
+                }
+            ],
+            "description": "过滤敏感词汇的laravel包，使用DFA算法",
+            "time": "2017-07-29T04:12:39+00:00"
         },
         {
             "name": "yzalis/identicon",

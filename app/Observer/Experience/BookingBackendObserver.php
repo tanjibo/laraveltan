@@ -11,6 +11,7 @@
 
 namespace App\Observer\Experience;
 
+use App\Events\SendNotificationEvent;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
@@ -183,7 +184,7 @@ class BookingBackendObserver
     public function updated( ExperienceBooking $booking )
     {
 
-        // event(new SendNotificationEvent($booking));
+        event(new SendNotificationEvent($booking));
         // SendBookingEmail::dispatch($booking);
     }
 

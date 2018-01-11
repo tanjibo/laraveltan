@@ -58,6 +58,14 @@
                             <el-button type="primary" @click="onSubmit">立即创建</el-button>
                             <el-button>取消</el-button>
                         </el-form-item>
+                        {{--<el-form-item label="是否发送短信">--}}
+                            {{--<el-switch--}}
+                                    {{--v-model="form.isSMS"--}}
+                                    {{--active-color="#13ce66"--}}
+                                    {{--inactive-color="#ff4949">--}}
+                            {{--</el-switch>--}}
+
+                        {{--</el-form-item>--}}
                     </el-form>
                 </section>
 
@@ -184,7 +192,8 @@
                     checkin:'',
                     checkout:'',
                     pay_mode:0,
-                    source:'LrssAdmin'
+                    source:'LrssAdmin',
+                    isSMS:false
                 }
 
             },

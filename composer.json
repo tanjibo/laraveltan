@@ -26,6 +26,7 @@
         "spatie/laravel-activitylog": "^2.3",
         "spatie/laravel-permission": "^2.7",
         "tanjibo/minilrss": "dev-master",
+        "yankewei/laravel-sensitive": "^2.0",
         "yzalis/identicon": "^1.2"
     },
     "require-dev": {

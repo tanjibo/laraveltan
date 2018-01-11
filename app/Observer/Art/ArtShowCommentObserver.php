@@ -23,7 +23,9 @@ class ArtShowCommentObserver
     {
         //过滤
         $comment->comment = clean($comment->comment, 'user_topic_body') ?: '您输入的内容违规,请注意。如有下次，我们将采取一定的措施';
+        $comment->comment=filterSentenceWord($comment->comment);
     }
+
 
     public function created( ArtShowComment $comment )
     {

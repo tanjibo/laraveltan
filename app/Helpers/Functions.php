@@ -1,5 +1,14 @@
 <?php
 
+function filterSentenceWord(string $word){
+    $interference = ['&', '*'];
+    $filename = './sensitiveWord.txt'; //每个敏感词独占一行
+    \Yankewei\LaravelSensitive\Facades\Sensitive::interference($interference); //添加干扰因子
+    \Yankewei\LaravelSensitive\Facades\Sensitive::addwords($filename); //需要过滤的敏感词
+    $words = \Yankewei\LaravelSensitive\Facades\Sensitive::filter($word);
+     return $words;
+}
+
 function userHasAccess(Array $permission){
     if(!auth()->user()->hasAnyPermission($permission)){
 
