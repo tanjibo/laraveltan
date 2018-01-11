@@ -80,9 +80,9 @@
                     </template>
 
                 </el-table-column>
-                <el-table-column prop="nickname" label="用户名称" sortable="custom">
+                {{--<el-table-column prop="nickname" label="用户名称" sortable="custom">--}}
 
-                </el-table-column>
+                {{--</el-table-column>--}}
                 <el-table-column prop="is_lrss_staff" label="内部员工" sortable="custom">
                     <template slot-scope="scope">
                         <div v-if="scope.row.is_lrss_staff">
