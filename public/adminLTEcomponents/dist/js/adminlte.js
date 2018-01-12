@@ -746,9 +746,6 @@ throw new Error('AdminLTE requires jQuery')
 
   PushMenu.prototype.init = function () {
 
-      if(!window.localStorage.getItem('lrss_click')){
-          $('body').addClass(ClassName.collapsed)
-      }
 
     if (this.options.expandOnHover
       || ($('body').is(Selector.mini + Selector.layoutFixed))) {
@@ -788,7 +785,7 @@ throw new Error('AdminLTE requires jQuery')
 
   PushMenu.prototype.open = function () {
     var windowWidth = $(window).width()
-      localStorage.setItem('lrss_click', 'true');
+
     if (windowWidth > this.options.collapseScreenSize) {
       $('body').removeClass(ClassName.collapsed)
         .trigger($.Event(Event.expanded))
@@ -801,7 +798,7 @@ throw new Error('AdminLTE requires jQuery')
 
   PushMenu.prototype.close = function () {
     var windowWidth = $(window).width()
-      localStorage.removeItem('lrss_click');
+
     if (windowWidth > this.options.collapseScreenSize) {
       $('body').addClass(ClassName.collapsed)
         .trigger($.Event(Event.collapsed))

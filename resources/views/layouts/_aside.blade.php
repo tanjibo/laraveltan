@@ -27,7 +27,7 @@
                 </a>
             </li>
             @hasanyrole('experience_manager|admin|superAdmin')
-            <li class="treeview active">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa  fa-sort-amount-desc"></i>
                     <span>安吉体验中心</span>
@@ -60,7 +60,7 @@
             @endhasanyrole
 
             @hasanyrole('user_manager|admin|superAdmin')
-            <li class="treeview  active">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-sort-amount-desc"></i>
                     <span>用户管理</span>
@@ -81,7 +81,7 @@
             @endhasanyrole
 
             @hasanyrole('art_manager|admin|superAdmin')
-            <li class="treeview  active">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-sort-amount-desc"></i>
                     <span>图片展</span>
@@ -101,7 +101,7 @@
             @endhasanyrole
 
             @hasanyrole('tearoom_manager|admin|superAdmin')
-            <li class="treeview  active">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-sort-amount-desc"></i>
                     <span>茶舍</span>

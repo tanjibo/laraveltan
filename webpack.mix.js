@@ -2,7 +2,7 @@ let mix = require('laravel-mix');
 
 mix.options({
 
-    devtool: 'cheap'
+    uglify: false
 
 });
 

@@ -2,7 +2,7 @@
     <div class="pull-right hidden-xs">
         <b>AdminLrss</b> 2017-12-18 v.1.0
     </div>
-    <strong>Copyright © 2016-2017 北京濯振轩文化发展有限公司 Co,Ltd.</strong>
+    <strong>Copyright © 2017-2018 北京濯振轩文化发展有限公司 Co,Ltd.</strong>
 </footer>
 
 <!-- Control Sidebar -->
