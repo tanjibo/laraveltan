@@ -94,7 +94,6 @@ class BookingController extends Controller
         if ($request->expectsJson()) {
 
             $request[ 'date' ] = date('Y-m-d', strtotime($request->date));
-            var_dump($request->all());return response()->json([],501);exit;
             return response()->json(TearoomBooking::query()->create($request->all()));
         }
 
