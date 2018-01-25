@@ -26,8 +26,8 @@ class ArtShowResource extends Resource
            'share_count'=>$this->share_count,
            'comment_count'=>$this->comment_count,
            'collection_count'=>$this->collection_count,
-           'is_auth_user_liked'=>count($this->likes),
-           'is_auth_user_collected'=>count($this->collections),
+          // 'is_auth_user_liked'=>count($this->likes),
+           'is_auth_user_collected'=>$this->collections()->ByWho(auth()->id())->count(),
        ];
     }
 }
