@@ -64,7 +64,7 @@ class BookingObserver
         // 锁定时间
         TearoomSchedule::lockTime($booking->tearoom_id, $booking->date, $booking->start_point, $booking->end_point);
        //发送短信
-      // event(new SendTearoomBackendNotificationEvent($booking));
+       event(new SendTearoomBackendNotificationEvent($booking));
     }
 
 
