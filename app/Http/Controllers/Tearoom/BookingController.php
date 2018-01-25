@@ -65,6 +65,7 @@ class BookingController extends Controller
         $tearoom = Tearoom::query()->with('tearoom_prices')->find($request->tearoom);
 
         $timeSchedule = collect(TearoomSchedule::$timetable);
+        dd($tearoom->tearoom_prices[0]->toArray());exit;
         return view('tearoom.booking.create_and_edit', compact('timeSchedule', 'tearoom'));
     }
 
