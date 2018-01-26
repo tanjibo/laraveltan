@@ -216,16 +216,15 @@
 
         <el-dialog title="温馨提示" :visible.sync="dialogVisible">
             <el-form v-if="changeStatus==1" :model="form">
-                <el-form-item label="实付金额" label-width="120px">
-                    <el-input v-model="form.real_fee" auto-complete="off"></el-input>
+                <el-form-item label="实付金额">
+                    <el-input class="sm-" v-model="form.real_fee" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
             <div v-if="changeStatus==10">确定服务完成？</div>
-
             <div v-if="changeStatus==-10">确定取消订单吗?</div>
 
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
+                {{--<el-button  @click="dialogVisible = false">取 消</el-button>--}}
                 <el-button type="primary" @click="submit()">确 定</el-button>
             </div>
         </el-dialog>
@@ -344,6 +343,11 @@
                     if (this.changeStatus == 1 || this.changeStatus == 10) {
                         params.real_fee = this.form.real_fee
                     }
+                    if(!params.real_fee){
+                        this.$message.error('请输入实付金额');
+                        return false;
+                    }
+                    
                     this.$http.post('{{route('tearoom_booking.changeStatus',$booking)}}', params).then(res => {
                         reload();
                     })
