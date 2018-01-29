@@ -7,6 +7,7 @@
 
 namespace App\Models\Backend;
 
+use App\Models\ModelTrait;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -24,6 +25,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class ExperienceSpecialPrice extends Eloquent
 {
+    use ModelTrait;
 	protected $table = 'experience_special_price';
 	public $incrementing = false;
 	public $timestamps = false;

@@ -69,8 +69,7 @@ class RoomController extends Controller
 
         $attachUrl = ExperienceRoomCommonSetting::query()->where('type', 'supporting_url')->select('url','id')->get();
         $specialPrice = $model->experience_special_price;
-
-
+        
         return view('experience.room.create_and_edit', compact('model', 'attachUrl', 'specialPrice'));
     }
 

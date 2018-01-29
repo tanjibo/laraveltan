@@ -250,13 +250,13 @@
                     })
                 },
                 makePrice(){
-                    let data = {
+                    let params = {
                         type: this.defaultType,
                         price: this.defautPrice,
                         dateSelect: this.dateSelect
                     }
                     let url=laroute.route('experience_rooms.makePrice',{experience_room:data['id']})
-                    this.$http.post(url, data).then(res => {
+                    this.$http.post(url, params).then(res => {
 
                        this.createSpecialPrice=res;
 

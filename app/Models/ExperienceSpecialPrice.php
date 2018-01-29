@@ -47,6 +47,7 @@ class ExperienceSpecialPrice extends Eloquent
             'type',
         ];
 
+
     public function experience_room()
     {
         return $this->belongsTo(\App\Models\ExperienceRoom::class);
