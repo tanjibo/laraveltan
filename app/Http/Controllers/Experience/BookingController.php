@@ -97,6 +97,8 @@ class BookingController extends Controller
                     ]
         );
 
+
+
         return response()->json(ExperienceBooking::store($request));
 
 

@@ -45,9 +45,11 @@ class BookingBackendObserver
         $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
         $booking->pay_mode = $booking::PAY_MODE_OFFLINE;
 
-
     }
 
+    public function created(ExperienceBooking $booking){
+        event(new SendNotificationEvent($booking));
+    }
     public function saving( ExperienceBooking $booking )
     {
         if(!$this->request->status){

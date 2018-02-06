@@ -36,6 +36,11 @@ class SendNotificationEventListener
      */
     public function handle( SendNotificationEvent $event )
     {
+        //判断是否后台下单
+        $source=isset($this->request->source)?$this->request->source:'';
+        if($event->booking->status==ExperienceBooking::STATUS_UNPAID && $source=='LrssAdmin'){
+          $this->unpayNotify($event->booking);
+        }
         //成功支付
         if($event->booking->status==ExperienceBooking::STATUS_PAID){
 
@@ -57,6 +62,17 @@ class SendNotificationEventListener
         $this->_tpl($booking, Sm::TYPE_EXPERIENCE_PAID_WITH_USER,Sm::TYPE_EXPERIENCE_PAID_WITH_OPERATOR);
 
     }
+
+    /**
+     * @param ExperienceBooking $booking
+     * 后台下订单，发送后台人员通知
+     */
+    public function unpayNotify(ExperienceBooking $booking){
+        $mobile   = implode(',', config('lrss.experience'));
+        $template = Sm::template(SM::TYPE_EXPERIENCE_UNPAY_WITH_OPERATOR, $booking);
+        Sm::send($mobile, $template,SM::TYPE_EXPERIENCE_UNPAY_WITH_OPERATOR);
+    }
+
 
     /**
      * 取消支付时候的通知
