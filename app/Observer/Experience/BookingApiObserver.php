@@ -45,7 +45,9 @@ class BookingApiObserver
             $booking->price = $total = 0.1;
         }
         else {
-            $booking->price = $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,$this->request->isPrepay);
+            $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,$this->request->isPrepay);
+            
+            $booking->price  = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,false);
         }
 
         //如果是余额支付
