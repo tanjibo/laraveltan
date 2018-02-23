@@ -41,14 +41,14 @@ class BookingApiObserver
 
         $booking->user_id = Auth::id() ?: 1;
         //计算价格
-//        if (App::environment() == 'test' || App::environment() == 'develop') {
-//            $booking->price = $total = 0.1;
-//        }
-//        else {
+        if (App::environment() == 'test' || App::environment() == 'develop') {
+            $booking->price = $total = 0.1;
+        }
+        else {
             $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,$this->request->isPrepay);
 
             $booking->price  = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,false);
-       // }
+        }
 
         //如果是余额支付
         if ($booking->pay_mode == $booking::PAY_MODE_BALANCE) {
