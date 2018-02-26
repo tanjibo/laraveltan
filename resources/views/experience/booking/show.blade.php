@@ -230,12 +230,12 @@
         </div>
 
         <el-dialog title="温馨提示" :visible.sync="dialogVisible">
-            <el-form v-if="changeStatus==1" :model="form">
+            <el-form v-if="changeStatus==1 || changeStatus==2" :model="form">
                 <el-form-item label="实付金额" label-width="120px">
                     <el-input v-model="form.real_price" auto-complete="off"></el-input>
                 </el-form-item>
             </el-form>
-            <div v-if="changeStatus==2">确定客户已经入住？</div>
+            <div style="text-align: center" v-if="changeStatus==2">确定客户已经入住？</div>
             <div v-if="changeStatus==10">确定服务完成？</div>
 
             <div v-if="changeStatus==-10">确定取消订单吗?</div>
@@ -358,7 +358,7 @@
                 },
                 submit(){
                     let params = {status: this.changeStatus};
-                    if (this.changeStatus == 1 || this.changeStatus == 10) {
+                    if (this.changeStatus == 1 || this.changeStatus == 10 ||this.changeStatus==2) {
                         params.real_price = this.form.real_price
                     }
                     this.$http.post('{{route('experience_bookings.changeStatus',$model)}}', params).then(res => {

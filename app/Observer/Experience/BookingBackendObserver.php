@@ -70,6 +70,11 @@ class BookingBackendObserver
                 $booking->real_price = $this->request->real_price;
                 static::statusToPaid($booking);
                 break;
+                case $booking::STATUS_CHECKIN:
+
+                $booking->real_price = $this->request->real_price;
+                static::statusToPaid($booking);
+                break;
             // 已完成
             case $booking::STATUS_COMPLETE:
                 static::statusToComplete($booking);
