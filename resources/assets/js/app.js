@@ -64,14 +64,13 @@ Vue.use(ElementUI)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-Vue.prototype.$http = axios;
+Vue.prototype.$http = axios.create({});
 
 Vue.prototype.$http.interceptors.response.use(function (response) {
     // Do something with response data
     return response.data;
 }, function (error) {
-    // Do something with response error
-    console.log(error);
+    // Do something with response erro
 
     return Promise.reject(error.response.data);
 
