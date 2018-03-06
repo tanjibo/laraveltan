@@ -87,7 +87,7 @@ Route::group(
         Route::post('/user/userInfo', 'UserController@userInfo');
         Route::get('/article/process',"ArticleController@index");
         Route::get('/article/list',"ArticleController@list");
-        Route::get('/article/{id}/detail',"ArticleController@show");
+        Route::get('/article/detail/{id}/',"ArticleController@show");
     }
     );
 
