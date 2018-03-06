@@ -108,7 +108,7 @@
 
                     let url = type == 'edit' ? laroute.route('experience_more_article.update', {'experience_more_article': data[0]['id']}) : '{{route("experience_more_article.store")}}';
 
-
+                  console.log(url)
                     this.$http.post(url, formDataJson).then(res => {
                         swal({
                             title: "温馨提示！",
