@@ -117,7 +117,7 @@
                             type: "success",
                             showConfirmButton: false,
                         }).catch(res => {
-                            //window.location.href='{{route('experience_more_article.index')}}'
+                            window.location.href='{{route('experience_more_article.index')}}'
                         });
                     })
                 },
