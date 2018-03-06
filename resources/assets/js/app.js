@@ -64,7 +64,7 @@ Vue.use(ElementUI)
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-Vue.prototype.$http = axios.create({});
+Vue.prototype.$http = axios;
 
 Vue.prototype.$http.interceptors.response.use(function (response) {
     // Do something with response data
