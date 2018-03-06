@@ -7,7 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+window.Quill=require('quill')
 import ElementUI from 'element-ui'
 
 
@@ -77,6 +77,8 @@ Vue.prototype.$http.interceptors.response.use(function (response) {
 
 });
 
+
+
 Vue.component('uploader', require('./components/upload.vue'));
 Vue.component('uploader-single', require('./components/upload-single.vue'));
 Vue.component('special-price', require('./components/special-price.vue'));
@@ -88,6 +90,8 @@ Vue.component('tearoom-price', require('./components/tearoom_price.vue'));
 
 Vue.component('tearoom-lock-time-select', require('./components/tearoom_lock_time_select.vue'));
 Vue.component('art-suggestion-reply', require('./components/art_suggestion_reply.vue'));
+Vue.component('new-quill-editor', require('./components/quill_editor.vue'));
+Vue.component("article_child",require('./components/article_child.vue'));
 
 
 

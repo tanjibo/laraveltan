@@ -55,6 +55,16 @@
                             <a href="{{route('experience_settings.index')}}"><i class="fa fa-cogs"></i>通用设置</a>
                         </li>
                     @endcan
+                        @can('experience_settings_show')
+                        <li @if(request()->segment(1)=='experience_settings') class="active" @endif>
+                            <a href="{{route('experience_article.index')}}"><i class="fa fa-video-camera"></i>三舍栏目</a>
+                        </li>
+                    @endcan
+                        @can('experience_settings_show')
+                        <li @if(request()->segment(1)=='experience_settings') class="active" @endif>
+                            <a href="{{route('experience_more_article.index')}}"><i class="fa fa-eye"></i>发现栏目</a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
             @endhasanyrole

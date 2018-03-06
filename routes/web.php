@@ -73,6 +73,10 @@ Route::middleware([ "auth" ])->group(
 
                 //-----------------------设置---------------------------
                 Route::resource('experience_settings', 'SettingsController');
+                //----------------------三舍改造过程-----------------------------
+                Route::resource('experience_article', 'ArticleController');
+
+                Route::resource('experience_more_article', 'MoreArticleController');
 
 
             }

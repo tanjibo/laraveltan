@@ -85,6 +85,9 @@ Route::group(
 
         //用户资料
         Route::post('/user/userInfo', 'UserController@userInfo');
+        Route::get('/article/process',"ArticleController@index");
+        Route::get('/article/list',"ArticleController@list");
+        Route::get('/article/{id}/detail',"ArticleController@show");
     }
     );
 
