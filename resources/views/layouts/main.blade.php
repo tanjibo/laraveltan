@@ -57,7 +57,7 @@
 <script src="{{mix('js/vendor.js')}}"></script>
 <script src="{{mix('js/app.js')}}"></script>
 
-<script src="{{mix("/js/laroute.js)}}"></script>
+<script src="{{mix("/js/laroute.js")}}"></script>
 {{--<script src="/adminLTEcomponents/dist/js/demo.js"></script>--}}
 {{--<script src="https://cdn.bootcss.com/element-ui/2.0.5/index.js"></script>--}}
 
