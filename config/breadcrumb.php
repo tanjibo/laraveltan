@@ -60,6 +60,41 @@ return [
         'name' => '通用设置',
         'url'  => 'experience_settings.index',
     ],
+
+    /**
+     * |--------------------------------------------------------------------------
+     * |添加栏目
+     * |--------------------------------------------------------------------------
+     */
+    'experience_article/index'=>[
+        'name' => '三舍栏目',
+        'url'  => 'experience_article.index',
+    ],
+    'experience_article/create'=>[
+        'name' => '添加三舍栏目文章',
+        'url'  => 'experience_article.create',
+    ],
+    'experience_article/edit'=>[
+        'name' => '编辑三舍栏目文章',
+        'url'  => 'experience_article.edit',
+    ],
+    /**
+     * |--------------------------------------------------------------------------
+     * |发现栏目
+     * |--------------------------------------------------------------------------
+     */
+    'experience_more_article/index'=>[
+        'name' => '发现栏目',
+        'url'  => 'experience_more_article.index',
+    ],
+    'experience_more_article/create'=>[
+        'name' => '添加发现栏目文章',
+        'url'  => 'experience_more_article.create',
+    ],
+    'experience_more_article/edit'=>[
+        'name' => '编辑栏目文章',
+        'url'  => 'experience_more_article.edit',
+    ],
     /**
      * |--------------------------------------------------------------------------
      * |角色订单

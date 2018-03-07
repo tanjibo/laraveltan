@@ -20,6 +20,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        userHasAccess(['experience_article_show']);
         $model=ExperienceArticle::query()->where('type',ExperienceArticle::TYPE_TRANSFORM_PROCESS)->orderBy('created_at','desc')->get();
       return view('experience.article.index',compact('model'));
     }
@@ -31,6 +32,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        userHasAccess(['experience_article_create']);
         return view("experience.article.create_and_edit");
     }
 
@@ -73,6 +75,7 @@ class ArticleController extends Controller
      */
     public function edit( ExperienceArticle $experience_article)
     {
+        userHasAccess(['experience_article_update']);
         $model=$experience_article;
          return view('experience.article.create_and_edit',compact('model'));
     }

@@ -15,6 +15,7 @@ class MoreArticleController extends Controller
      */
     public function index( ExperienceArticle $model )
     {
+        userHasAccess(['experience_more_article_show']);
         $model = ExperienceArticle::query()->where('type', ExperienceArticle::TYPE_CUSTOMER_STORY_FATHER)->with('articleChild')->orderBy('created_at', 'desc')->get();
         return view('experience.more_article.index', compact('model'));
     }
@@ -26,6 +27,7 @@ class MoreArticleController extends Controller
      */
     public function create()
     {
+        userHasAccess(['experience_more_article_create']);
         return view('experience.more_article.create_and_edit');
     }
 
@@ -72,6 +74,7 @@ class MoreArticleController extends Controller
      */
     public function edit( ExperienceArticle $experience_more_article )
     {
+        userHasAccess(['experience_more_article_update']);
         $child   = $experience_more_article->articleChild->toArray();
         $model[] = $experience_more_article->toArray();
 
