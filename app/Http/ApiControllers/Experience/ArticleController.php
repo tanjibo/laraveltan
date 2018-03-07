@@ -15,9 +15,10 @@ class ArticleController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $article = ExperienceArticle::query()->where('type', ExperienceArticle::TYPE_TRANSFORM_PROCESS)->orderBy("created_at", 'desc')->first();
+        $request->detail = true;
         if (!count($article)) {
             return $this->success([ 'data' => '', 'message' => '', 'code' => 404 ]);
         }
