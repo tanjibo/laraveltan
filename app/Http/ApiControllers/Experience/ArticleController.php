@@ -17,6 +17,7 @@ class ArticleController extends ApiController
      */
     public function index(Request $request)
     {
+
         $article = ExperienceArticle::query()->where('type', ExperienceArticle::TYPE_TRANSFORM_PROCESS)->orderBy("created_at", 'desc')->first();
         $request->detail = true;
         if (!count($article)) {

@@ -207,6 +207,10 @@
     }
 
     .quill-editor {
+        .ql-container{
+            height:500px;
+            overflow-y: auto;
+        }
         /*工具栏内用*/
         .ql-font {
             span[data-value="Arial"]::before {

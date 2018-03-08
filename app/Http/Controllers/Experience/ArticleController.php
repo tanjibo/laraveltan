@@ -20,6 +20,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
+
         userHasAccess(['experience_article_show']);
         $model=ExperienceArticle::query()->where('type',ExperienceArticle::TYPE_TRANSFORM_PROCESS)->orderBy('created_at','desc')->get();
       return view('experience.article.index',compact('model'));
