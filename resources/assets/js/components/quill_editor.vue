@@ -208,7 +208,7 @@
 
     .quill-editor {
         .ql-container{
-            height:500px;
+            height:800px;
             overflow-y: auto;
         }
         /*工具栏内用*/
