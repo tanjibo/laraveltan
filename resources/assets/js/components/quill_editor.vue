@@ -43,9 +43,6 @@
     import ImageResize from 'quill-image-resize-module'
     Quill.register('modules/imageDrop', ImageDrop)
     Quill.register('modules/imageResize', ImageResize)
-    const Font = Quill.import('formats/font');
-    Font.whitelist = ['Arial', '微软雅黑', 'serif', 'sans-serif', '宋体', '黑体', 'monospace'];
-    Quill.register(Font, true);
 
     //设置
 
@@ -75,7 +72,7 @@
                                 [{'direction': 'rtl'}],
                                 [{'size': ['small', false, 'large', 'huge']}],
                                 [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                                [{'font': ['Arial', '微软雅黑', 'serif', 'sans-serif', '宋体', '黑体', 'monospace']}],
+                                [{'font': []}],
                                 [{'color': []}, {'background': []}],
                                 [{'align': []}],
                                 ['clean'],
@@ -184,65 +181,13 @@
         font-size: 14px;
     }
 
-    .ql-editor {
-        min-height: 500px;
-        height:auto;
-
-    }
-
-    .quill-code {
-        border: none;
-        height: auto;
-        > code {
-            width: 100%;
-            margin: 0;
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-top: none;
-            border-radius: 0;
-            height: 10rem;
-            overflow-y: auto;
-            resize: vertical;
-        }
-    }
 
     .quill-editor {
         .ql-container{
             height:800px;
             overflow-y: auto;
         }
-        /*工具栏内用*/
-        .ql-font {
-            span[data-value="Arial"]::before {
-                content: "Arial" !important;
-                font-family:"Arial";
-            }
-            span[data-value="宋体"]::before {
-                content: "宋体" !important;
-                font-family:"宋体";
-            }
-            span[data-value="黑体"]::before {
-                content: "黑体" !important;
-                font-family: "黑体";
-            }
-            span[data-value="微软雅黑"]::before {
-                content: "微软雅黑" !important;
-                font-family: "微软雅黑";
-            }
-        }
-        /*编辑器内容用*/
-        .ql-font-Arial {
-            font-family:"Arial" !important;
-        }
-        .ql-font-宋体 {
-        font-family:"宋体" !important;
-        }
-        .ql-font-黑体 {
-            font-family:"黑体" !important;
-        }
-        .ql-font-微软雅黑 {
-            font-family:"微软雅黑" !important;
-        }
+
     }
 
 </style>

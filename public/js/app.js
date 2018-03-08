@@ -1999,9 +1999,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 Quill.register('modules/imageDrop', __WEBPACK_IMPORTED_MODULE_5_quill_image_drop_module__["a" /* ImageDrop */]);
 Quill.register('modules/imageResize', __WEBPACK_IMPORTED_MODULE_6_quill_image_resize_module___default.a);
-var Font = Quill.import('formats/font');
-Font.whitelist = ['Arial', '微软雅黑', 'serif', 'sans-serif', '宋体', '黑体', 'monospace'];
-Quill.register(Font, true);
 
 //设置
 
@@ -2021,7 +2018,7 @@ Quill.register(Font, true);
                 upload_id: this.id,
                 modules: {
                     toolbar: {
-                        container: [['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'header': 1 }, { 'header': 2 }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'script': 'sub' }, { 'script': 'super' }], [{ 'indent': '-1' }, { 'indent': '+1' }], [{ 'direction': 'rtl' }], [{ 'size': ['small', false, 'large', 'huge'] }], [{ 'header': [1, 2, 3, 4, 5, 6, false] }], [{ 'font': ['Arial', '微软雅黑', 'serif', 'sans-serif', '宋体', '黑体', 'monospace'] }], [{ 'color': [] }, { 'background': [] }], [{ 'align': [] }], ['clean'], ['link', 'image', 'video']],
+                        container: [['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'header': 1 }, { 'header': 2 }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'script': 'sub' }, { 'script': 'super' }], [{ 'indent': '-1' }, { 'indent': '+1' }], [{ 'direction': 'rtl' }], [{ 'size': ['small', false, 'large', 'huge'] }], [{ 'header': [1, 2, 3, 4, 5, 6, false] }], [{ 'font': [] }], [{ 'color': [] }, { 'background': [] }], [{ 'align': [] }], ['clean'], ['link', 'image', 'video']],
                         handlers: {
                             image: function image(value) {
                                 if (value) {
@@ -4538,7 +4535,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n.el-form-item__content {\n  line-height: 24px;\n  position: relative;\n  font-size: 14px;\n}\n.ql-editor {\n  min-height: 500px;\n  height: auto;\n}\n.quill-code {\n  border: none;\n  height: auto;\n}\n.quill-code > code {\n    width: 100%;\n    margin: 0;\n    padding: 1rem;\n    border: 1px solid #ccc;\n    border-top: none;\n    border-radius: 0;\n    height: 10rem;\n    overflow-y: auto;\n    resize: vertical;\n}\n.quill-editor {\n  /*工具栏内用*/\n  /*编辑器内容用*/\n}\n.quill-editor .ql-container {\n    height: 800px;\n    overflow-y: auto;\n}\n.quill-editor .ql-font span[data-value=\"Arial\"]::before {\n    content: \"Arial\" !important;\n    font-family: \"Arial\";\n}\n.quill-editor .ql-font span[data-value=\"宋体\"]::before {\n    content: \"\\5B8B\\4F53\" !important;\n    font-family: \"\\5B8B\\4F53\";\n}\n.quill-editor .ql-font span[data-value=\"黑体\"]::before {\n    content: \"\\9ED1\\4F53\" !important;\n    font-family: \"\\9ED1\\4F53\";\n}\n.quill-editor .ql-font span[data-value=\"微软雅黑\"]::before {\n    content: \"\\5FAE\\8F6F\\96C5\\9ED1\" !important;\n    font-family: \"\\5FAE\\8F6F\\96C5\\9ED1\";\n}\n.quill-editor .ql-font-Arial {\n    font-family: \"Arial\" !important;\n}\n.quill-editor .ql-font-宋体 {\n    font-family: \"\\5B8B\\4F53\" !important;\n}\n.quill-editor .ql-font-黑体 {\n    font-family: \"\\9ED1\\4F53\" !important;\n}\n.quill-editor .ql-font-微软雅黑 {\n    font-family: \"\\5FAE\\8F6F\\96C5\\9ED1\" !important;\n}\n", ""]);
+exports.push([module.i, "\n.el-form-item__content {\n  line-height: 24px;\n  position: relative;\n  font-size: 14px;\n}\n.quill-editor .ql-container {\n  height: 100px;\n  overflow-y: auto;\n}\n", ""]);
 
 // exports
 
