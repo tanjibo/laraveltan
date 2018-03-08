@@ -65,6 +65,11 @@
                             <a href="{{route('experience_more_article.index')}}"><i class="fa fa-eye"></i>发现栏目</a>
                         </li>
                     @endcan
+                        @can('experience_more_article_show')
+                        <li @if(request()->segment(1)=='experience_wechat_fetcher') class="active" @endif>
+                            <a href="{{route('experience_wechat_fetcher.index')}}"><i class="fa fa-bug"></i>微信爬虫</a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
             @endhasanyrole

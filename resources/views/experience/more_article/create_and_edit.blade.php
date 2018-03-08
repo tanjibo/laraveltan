@@ -11,7 +11,7 @@
             </div>
             <!-- /.box-header -->
             <el-form label-width="80px">
-                <div class="box-body">
+                <div  class="box-body">
                     <div class="box-group" id="accordion">
 
                         <article_child v-on:delchild="delChild" v-for="(child,index) in formData" :num="index"

@@ -95,6 +95,24 @@ return [
         'name' => '编辑栏目文章',
         'url'  => 'experience_more_article.edit',
     ],
+
+    /**
+     * |--------------------------------------------------------------------------
+     * |发现栏目
+     * |--------------------------------------------------------------------------
+     */
+    'experience_wechat_fetcher/index'=>[
+        'name' => '微信爬虫',
+        'url'  => 'experience_wechat_fetcher.index',
+    ],
+    'experience_wechat_fetcher/create'=>[
+        'name' => '添加爬虫',
+        'url'  => 'experience_wechat_fetcher.create',
+    ],
+    'experience_wechat_fetcher/edit'=>[
+        'name' => '修改微信文章类型',
+        'url'  => 'experience_wechat_fetcher.edit',
+    ],
     /**
      * |--------------------------------------------------------------------------
      * |角色订单

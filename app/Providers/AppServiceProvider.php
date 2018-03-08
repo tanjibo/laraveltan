@@ -5,12 +5,14 @@ namespace App\Providers;
 use App\Models\ArtShow;
 use App\Models\ArtShowComment;
 use App\Models\ArtShowSuggestion;
+use App\Models\ExperienceArticle;
 use App\Models\ExperienceBooking;
 use App\Models\TearoomBooking;
 use App\Observer\Art\ArtShowCommentLikeObserver;
 use App\Observer\Art\ArtShowCommentObserver;
 use App\Observer\Art\ArtShowObserver;
 use App\Observer\Art\ArtShowSuggestionObserver;
+use App\Observer\Experience\ArticleObserver;
 use App\Observer\Experience\BookingApiObserver;
 use App\Observer\Experience\BookingBackendObserver;
 use App\Observer\Tearoom\BookingObserver;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         //订单监听
        \App\Models\Backend\ExperienceBooking::observe(BookingBackendObserver::class);
        ExperienceBooking::observe(BookingApiObserver::class);
+       ExperienceArticle::observe(ArticleObserver::class);
         Carbon::setLocale("zh");
 
         //观察者模式

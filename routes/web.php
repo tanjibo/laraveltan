@@ -78,6 +78,8 @@ Route::middleware([ "auth" ])->group(
 
                 Route::resource('experience_more_article', 'MoreArticleController');
 
+                Route::resource('experience_wechat_fetcher', 'WechatFetcherController');
+
 
             }
         )

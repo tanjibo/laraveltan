@@ -12,7 +12,7 @@
                             <img class="profile-user-img img-responsive" src="{{$v->cover_img}}"
                                  alt="User profile picture">
 
-                            <h4 class="profile-username text-center" style="font-size:18px">{{$v->title}}</h4>
+                            <h4 class="profile-username text-center" style="font-size:16px">{{str_limit($v->title,100,'...')}}</h4>
 
                             <p class="text-muted text-center">{{$v->desc}}</p>
                             <a href="{{route('experience_article.edit',['experience_article'=>$v->id])}}"
