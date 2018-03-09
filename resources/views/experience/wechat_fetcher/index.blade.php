@@ -17,7 +17,7 @@
                             <p class="text-muted text-center">{{$v->desc}}</p>
 
                             <a href="{{route('experience_wechat_fetcher.edit',['experience_wechat_fetcher'=>$v->id])}}"
-                               class="btn btn-primary"><b>修改</b></a>
+                               class="btn btn-primary"><b>选择文章类型</b></a>
                             <div class="pull-right" style="margin-top: 5px;">时间:{{$v->created_at->toDateString()}}</div>
 
                         </div>

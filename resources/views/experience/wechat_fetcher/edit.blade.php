@@ -18,7 +18,7 @@
                                 <div class="box-body">
                                     <el-form-item label="选择文章类型">
                                         <el-radio  v-model="type" label="1">发现栏目</el-radio>
-                                        <el-radio  v-model="type" label="2">三舍栏目</el-radio>
+                                        <el-radio  v-model="type" label="0">三舍栏目</el-radio>
                                     </el-form-item>
                                     <el-form-item v-if="type==1" label="选择子文章">
                                         <el-select  style="max-width:100%" v-model="others" multiple placeholder="请选择">
