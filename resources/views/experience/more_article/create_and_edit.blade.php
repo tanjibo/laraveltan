@@ -16,6 +16,17 @@
 
                         <article_child v-on:delchild="delChild" v-for="(child,index) in formData" :num="index"
                                        :child.sync="child"></article_child>
+                        <el-form-item  v-if="WechatArticleLen" label="子文章">
+                            <el-select  style="max-width:100%" v-model="others" multiple placeholder="请选择">
+                                <el-option
+                                        size="medium"
+                                        v-for="item in options"
+                                        :key="item.id"
+                                        :label="item.title"
+                                        :value="item.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
                         <div class="box-footer">
                             <el-form-item>
                                 @if(isset($model))
@@ -53,10 +64,15 @@
                 type: '1',
             }];
         let data = {!! isset($model)?$model->toJson():'formDataTpl' !!};
+        let options={!! isset($other)?$other->toJson() :'[]'!!};
+        let WechatArticleLen={!! isset($other)?count($other):0 !!};
         let vm = new Vue({
             el: '#app',
             data: {
-                formData: data
+                formData: data,
+                options:options,
+                others:[],
+                WechatArticleLen:WechatArticleLen
             },
 
             methods: {
@@ -105,7 +121,7 @@
                         formDataJson._method = "PUT"
                     }
 
-
+                    formDataJson.others=this.others
                     let url = type == 'edit' ? laroute.route('experience_more_article.update', {'experience_more_article': data[0]['id']}) : '{{route("experience_more_article.store")}}';
 
                   console.log(url,type)
@@ -117,7 +133,7 @@
                             type: "success",
                             showConfirmButton: false,
                         }).catch(res => {
-                            window.location.href='{{route('experience_more_article.index')}}'
+                           // window.location.href='{{route('experience_more_article.index')}}'
                         });
                     })
                 },

@@ -83,8 +83,8 @@ class MoreArticleController extends Controller
         }
 
         $model = collect($model);
-
-        return view('experience.more_article.create_and_edit', compact('model'));
+        $other = ExperienceArticle::query()->wechat()->get();
+        return view('experience.more_article.create_and_edit', compact('model','other'));
     }
 
     /**
@@ -97,6 +97,7 @@ class MoreArticleController extends Controller
     public function update( Request $request, ExperienceArticle $experience_more_article )
     {
         $father = $request->data[ 0 ];
+
         $child  = collect($request->data)->where('type', $experience_more_article::TYPE_CUSTOMER_STORY_CHILD)->toArray();
 
         if ($experience_more_article->update($father) && count($child)) {
@@ -107,6 +108,16 @@ class MoreArticleController extends Controller
                     $experience_more_article->articleChild()->create($v);
                 }
             }
+        }
+        if (isset($request->others) && count($request->others)) {
+            $models = ExperienceArticle::query()->whereIn('id', $request->others)->get();
+            $models->map(
+                function( $item ) use ($experience_more_article) {
+                    $item->type      = ExperienceArticle::TYPE_CUSTOMER_STORY_CHILD;
+                    $item->parent_id = $experience_more_article->id;
+                    $item->save();
+                }
+            );
         }
         return response()->json(['status'=>'success']);
     }
