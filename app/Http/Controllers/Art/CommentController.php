@@ -18,8 +18,8 @@ class CommentController extends Controller
     public function indexApi(Request $request,ArtShowComment $art_comment){
         if($request->expectsJson()){
             if(!$art_comment) return [];
-            $model = ArtShowComment::query()->with('art_show','owner');
-
+            $model = ArtShowComment::query()->with('art_show',
+            'owner')->whereHas('art_show');
             //排序
             if ($order = $request->columns ?: 'id') {
                 $request->order == 'ascending' ? $model->orderBy($request->columns) : $model->orderByDesc($request->columns);
