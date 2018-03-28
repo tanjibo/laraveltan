@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         CancelOrder::class,  //取消订单
-        DelOrder::class  //删除取消的订单
+       // DelOrder::class  //删除取消的订单
     ];
 
     /**
@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
          $schedule->command('cancelOrder')->withoutOverlapping()
                   ->everyMinute();
          //删除取消的订单
-         $schedule->command('delOrder:cancel')->withoutOverlapping()->daily();
+       //  $schedule->command('delOrder:cancel')->withoutOverlapping()->daily();
     }
 
     /**
