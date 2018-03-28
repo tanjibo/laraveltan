@@ -27,7 +27,7 @@ Route::group(
     Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
 
     Route::group(
-        [ 'middleware' => App::environment() == 'local'||App::environment() == "test"?: 'auth.api' ], function() {
+        [ 'middleware' => App::environment() == 'local'?: 'auth.api' ], function() {
 
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
