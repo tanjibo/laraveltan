@@ -34,8 +34,8 @@ class RefundFailNotificationEventListener
             'real_price' => $event->booking->real_price,
             'customer'   => $event->booking->customer,
             'mobile'     => $event->booking->mobile,
-            'checkin'    => $event->booking->checkin->toDateString(),
-            'checkout'   => $event->booking->checkout->toDateString(),
+            'checkin'    => $event->booking->checkin,
+            'checkout'   => $event->booking->checkout,
         ];
         $template  = new SendCloudTemplate('refund_fail_tpl', $bind_data);
 
