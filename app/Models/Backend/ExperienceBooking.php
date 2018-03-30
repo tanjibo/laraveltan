@@ -7,6 +7,7 @@
 
 namespace App\Models\Backend;
 
+use App\Events\SendNotificationEvent;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -96,6 +97,7 @@ class ExperienceBooking extends \App\Models\ExperienceBooking
 
         if ($model = static::query()->create($request->all())) {
             $model->experience_booking_rooms()->attach($request->rooms);
+            event(new SendNotificationEvent($model));
             return $model;
         }
 

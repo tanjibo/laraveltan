@@ -70,7 +70,7 @@ class SendNotificationEventListener
     public function unpayNotify(ExperienceBooking $booking){
         $mobile   = implode(',', config('lrss.experience'));
         $template = Sm::template(SM::TYPE_EXPERIENCE_UNPAY_WITH_OPERATOR, $booking);
-        Sm::send($mobile, $template,SM::TYPE_EXPERIENCE_UNPAY_WITH_OPERATOR);
+       Sm::send($mobile, $template,SM::TYPE_EXPERIENCE_UNPAY_WITH_OPERATOR);
 
         // 用户
         $template = Sm::template(Sm::TYPE_EXPERIENCE_UNPAY_WITH_USER, $booking);
