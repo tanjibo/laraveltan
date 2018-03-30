@@ -50,6 +50,7 @@ class BookingBackendObserver
     public function created(ExperienceBooking $booking){
         event(new SendNotificationEvent($booking));
     }
+
     public function saving( ExperienceBooking $booking )
     {
         if(!$this->request->status){
