@@ -55,19 +55,24 @@
                             <a href="{{route('experience_settings.index')}}"><i class="fa fa-cogs"></i>通用设置</a>
                         </li>
                     @endcan
-                        @can('experience_article_show')
+                    @can('experience_article_show')
                         <li @if(request()->segment(1)=='experience_article') class="active" @endif>
                             <a href="{{route('experience_article.index')}}"><i class="fa fa-video-camera"></i>三舍栏目</a>
                         </li>
                     @endcan
-                        @can('experience_more_article_show')
+                    @can('experience_more_article_show')
                         <li @if(request()->segment(1)=='experience_more_article') class="active" @endif>
                             <a href="{{route('experience_more_article.index')}}"><i class="fa fa-eye"></i>发现栏目</a>
                         </li>
                     @endcan
-                        @can('experience_more_article_show')
+                    @can('experience_more_article_show')
                         <li @if(request()->segment(1)=='experience_wechat_fetcher') class="active" @endif>
                             <a href="{{route('experience_wechat_fetcher.index')}}"><i class="fa fa-bug"></i>微信爬虫</a>
+                        </li>
+                    @endcan
+                    @can('experience_send_sm_show')
+                        <li @if(request()->segment(1)=='experience_send_sm') class="active" @endif>
+                            <a href="{{route('experience_send_sm.index')}}"><i class="fa fa-send-o"></i>短信发送</a>
                         </li>
                     @endcan
                 </ul>

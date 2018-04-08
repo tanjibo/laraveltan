@@ -86,6 +86,48 @@ class Sm extends Eloquent
             'created_at',
         ];
 
+
+
+    /**
+     * @return string
+     * 单独发送短信
+     */
+    public static function singleSendSmTemplate(){
+        $room_arr_id=[];
+        $rooms       = collect(\request()->rooms)->map(
+            function( $item ) use(&$room_arr_id) {
+                $arr=explode(":",$item);
+                array_push($room_arr_id,$arr[1]);
+                return '【' . current($arr) . '】';
+            }
+        )->implode('和')
+        ;
+        $checkin     = \request()->checkin;
+        $checkout    = \request()->checkout;
+        $price       = ExperienceBooking::calculateFee($checkin,$checkout,$room_arr_id);
+        $mobile      = '13051747151'; //客服电话
+
+        switch ( \request()->smStatus ) {
+
+
+            // 体验店预约未支付/支付定金用户短信-------------------------------------------------
+            case self::TYPE_EXPERIENCE_UNPAY_WITH_USER:
+                return '您已预订安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，含双早。办理入住需在下午14:00后，退房在中午12:00前。地址：浙江省湖州市安吉县报福镇深溪三亩田村［了如三舍］（大石浪景区附近），联系电话：' . $mobile . '。';
+
+            // 体验店预约支付完成用户短信----------------------------------------------------------
+            case self::TYPE_EXPERIENCE_PAID_WITH_USER:
+
+                return '您已成功支付安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，支付金额¥' . $price . '，含双早。联系电话：' . $mobile . '。';
+
+
+            // 体验店取消预约用户短信------------------------------------------------------------
+            case self::TYPE_EXPERIENCE_CANCEL_WITH_USER:
+                return '您已取消安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，含双早。欢迎再次预订，谢谢！';
+            default:
+                return '';
+
+        }
+    }
     /**
      * 短信模板
      *
@@ -113,17 +155,16 @@ class Sm extends Eloquent
 
             // 体验店预约未支付/支付定金用户短信-------------------------------------------------
             case self::TYPE_EXPERIENCE_UNPAY_WITH_USER:
-                return  '您已预订安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，含双早。办理入住需在下午14:00后，退房在中午12:00前。地址：浙江省湖州市安吉县报福镇深溪三亩田村［了如三舍］（大石浪景区附近），联系电话：' . $mobile . '。';
+                return '您已预订安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，含双早。办理入住需在下午14:00后，退房在中午12:00前。地址：浙江省湖州市安吉县报福镇深溪三亩田村［了如三舍］（大石浪景区附近），联系电话：' . $mobile . '。';
 
             // 体验店预约运营短信
             case self::TYPE_EXPERIENCE_UNPAY_WITH_OPERATOR:
-               return $customer . $sex . $user_mobile . '预订了安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，请注意登录后台查看';
+                return $customer . $sex . $user_mobile . '预订了安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，请注意登录后台查看';
 
             // 体验店预约支付完成用户短信----------------------------------------------------------
             case self::TYPE_EXPERIENCE_PAID_WITH_USER:
 
                 return '您已成功支付安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，支付金额¥' . $price . '，含双早。联系电话：' . $mobile . '。';
-
 
 
             // 体验店预约完成支付运营短信
@@ -133,15 +174,15 @@ class Sm extends Eloquent
 
             // 体验店取消预约用户短信------------------------------------------------------------
             case self::TYPE_EXPERIENCE_CANCEL_WITH_USER:
-              return   '您已取消安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，含双早。欢迎再次预订，谢谢！';
+                return '您已取消安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，含双早。欢迎再次预订，谢谢！';
 
 
             // 体验店取消预约运营短信
             case self::TYPE_EXPERIENCE_CANCEL_WITH_OPERATOR:
-               return  $customer . $sex . $user_mobile . '取消安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，请注意登录后台查看';
+                return $customer . $sex . $user_mobile . '取消安吉体验中心 ' . $rooms . ' 房，入住日期' . $checkin . '，退房日期' . $checkout . '，订单金额¥' . $price . '，请注意登录后台查看';
 
             default:
-              return  '';
+                return '';
 
         }
 
@@ -157,7 +198,7 @@ class Sm extends Eloquent
     {
 
 
-        $datetime = $booking->date .' '.$booking->time;
+        $datetime = $booking->date . ' ' . $booking->time;
         $name     = $booking->tearoom->name;
         $customer = $booking->customer;
         $gender   = $booking->gender ? '先生' : '女士';
@@ -168,16 +209,16 @@ class Sm extends Eloquent
 
             // 茶舍预约用户短信
             case self::TYPE_TEAROOM_BOOKING_WITH_USER:
-               return  '您已成功预约 ' . $datetime . ' 安定门茶舍空间-' . $name . '，订单金额￥' . $fee . '。茶舍地址：北京市东城区安定门西大街9号。请您按时前往，消费后在店内微信扫码支付即可，谢谢！';
+                return '您已成功预约 ' . $datetime . ' 安定门茶舍空间-' . $name . '，订单金额￥' . $fee . '。茶舍地址：北京市东城区安定门西大街9号。请您按时前往，消费后在店内微信扫码支付即可，谢谢！';
 
             // 茶舍预约茶艺师短信
             case self::TYPE_TEAROOM_BOOKING_WITH_OPERATOR:
-                return   $customer . $gender . ' ' . $mobile . ' 成功预约 ' . $datetime . ' 安定门茶舍空间 －' . $name . '，订单金额￥' . $fee . '。';
+                return $customer . $gender . ' ' . $mobile . ' 成功预约 ' . $datetime . ' 安定门茶舍空间 －' . $name . '，订单金额￥' . $fee . '。';
 
 
             // 茶舍取消茶艺师短信
             case self::TYPE_TEAROOM_CANCEL_WITH_OPERATOR:
-                return   $customer . $gender . ' ' . $mobile . ' 已取消预约 ' . $datetime . ' 安定门茶舍空间－' . $name . '，订单金额￥' . $fee . '。';
+                return $customer . $gender . ' ' . $mobile . ' 已取消预约 ' . $datetime . ' 安定门茶舍空间－' . $name . '，订单金额￥' . $fee . '。';
 
         }
 

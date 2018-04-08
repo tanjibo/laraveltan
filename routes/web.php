@@ -80,6 +80,8 @@ Route::middleware([ "auth" ])->group(
 
                 Route::resource('experience_wechat_fetcher', 'WechatFetcherController');
 
+                Route::resource("experience_send_sm","SendSmController");
+
 
             }
         )

@@ -60,6 +60,10 @@ return [
         'name' => '通用设置',
         'url'  => 'experience_settings.index',
     ],
+    'experience_send_sm/index'=>[
+        'name' => '短信发送',
+        'url'  => 'experience_send_sm.index',
+    ],
 
     /**
      * |--------------------------------------------------------------------------
