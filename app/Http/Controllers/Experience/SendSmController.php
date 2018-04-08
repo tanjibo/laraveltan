@@ -17,6 +17,8 @@ class SendSmController extends Controller
 {
     public function index()
     {
+      userHasAccess(['experience_send_sm_show']);
+      
         $model = ExperienceRoom::query()->active()->select('id', 'name')->get();
 
         return view("experience.send_sm.index", compact("model"));
