@@ -30,23 +30,10 @@
                                 </el-checkbox-group>
                         </el-form-item>
 
-                        <el-form-item label="客户名称">
-                            <el-input v-model="form.customer"></el-input>
-                        </el-form-item>
                         <el-form-item label="手机">
                             <el-input v-model="form.mobile"></el-input>
                         </el-form-item>
-                        <el-form-item label="性别">
-                            <el-radio-group v-model="form.gender">
-                                <el-radio label="1">男</el-radio>
-                                <el-radio label="2">女</el-radio>
-                            </el-radio-group>
-                        </el-form-item>
 
-                        <el-form-item label="人数">
-
-                            <el-input-number v-model="form.people" :min="1" :max="25" label="人数"></el-input-number>
-                        </el-form-item>
                         <el-form-item label="短信状态">
                             <el-radio-group v-model="form.smStatus">
                                 <el-radio label="21">完成支付</el-radio>
