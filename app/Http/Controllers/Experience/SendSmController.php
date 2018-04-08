@@ -32,13 +32,8 @@ class SendSmController extends Controller
             $request, [
                         'checkin'  => 'required|date_format:Y-m-d', //入住时间
                         'checkout' => 'required|date_format:Y-m-d', //退房时间
-                        'customer' => 'required|max:25',           //顾客
-                        'gender'   => 'required',
-                        'pay_mode' => 'required', //支付方式
-                        'people'   => 'required|max:10|min:1',//人数
                         'rooms'    => 'required|array', //房间id 不能为空
                         'mobile'   => 'bail|required|size:11|regex:/^1[34578][0-9]{9}$/', //电话号码
-
                     ]
         );
 
