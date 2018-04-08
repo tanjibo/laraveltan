@@ -161,7 +161,7 @@ class ExperienceRoomBookingRepository
                                         }
                                     }
                                 )
-                                ->where('checkin', '>=', date('Y-m-d'))
+                                ->where('checkout', '>=', date('Y-m-d'))
                                 ->where('status', '<>', -10)
                                 ->when(
                                     $booking_id, function( $query ) use ( $booking_id ) {
