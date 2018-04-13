@@ -27,8 +27,14 @@
                                         <el-input v-model="form.name"></el-input>
                                     </el-form-item>
 
-                                    <el-form-item label="价格">
+                                    <el-form-item label="普通价格">
                                         <el-input type="number" v-model="form.price"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="休息日价格">
+                                        <el-input type="number" v-model="form.playday_price"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="节假日价格">
+                                        <el-input type="number" v-model="form.holiday_price"></el-input>
                                     </el-form-item>
 
                                     <el-form-item label="配置">
@@ -199,6 +205,8 @@
                     name: data.name,    //房间名称
                     price: data.price,   //价格
                     attach: data.attach, //配置
+                    playday_price:data.playday_price,
+                    holiday_price:data.holiday_price,
                     intro: data.intro,
                     design_concept: data.design_concept,
                     'sort':data?data['sort']:1,
@@ -226,7 +234,7 @@
            },
             methods: {
                 submitForm(type='edit'){
-                   if(!(this.form.cover && this.form.name && this.form.price)){
+                   if(!(this.form.cover && this.form.name && this.form.price && this.form.playday_price && this.form.holiday_price)){
                        this.$message.error('请完成房间信息');return false;
                    }
 

@@ -71,7 +71,9 @@ class ExperienceRoom extends Model
             'attach_url',
             'design_concept',
             'is_prepay',
-            'prepay_percent'
+            'prepay_percent',
+            'playday_price',
+            'holiday_price'
         ];
 
 
@@ -117,7 +119,9 @@ class ExperienceRoom extends Model
     public function price()
     {
         $specialPrice          = $this->experience_special_price()->first();
-        $item[ 'today_price' ] = "￥" . ($this->experience_special_price()->where('date', date('Y-m-d'))->value('price') ?: $this->price);
+        $item[ 'today_price' ] = "￥" . ($this->experience_special_price()->where('date', date('Y-m-d'))->value('price') ?: $this->price).'/晚';
+        $item['playday_price']="￥".($this->playday_price?:$this->price).'/晚';
+        $item['holiday_price']="￥".($this->holiday_price?:$this->price).'/晚';
 
         if ($specialPrice)
             $item[ 'new_price' ] = "￥" . $this->price . '/￥' . $specialPrice->price . (isset($specialPrice->type) ? "({$specialPrice->type})" : '');
