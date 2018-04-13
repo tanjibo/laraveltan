@@ -28,6 +28,7 @@ class Partners extends Model
     }
 
     public static function partnerId(string $token){
+        dd(auth()->id());
        return  static::query()->token($token)->value('id');
     }
 }
