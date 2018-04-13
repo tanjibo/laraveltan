@@ -30,24 +30,12 @@ class ExperienceRoomController extends ApiController
         $this->repository = $repository;
     }
 
-    /**
-     * @return mixed
-     * 房间列表
-     */
     public function roomList( Request $request )
     {
 
         if ($data = $this->repository->all()) {
-
-            if ($request->partnerToken) {
-                $experience_partner_id=Partners::partnerId($request->partnerToken);
-                if(!$experience_partner_id) return false;
-                $arr = [
-                    "user_id"    =>auth()->id(),
-                    'experience_partner_id' =>$experience_partner_id ,
-                ];
-              PartnerUser::query()->create($arr);
-            }
+            //添加第三方用户来源
+            Partners::addPartnerUser();
 
             return $this->success($data);
         }

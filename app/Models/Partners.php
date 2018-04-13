@@ -22,12 +22,27 @@ class Partners extends Model
         return static::query()->create($arr);
     }
 
-    public function scopeToken($query,$token)
+    public function scopeToken( $query, $token )
     {
-        return $query->where('token',$token);
+        return $query->where('token', $token);
     }
 
-    public static function partnerId(string $token){
-       return  static::query()->token($token)->value('id');
+    public static function partnerId( string $token )
+    {
+        return static::query()->token($token)->value('id');
+    }
+
+    /**
+     * 添加第三方来源用户
+     */
+    public static function addPartnerUser()
+    {
+        if ($experience_partner_id = static::partnerId(request()->partnerToken)) {
+            $arr = [
+                "user_id"               => auth()->id() ?: 165,
+                'experience_partner_id' => $experience_partner_id,
+            ];
+            PartnerUser::query()->firstOrCreate($arr);
+        }
     }
 }
