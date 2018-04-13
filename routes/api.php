@@ -23,12 +23,14 @@ Route::group(
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
     Route::post('/customer/refreshToken',"LoginController@refreshToken");
 
-    //房间列表
-    Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
+
 
     Route::group(
         [ 'middleware' => App::environment() == 'local'?: 'auth.api' ], function() {
 
+        //房间列表
+        Route::post('/room/list', 'ExperienceRoomController@roomList')->name('room.list');
+        
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
         //房间详情
