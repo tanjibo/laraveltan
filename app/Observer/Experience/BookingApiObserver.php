@@ -22,6 +22,7 @@ use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
 
 use App\Models\ExperienceRefund;
+use App\Models\Partners;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -45,9 +46,9 @@ class BookingApiObserver
             $booking->price = $total = 0.1;
         }
         else {
-            $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,$this->request->isPrepay);
+            $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms, $this->request->isPrepay);
 
-            $booking->price  = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms,false);
+            $booking->price = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms, false);
         }
 
         //如果是余额支付
@@ -67,11 +68,26 @@ class BookingApiObserver
             $booking->real_price = $total;
         }
 
-        $booking->checkin  = date('Y-m-d', strtotime($this->request->checkin));
-        $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
-        $booking->status   = $booking::STATUS_UNPAID;
-        $booking->is_prepay=$this->request->isPrepay;
+        $booking->checkin   = date('Y-m-d', strtotime($this->request->checkin));
+        $booking->checkout  = date('Y-m-d', strtotime($this->request->checkout));
+        $booking->status    = $booking::STATUS_UNPAID;
+        $booking->is_prepay = $this->request->isPrepay;
+        $booking->source=static::isComingPartner($this->request->partnerToken);
 
+    }
+
+    /**
+     * @param $token
+     * @return string
+     * 判断是否第三方合作来源
+     */
+    public static function isComingPartner( $token )
+    {
+        if ($token) {
+            $name = Partners::query()->token($token)->value('name');
+            return $name ?: "mini";
+        }
+        return 'mini';
     }
 
 
@@ -89,7 +105,7 @@ class BookingApiObserver
                 break;
             // 已取消
             case $booking::STATUS_CANCEL:
-                static::statusToCancel($booking,$this->request);
+                static::statusToCancel($booking, $this->request);
                 break;
 
         }
@@ -158,7 +174,7 @@ class BookingApiObserver
      * @param $booking
      * 取消订单
      */
-    public static function statusToCancel( $booking,$request )
+    public static function statusToCancel( $booking, $request )
     {
         // 账户记录
         if ($booking->balance > 0) {
@@ -191,11 +207,12 @@ class BookingApiObserver
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-            $result =App::environment()=='local'?['result_code'=>'']:Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+            $result = App::environment() == 'local' ? [ 'result_code' => '' ] : Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
 
-            if ($result['result_code']=='SUCCESS') {
+            if ($result[ 'result_code' ] == 'SUCCESS') {
                 ExperienceRefund::query()->create($result);
-            }else{
+            }
+            else {
                 //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
                 event(new RefundFailNotificationEvent($booking));
                 //队列发送--------------有点问题-------------放弃了

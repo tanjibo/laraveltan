@@ -136,6 +136,7 @@ class ExperienceRoomBookingController extends ApiController
             //和微信支付交互
 
             $data = $this->payment->unifiedorder($model);
+
             //booking_id
             $data['booking_id']=$model->id;
 
