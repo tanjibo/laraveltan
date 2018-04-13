@@ -44,7 +44,7 @@ class ExperienceRoomController extends ApiController
                 $experience_partner_id=Partners::partnerId($request->partnerToken);
                 if(!$experience_partner_id) return false;
                 $arr = [
-                    "user_id"               => auth()->id(),
+                    "user_id"    => Auth::id(),
                     'experience_partner_id' =>$experience_partner_id ,
                 ];
               PartnerUser::query()->create($arr);
