@@ -25,9 +25,10 @@ use Repositories\ExperienceRoomRepository;
 class ExperienceRoomController extends ApiController
 {
     protected $repository;
-
+    protected $user_id;
     public function __construct( ExperienceRoomRepository $repository )
     {
+        $this->user_id=auth()->id();
         $this->repository = $repository;
     }
 
@@ -44,7 +45,7 @@ class ExperienceRoomController extends ApiController
                 $experience_partner_id=Partners::partnerId($request->partnerToken);
                 if(!$experience_partner_id) return false;
                 $arr = [
-                    "user_id"    => Auth::id(),
+                    "user_id"    =>$this->user_id,
                     'experience_partner_id' =>$experience_partner_id ,
                 ];
               PartnerUser::query()->create($arr);
