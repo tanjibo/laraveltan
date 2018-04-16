@@ -128,7 +128,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div  class="panel-collapse collapse in">
+                            <div class="panel-collapse collapse in">
                                 <div class="box-body">
                                     <el-form-item label="价格段">
                                         <el-input style="width:200px;" v-model="defautPrice" placeholder="价格">
@@ -142,9 +142,9 @@
                                                 range-separator="至"
                                                 start-placeholder="开始日期"
                                                 end-placeholder="结束日期"
+                                                @change="makePrice"
                                         >
                                         </el-date-picker>
-                                        <el-button @click="makePrice" type="primary" plain>生成价格</el-button>
 
                                     </el-form-item>
                                     <special-price :specialprice.sync="createSpecialPrice"></special-price>
@@ -265,9 +265,9 @@
                     }
                     let url=laroute.route('experience_rooms.makePrice',{experience_room:data['id']})
                     this.$http.post(url, params).then(res => {
-
-                       this.createSpecialPrice=res;
-
+                    
+                        this.createSpecialPrice=this.createSpecialPrice.concat(res);
+                       console.log(this.createSpecialPrice)
                     })
 
                 }

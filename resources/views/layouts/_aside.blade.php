@@ -77,7 +77,7 @@
                     @endcan
                     @can("experience_partners_show")
                         <li @if(request()->segment(1)=='experience_partners') class="active" @endif>
-                            <a href="{{route('experience_partners.index')}}"><i class="fa fa-send-o"></i>合作用户</a>
+                            <a href="{{route('experience_partners.index')}}"><i class="fa fa-group"></i>合作用户</a>
                         </li>
                     @endcan
                 </ul>
