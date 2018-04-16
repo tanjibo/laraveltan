@@ -27,7 +27,7 @@ class Partners extends Model
         return $query->where('token', $token);
     }
 
-    public static function partnerId( string $token )
+    public static function partnerId( $token )
     {
         return static::query()->token($token)->value('id');
     }
