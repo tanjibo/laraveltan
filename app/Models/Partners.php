@@ -37,7 +37,7 @@ class Partners extends Model
      */
     public static function addPartnerUser()
     {
-        if ($experience_partner_id = static::partnerId(request()->partnerToken)) {
+        if ($experience_partner_id = static::partnerId(request()->partnerToken?:"")) {
             $arr = [
                 "user_id"               => auth()->id() ?: 165,
                 'experience_partner_id' => $experience_partner_id,
