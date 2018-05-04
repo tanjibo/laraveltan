@@ -215,14 +215,14 @@ class BookingApiObserver
                 $booking->is_refund = ExperienceBooking::STATUS_REFUNDED;
                 ExperienceRefund::query()->create($result);
             }
-           // else {
+            else {
                 //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
 
-               // $booking->is_refund = ExperienceBooking::STATUS_UNREFUND;
-               // event(new RefundFailNotificationEvent($booking));
+                $booking->is_refund = ExperienceBooking::STATUS_UNREFUND;
+                event(new RefundFailNotificationEvent($booking));
                 //队列发送--------------有点问题-------------放弃了
                 //SendRefundFailEmail::dispatch($booking);
-           // }
+            }
 
         }
 
@@ -236,7 +236,7 @@ class BookingApiObserver
     public function updated( ExperienceBooking $booking )
     {
 
-       // event(new SendNotificationEvent($booking));
+        event(new SendNotificationEvent($booking));
          //SendBookingEmail::dispatch($booking);
     }
 }

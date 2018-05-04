@@ -206,7 +206,7 @@ class ExperienceRoomBookingController extends ApiController
     public function orderStatusToChange( Request $request )
     {
         //授权
-        //$this->authorize('update',ExperienceBooking::query()->find($request->booking_id));
+        $this->authorize('update',ExperienceBooking::query()->find($request->booking_id));
 
 
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {

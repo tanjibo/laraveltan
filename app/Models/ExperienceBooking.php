@@ -254,7 +254,11 @@ class ExperienceBooking extends Eloquent
         if ($status == static::STATUS_CANCEL) {
            // if (!$systemOption && ($booking->status != static::STATUS_PAID)) return false;
         }
-        $booking->status = $status;
+        if($booking->is_refund==static::STATUS_REFUNDED){
+            $booking->status=static::STATUS_CANCEL;
+        }else{
+            $booking->status = $status;
+        }
 
         return $booking->save();
     }
