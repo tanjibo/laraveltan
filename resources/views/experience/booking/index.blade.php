@@ -84,7 +84,10 @@
                         <el-tag size="mini" type="info" v-if="scope.row.status==2">已入住</el-tag>
                         <el-tag size="mini" type="success" v-if="scope.row.status==10">已完成</el-tag>
                         <el-tag size="mini" type="danger" v-if="scope.row.status==-10">已取消</el-tag>
+
                         <el-tag size="mini" type="success" v-if="scope.row.is_prepay==1">预付金</el-tag>
+                        <el-tag size="mini" type="default" v-if="scope.row.is_refund==1">待退款</el-tag>
+                        <el-tag size="mini" type="danger" v-if="scope.row.is_refund==2">已退款</el-tag>
 
                     </template>
                 </el-table-column>

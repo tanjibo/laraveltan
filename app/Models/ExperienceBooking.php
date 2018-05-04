@@ -62,7 +62,7 @@ class ExperienceBooking extends Eloquent
             'people'     => 'int',
             'status'     => 'int',
             'is_comment' => 'int',
-            'is_prepay'=>'int'
+            'is_prepay'  => 'int',
         ];
 
     /**
@@ -73,7 +73,8 @@ class ExperienceBooking extends Eloquent
     const STATUS_CHECKIN  = 2;    // 已入住
     const STATUS_COMPLETE = 10;   // 已完成
     const STATUS_CANCEL   = -10;  // 已取消
-    const STATUS_DEL   = -100;  // 已取消
+    const STATUS_DEL      = -100;  // 已取消
+    const STATUS_SUCCESS_REFUND      = -11;  // 完成用户退款
 
     /**
      * 支付方式
@@ -81,6 +82,13 @@ class ExperienceBooking extends Eloquent
     const PAY_MODE_OFFLINE = 0;    // 线下支付
     const PAY_MODE_WECHAT  = 1;    // 微信支付
     const PAY_MODE_BALANCE = 10;   // 余额支付
+
+    /**
+     * 是否已退款
+     */
+    const STATUS_NO_REFUND = 0;    // 不用退款
+    const STATUS_UNREFUND  = 1;    // 未退款
+    const STATUS_REFUNDED =2 ;   // 已退款
 
     protected $dates
         = [
@@ -141,10 +149,9 @@ class ExperienceBooking extends Eloquent
             'is_comment',
             'partner',
             'source',
-            'is_prepay'
+            'is_prepay',
+            "is_refund"
         ];
-
-
 
 
     public function user()
@@ -182,8 +189,8 @@ class ExperienceBooking extends Eloquent
     {
 
         if ($model = static::query()->create($request->all())) {
-           $model->rooms()->attach($request->rooms);
-           return $model;
+            $model->rooms()->attach($request->rooms);
+            return $model;
         }
 
         return false;
@@ -198,22 +205,22 @@ class ExperienceBooking extends Eloquent
      * @param  array $room [description]
      * @return [type]           [description]
      */
-    public static function calculateFee( $checkin, $checkout, $room = [],$isPrepay=false)
+    public static function calculateFee( $checkin, $checkout, $room = [], $isPrepay = false )
     {
         $total = 0;
         $ds    = ExperienceRoomBookingRepository::_splitDate($checkin, $checkout);
 
         // 房间金额
         foreach ( $room as $v ) {
-            $r = ExperienceRoom::query()->select('id', 'price', 'type','prepay_percent')->find($v);
+            $r = ExperienceRoom::query()->select('id', 'price', 'type', 'prepay_percent')->find($v);
 
             foreach ( $ds as $date ) {
                 // 节日价
                 //预付金
-                $prepay= $isPrepay?($r->prepay_percent/100):1;
+                $prepay  = $isPrepay ? ($r->prepay_percent / 100) : 1;
                 $special = ExperienceSpecialPrice::query()->where('experience_room_id', $r->id)->where('date', $date)->value('price');
                 //加上预付金
-                $total   += ($special === null ? $r->price*$prepay : $special*$prepay);
+                $total += ($special === null ? $r->price * $prepay : $special * $prepay);
             }
         }
 
@@ -227,24 +234,24 @@ class ExperienceBooking extends Eloquent
      * @param bool $systemOption 是不是系统自动操作
      * @return bool
      */
-    public static function changeBookingOrder( $id, $status,$systemOption=false )
+    public static function changeBookingOrder( $id, $status, $systemOption = false )
     {
 
         if (!$booking = static::query()->find($id))
             return false;
 
         //删除订单
-        if($status==static::STATUS_DEL){
+        if ($status == static::STATUS_DEL) {
             static::destroy($id);
             return true;
         }
 
-        if ($booking->status == $status){
+        if ($booking->status == $status) {
             return true;
         }
         //用户发起的取消请求，只有完成支付的订单，才能取消订单====这一步很重要的
-        if($status==static::STATUS_CANCEL){
-            if(!$systemOption &&($booking->status!=static::STATUS_PAID))return false;
+        if ($status == static::STATUS_CANCEL) {
+            if (!$systemOption && ($booking->status != static::STATUS_PAID)) return false;
         }
         $booking->status = $status;
 

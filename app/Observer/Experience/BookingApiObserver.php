@@ -210,10 +210,14 @@ class BookingApiObserver
             $result = App::environment() == 'local' ? [ 'result_code' => '' ] : Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
 
             if ($result[ 'result_code' ] == 'SUCCESS') {
+                //更改订单状态为已退款
+                $booking->is_refund=ExperienceBooking::STATUS_REFUNDED;
                 ExperienceRefund::query()->create($result);
             }
             else {
                 //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
+
+                $booking->is_refund=ExperienceBooking::STATUS_UNREFUND;
                 event(new RefundFailNotificationEvent($booking));
                 //队列发送--------------有点问题-------------放弃了
                 //SendRefundFailEmail::dispatch($booking);

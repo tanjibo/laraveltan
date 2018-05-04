@@ -81,9 +81,19 @@ class ExperienceBooking extends \App\Models\ExperienceBooking
             return true;
         }
 
+        //更改订单，标识为未退款
+        if($booking->status==static::STATUS_PAID && request()->status==static::STATUS_CANCEL){
+            $booking->is_refund=static::STATUS_UNREFUND;
+        }
+        //更改订单，标识为已退款
+        if (request()->status == static::STATUS_SUCCESS_REFUND){
+            $booking->is_refund=static::STATUS_REFUNDED;
+            return $booking->save();
+        }
 
-        $booking->status = request()->status;
-        return $booking->save();
+
+            $booking->status = request()->status;
+            return $booking->save();
     }
 
 

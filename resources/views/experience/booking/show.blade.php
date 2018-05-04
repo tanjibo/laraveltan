@@ -209,8 +209,8 @@
                                                 <div v-if="status==10">
                                                     -
                                                 </div>
-                                                <div v-if="status==-10">
-                                                    -
+                                                <div v-if="status==-10  && isRefund==1">
+                                                                      <el-button type="danger" @click="changeStatusFunc(-11)" round>完成退款</el-button>
                                                 </div>
 
                                             </span>
@@ -239,6 +239,7 @@
             <div v-if="changeStatus==10">确定服务完成？</div>
 
             <div v-if="changeStatus==-10">确定取消订单吗?</div>
+            <div v-if="changeStatus==-11">确定完成用户退款了吗?</div>
 
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -331,6 +332,7 @@
                 status: model.status,
                 requirements: requirements,
                 remark: model.remark,
+                isRefund:model.is_refund,
                 rooms: rooms,
                 dialogVisible: false,
                 changeStatus: '',
@@ -353,22 +355,22 @@
                     }
                     let params = {requirements: this.form.myRequirements}
                     this.$http.post("{{route('experience_bookings.editRequirements',$model)}}", params).then(res => {
-                       reload();
+                        reload();
                     })
                 },
                 submit(){
                     let params = {status: this.changeStatus};
-                    if (this.changeStatus == 1 || this.changeStatus == 10 ||this.changeStatus==2) {
+                    if (this.changeStatus == 1 || this.changeStatus == 10 || this.changeStatus == 2 ||this.changeStatus==-11) {
                         params.real_price = this.form.real_price
                     }
                     this.$http.post('{{route('experience_bookings.changeStatus',$model)}}', params).then(res => {
-                      reload();
+                        // reload();
                     })
                 },
             }
         })
 
-        function reload(){
+        function reload() {
             swal({
                 title: '操作成功',
                 text: '1秒后关闭',
