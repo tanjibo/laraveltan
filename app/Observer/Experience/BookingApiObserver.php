@@ -72,7 +72,7 @@ class BookingApiObserver
         $booking->checkout  = date('Y-m-d', strtotime($this->request->checkout));
         $booking->status    = $booking::STATUS_UNPAID;
         $booking->is_prepay = $this->request->isPrepay;
-        $booking->source=static::isComingPartner($this->request->partnerToken);
+        $booking->source    = static::isComingPartner($this->request->partnerToken);
 
     }
 
@@ -93,21 +93,22 @@ class BookingApiObserver
 
     public function updating( ExperienceBooking $booking )
     {
+        if (isset($this->request->status)) {
+            switch ( $this->request->status ) {
+                // 已支付
+                case $booking::STATUS_PAID:
+                    static::statusToPaid($booking);
+                    break;
+                // 已完成
+                case $booking::STATUS_COMPLETE:
+                    static::statusToComplete($booking);
+                    break;
+                // 已取消
+                case $booking::STATUS_CANCEL:
+                    static::statusToCancel($booking, $this->request);
+                    break;
 
-        switch ( $this->request->status ) {
-            // 已支付
-            case $booking::STATUS_PAID:
-                static::statusToPaid($booking);
-                break;
-            // 已完成
-            case $booking::STATUS_COMPLETE:
-                static::statusToComplete($booking);
-                break;
-            // 已取消
-            case $booking::STATUS_CANCEL:
-                static::statusToCancel($booking, $this->request);
-                break;
-
+            }
         }
     }
 
@@ -211,14 +212,14 @@ class BookingApiObserver
 
             if ($result[ 'result_code' ] == 'SUCCESS') {
                 //更改订单状态为已退款
-                $booking->is_refund=ExperienceBooking::STATUS_REFUNDED;
-                $booking->status=ExperienceBooking::STATUS_CANCEL;
+                $booking->is_refund = ExperienceBooking::STATUS_REFUNDED;
+                $booking->status    = ExperienceBooking::STATUS_CANCEL;
                 ExperienceRefund::query()->create($result);
             }
             else {
                 //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
 
-                $booking->is_refund=ExperienceBooking::STATUS_UNREFUND;
+                $booking->is_refund = ExperienceBooking::STATUS_UNREFUND;
                 event(new RefundFailNotificationEvent($booking));
                 //队列发送--------------有点问题-------------放弃了
                 //SendRefundFailEmail::dispatch($booking);

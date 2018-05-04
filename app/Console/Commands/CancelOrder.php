@@ -50,7 +50,7 @@ class CancelOrder extends Command
     private function cancelBookingNorMal()
     {
         $date = new Carbon('now');
-        if (\App::environment() == 'develop') {
+        if (\App::environment() == 'develop' ||\App::environment() == 'test') {
             $before = $date->subMinutes(1);
         }
         else {
