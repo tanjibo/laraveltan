@@ -134,6 +134,9 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    'guzzle'  => [
+        'timeout' => 5.0, // 超时时间（秒）
+    ],
 
     'providers' => [
 

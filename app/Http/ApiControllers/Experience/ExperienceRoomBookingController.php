@@ -2,20 +2,11 @@
 
 namespace App\Http\ApiControllers\Experience;
 
-use App\Foundation\Lib\Payment;
 use App\Http\ApiControllers\ApiController;
 use App\Http\Resources\Experience\ExperienceRoomBookingResource;
-use App\Jobs\SendBookingEmail;
-use App\Jobs\SendRefundFailEmail;
 use App\Models\ExperienceBooking;
-use App\Models\ExperienceSpecialRoomBooking;
-use App\Models\ExperienceSpecialRoomBookingXinyuege;
 use App\Models\PaymentLog;
-use App\Notifications\RefundFailNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Naux\Mail\SendCloudTemplate;
 use Repositories\ExperienceRoomBookingRepository;
 use Repositories\MiniDateRepository;
 use Repositories\PaymentRepository;
@@ -215,7 +206,7 @@ class ExperienceRoomBookingController extends ApiController
     public function orderStatusToChange( Request $request )
     {
         //授权
-        $this->authorize('update',ExperienceBooking::query()->find($request->booking_id));
+        //$this->authorize('update',ExperienceBooking::query()->find($request->booking_id));
 
 
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
