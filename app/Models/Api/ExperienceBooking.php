@@ -233,7 +233,7 @@ class ExperienceBooking extends Eloquent
         }
         //用户发起的取消请求，只有完成支付的订单，才能取消订单====这一步很重要的
         if($status==static::STATUS_CANCEL){
-            if(!$systemOption &&($booking->status!=static::STATUS_PAID))return false;
+          //  if(!$systemOption &&($booking->status!=static::STATUS_PAID))return false;
         }
         $booking->status = $status;
 
