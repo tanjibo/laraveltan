@@ -212,6 +212,7 @@ class BookingApiObserver
             if ($result[ 'result_code' ] == 'SUCCESS') {
                 //更改订单状态为已退款
                 $booking->is_refund=ExperienceBooking::STATUS_REFUNDED;
+                $booking->status=ExperienceBooking::STATUS_CANCEL;
                 ExperienceRefund::query()->create($result);
             }
             else {

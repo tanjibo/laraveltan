@@ -364,7 +364,7 @@
                         params.real_price = this.form.real_price
                     }
                     this.$http.post('{{route('experience_bookings.changeStatus',$model)}}', params).then(res => {
-                        // reload();
+                         reload();
                     })
                 },
             }

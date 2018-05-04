@@ -237,6 +237,7 @@ class ExperienceBooking extends Eloquent
         }
         $booking->status = $status;
 
+
         return $booking->save();
     }
 
