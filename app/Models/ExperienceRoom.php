@@ -119,7 +119,7 @@ class ExperienceRoom extends Model
     public function price()
     {
         $specialPrice          = $this->experience_special_price()->first();
-        $item[ 'today_price' ] = "￥" . ($this->experience_special_price()->where('date', date('Y-m-d'))->value('price') ?: $this->price).'/晚';
+        $item[ 'today_price' ] = "￥" .$this->price.'/晚';
         $item['playday_price']="￥".($this->playday_price?:$this->price).'/晚';
         $item['holiday_price']="￥".($this->holiday_price?:$this->price).'/晚';
 
