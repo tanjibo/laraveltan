@@ -191,8 +191,9 @@ class BookingBackendObserver
      */
     public function updated( ExperienceBooking $booking )
     {
-
-        event(new SendNotificationEvent($booking));
+        if($booking->is_refund!=ExperienceBooking::STATUS_REFUNDED){
+            event(new SendNotificationEvent($booking));
+        }
         // SendBookingEmail::dispatch($booking);
     }
 
