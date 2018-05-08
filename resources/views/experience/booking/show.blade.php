@@ -209,9 +209,11 @@
                                                 <div v-if="status==10">
                                                     -
                                                 </div>
+                                                @can("experience_booking_refund")
                                                 <div v-if="status==-10  && isRefund==1">
                                                                       <el-button type="danger" @click="changeStatusFunc(-11)" round>完成退款</el-button>
                                                 </div>
+                                                @endcan
 
                                             </span>
                                         </div>
