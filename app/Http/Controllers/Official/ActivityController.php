@@ -62,8 +62,8 @@ class ActivityController extends Controller
     public function update( Request $request, OfficialActivity $official_activity )
     {
         $official_activity->fill($request->all())->save();
-        $model = $official_activity->share_settings()->create($request->share);
-
+          $official_activity->share_settings()->delete();
+          $model= $official_activity->share_settings()->create($request->share);
         return response()->json($model);
     }
 

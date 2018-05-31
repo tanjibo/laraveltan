@@ -231,8 +231,8 @@
                                 showConfirmButton: false,
                             }).catch(res => {
                                 console.log(res);
-                               window.location.href = laroute.route('official_activity.index')
-                            });
+                               window.reload();
+                        });
                         })
                     },
 
