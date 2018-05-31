@@ -48,7 +48,7 @@
                 return {
                     share:false,
                     sub: false,
-                    phone: "18610729170",
+                    phone: '',
                 }
             },
 

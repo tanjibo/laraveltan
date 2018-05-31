@@ -84,7 +84,7 @@ class HomeController extends BaseController
                 'status'   => User::USER_STATUS_ON,
 
             ];
-            if (App::environment() != 'local') {
+            if (!in_array(App::environment() ,['local','test']) ){
                 $userData[ 'union_id' ] = $wxUserInfo[ "unionid" ];
                 $user                   = User::query()->where('union_id', $wxUserInfo[ "unionid" ])->first();
             }
