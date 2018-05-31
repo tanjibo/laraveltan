@@ -39,21 +39,21 @@ class BaseController extends Controller
         $model = OfficialActivity::find(getActivityId());
         if (!$model) {
             $status='活动不存在或已经停止了';
-            echo  header("Location:".route("officialAccount.gateway",compact("status")));
+            echo  header("Location:".route("officialAccount.gateway",['status'=>"not_found"]));
             exit;
 
         }
         $this->activity = $model;
         if (strtotime($model->start_time) > time()) {
             $status='活动还未开始,客官可不要着急呦';
-            echo  header("Location:".route("officialAccount.gateway",compact("status")));
+            echo  header("Location:".route("officialAccount.gateway",['status'=>"not_start"]));
             exit;
         }
 
 
         if (strtotime($model->end_time) < time()) {
-            $status='活动已结束,请关注下一期吧';
-            echo  header("Location:".route("officialAccount.gateway",compact("status")));
+
+            echo  header("Location:".route("officialAccount.gateway",['status'=>"be_end"]));
             exit;
         }
 
