@@ -17,7 +17,8 @@ Route::prefix('official_account')->group(
         Route::middleware("wechat.oauth:snsapi_base")->match([ 'post', 'get' ], "/showDrawArticle", "verifyController@showDrawArticle")->name('officialAccount.showDrawArticle');
 
         Route::group(
-            [ 'middleware' => 'wechat.oauth:snsapi_userinfo' ], function() {
+           // [ 'middleware' => 'wechat.oauth:snsapi_userinfo' ], function() {
+            [ 'middleware' => 'wechat.oauth.lrss:snsapi_userinfo' ], function() {
             //首页
             Route::any('/home', "HomeController@index")->name('officialAccount.home');
             Route::any('/gateway', "VerifyController@gateway")->name('officialAccount.gateway');

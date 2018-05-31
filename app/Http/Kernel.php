@@ -5,6 +5,7 @@ namespace App\Http;
 
 use App\Http\Middleware\AdminAuthenticateApi;
 use App\Http\Middleware\AuthenticateApi;
+use App\Http\Middleware\OfficialAccountAuthenticate;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Overtrue\LaravelWeChat\Middleware\OAuthAuthenticate;
@@ -62,6 +63,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'auth.api'=>AuthenticateApi::class,
-        "wechat.oauth"=>OAuthAuthenticate::class
+        "wechat.oauth"=>OAuthAuthenticate::class,
+        "wechat.oauth.lrss"=>OfficialAccountAuthenticate::class
     ];
 }
