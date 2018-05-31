@@ -16,7 +16,7 @@ class CreateOfficialActivity extends Migration
             $table->increments('id');
             $table->text('default_welcome')->comment('默认欢迎语');
             $table->text('be_recommend_welcome')->comment('被推荐获得抽奖码欢迎语');
-            $table->text('auto_reply_welcome')->default("已收到您的留言，请稍等")->comment('自动回复用语');
+            $table->text('auto_reply_welcome')->comment('自动回复用语');
             $table->text('menu_json')->comment('菜单栏');
             $table->timestamps();
 
