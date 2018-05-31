@@ -14,8 +14,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
-    protected  $api_namespace='App\Http\ApiControllers';
+    protected $namespace        = 'App\Http\Controllers';
+    protected $api_namespace    = 'App\Http\ApiControllers';
+    protected $official_front_namespace = 'App\Http\OfficialControllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -40,7 +41,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapWechatRoutes();
     }
 
     /**
@@ -52,9 +53,28 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+        Route::group(
+            [
+                'domain'     => config('app.admin_domain'),
+                'middleware' => 'web',
+                'namespace'  => $this->namespace,
+            ], function( $router ) {
+            require base_path('routes/web.php');
+        }
+        );
+    }
+
+    protected function mapWechatRoutes()
+    {
+        Route::group(
+            [
+                'domain'     => config('app.official_domain'),
+                'middleware' => 'web',
+                'namespace'  => $this->official_front_namespace,
+            ], function( $router ) {
+            require base_path('routes/official.php');
+        }
+        );
     }
 
     /**
@@ -66,9 +86,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->api_namespace)
-             ->group(base_path('routes/api.php'));
+        Route::group(
+            [
+                'prefix'=>'api',
+                'domain'     => config('app.api_domain'),
+                'middleware' => 'api',
+                'namespace'  => $this->api_namespace,
+            ], function( $router ) {
+            require base_path('routes/api.php');
+        }
+        );
+//        Route::prefix('api')
+//             ->middleware('api')
+//             ->domain(config("app.api_domain"))
+//             ->namespace($this->api_namespace)
+//             ->group(base_path('routes/api.php'))
+//        ;
     }
 }

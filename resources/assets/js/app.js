@@ -88,7 +88,7 @@ Vue.component('art-show-comment', require('./components/art_show_comment.vue'));
 Vue.component('tearoom-price', require('./components/tearoom_price.vue'));
 
 Vue.component('tearoom-lock-time-select', require('./components/tearoom_lock_time_select.vue'));
-Vue.component('art-suggestion-reply', require('./components/art_suggestion_reply.vue'));
+Vue.component('eart-suggestion-reply', require('./components/art_suggestion_reply.vue'));
 Vue.component('new-quill-editor', require('./components/quill_editor.vue'));
 Vue.component("article_child",require('./components/article_child.vue'));
 

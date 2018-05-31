@@ -5,7 +5,7 @@
                 class="avatar-uploader"
                 element-loading-text="拼命上传中。。。"
                 list-type="picture-card"
-                action="/upload/qiniu"
+                :action="defaultUploadUrl"
                 :show-file-list="false"
                 :headers="{'X-CSRF-TOKEN':token}"
                 :on-success="handleAvatarSuccess"
@@ -68,10 +68,11 @@
 <script>
 
     export default {
-        props: ['imgurl'],
+        props: ['imgurl','uploadurl'],
         data(){
             return {
                 imgUrl: this.imgurl,
+                defaultUploadUrl:this.uploadurl || 'upload/qiniu',
                 loading: false,
                 token:window.axios.defaults.headers.common['X-CSRF-TOKEN']
             }

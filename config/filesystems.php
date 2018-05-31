@@ -42,6 +42,14 @@ return [
     */
 
     'disks' => [
+        //...
+        'qiniu' => [
+            'driver'     => 'qiniu',
+            'access_key' => env('QINIU_ACCESS_KEY', 'KlJYnXDYLIwwABs6zoPmRGVc6xbAP4Kuzifr-fxM'),
+            'secret_key' => env('QINIU_SECRET_KEY', 'UR4jTeUYIyClk51yUQ3XGYPoG8XMsimTY5uLvvVA'),
+            'bucket'     => env('QINIU_BUCKET', 'experience-room'),
+            'domain'     => env('QINIU_DOMAIN', 'https://static.liaorusanshe.com'),
+        ],
 
         'local' => [
             'driver' => 'local',
@@ -62,6 +70,9 @@ return [
             'region' => env('AWS_REGION'),
             'bucket' => env('AWS_BUCKET'),
         ],
+
+
+
 
     ],
 

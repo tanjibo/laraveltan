@@ -7,6 +7,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, SoftDeletes;
-    use HasRoles{
+    use HasRoles {
         hasRole as public fatherHasRole;
     }
 
@@ -80,10 +81,11 @@ class User extends Authenticatable
     const SOURCE_DEFAULT        = 0;   // 商城
     const SOURCE_TRAVELZOO      = 11;  // 旅游族
     const SOURCE_EXPERIENCEROOM = 1;  //安吉体验中心
-    const SOURCE_ARTSHOW = 12;  //空间展示
+    const SOURCE_ARTSHOW        = 12;  //空间展示
     const SOURCE_TEAROOM        = 2;  // 茶社
     const SOURCE_ALL            = 100;  // 全部
     const SOURCE_NOUSER         = 888888;  // 没有
+    const SOURCE_DRAW           = 5;  //抽奖
 
     /**
      * 终端
@@ -153,7 +155,7 @@ class User extends Authenticatable
             'remark',
             'intention',
             'terminal',
-            'art_open_id'
+            'art_open_id',
         ];
 
 
@@ -169,15 +171,10 @@ class User extends Authenticatable
         ];
 
 
-
-
     public function setPasswordAttribute( $value )
     {
         $this->attributes[ 'password' ] = bcrypt($value);
     }
-
-
-
 
 
     public function account_records()
@@ -204,7 +201,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\ExperienceBooking::class);
     }
-
 
 
     public function favorites()
@@ -240,7 +236,7 @@ class User extends Authenticatable
     public function findForPassport( $username )
     {
 
-        return $this->orWhere('mobile', $username)->orWhere('union_id',$username)->first();
+        return $this->orWhere('mobile', $username)->orWhere('union_id', $username)->first();
     }
 
     public function validateForPassportPasswordGrant( $password )
@@ -413,7 +409,8 @@ class User extends Authenticatable
     }
 
 
-    public function hasRole($roles){
+    public function hasRole( $roles )
+    {
 
         if ($this->is_superadmin) {
             return true;
@@ -424,10 +421,13 @@ class User extends Authenticatable
     /**
      * 用户总订单数量
      */
-    public function totalOrderNum(){
-        return $this->experience_bookings->count()+$this->tearoom_booking->count();
+    public function totalOrderNum()
+    {
+        return $this->experience_bookings->count() + $this->tearoom_booking->count();
     }
-    public function tearoom_booking(){
+
+    public function tearoom_booking()
+    {
         return $this->hasMany(TearoomBooking::class);
     }
 
@@ -435,7 +435,30 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      * 个人收藏的中式空间
      */
-    public function art_show(){
-        return $this->belongsToMany(ArtShow::class,'art_show_collection');
+    public function art_show()
+    {
+        return $this->belongsToMany(ArtShow::class, 'art_show_collection');
+    }
+
+    public function draw()
+    {
+        return $this->hasOne(OfficialActivityUser::class, 'open_id', 'open_id');
+    }
+
+    public function draw_number()
+    {
+        return $this->hasMany(OfficialActivityNumber::class, "open_id", "open_id");
+    }
+
+
+
+
+    /**
+     * 添加用户海报
+     */
+    public function addUserPoster()
+    {
+        $this->draw->update($this->makePoster());
+
     }
 }

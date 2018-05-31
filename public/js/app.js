@@ -2361,10 +2361,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['imgurl'],
+    props: ['imgurl', 'uploadurl'],
     data: function data() {
         return {
             imgUrl: this.imgurl,
+            defaultUploadUrl: this.uploadurl || 'upload/qiniu',
             loading: false,
             token: window.axios.defaults.headers.common['X-CSRF-TOKEN']
         };
@@ -34916,7 +34917,7 @@ var render = function() {
           attrs: {
             "element-loading-text": "拼命上传中。。。",
             "list-type": "picture-card",
-            action: "/upload/qiniu",
+            action: _vm.defaultUploadUrl,
             "show-file-list": false,
             headers: { "X-CSRF-TOKEN": _vm.token },
             "on-success": _vm.handleAvatarSuccess,
@@ -36238,7 +36239,7 @@ Vue.component('art-show-comment', __webpack_require__("./resources/assets/js/com
 Vue.component('tearoom-price', __webpack_require__("./resources/assets/js/components/tearoom_price.vue"));
 
 Vue.component('tearoom-lock-time-select', __webpack_require__("./resources/assets/js/components/tearoom_lock_time_select.vue"));
-Vue.component('art-suggestion-reply', __webpack_require__("./resources/assets/js/components/art_suggestion_reply.vue"));
+Vue.component('eart-suggestion-reply', __webpack_require__("./resources/assets/js/components/art_suggestion_reply.vue"));
 Vue.component('new-quill-editor', __webpack_require__("./resources/assets/js/components/quill_editor.vue"));
 Vue.component("article_child", __webpack_require__("./resources/assets/js/components/article_child.vue"));
 

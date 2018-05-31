@@ -5,7 +5,6 @@ return [
         'default' => [
 
             'appid'            => 'wx28cb8b1d2b4514d0',
-
             'secret'           => 'ddf1aa240a07266752638e5510aba064',
             'grant_type' => 'authorization_code',
 

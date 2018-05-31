@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 /**
  * 小程序api
  */
+
 Route::group(
     [ 'namespace' => 'Experience', 'middleware' => 'api' ], function() {
 

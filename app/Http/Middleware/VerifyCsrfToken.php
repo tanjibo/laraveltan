@@ -12,6 +12,8 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        '/LrssMiniProgram'
+        '/LrssMiniProgram',
+        "/official_account/verify",
+        '/official_account/shareTimeLine'
     ];
 }

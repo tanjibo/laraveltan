@@ -133,7 +133,25 @@ Route::middleware([ "auth" ])->group(
         )
         ;
 
+        //--------------------------微信活动--------------------------
+        Route::namespace('Official')->group(
+            function(){
+                Route::Resource('official_activity',"ActivityController",['except'=>['show']]);
 
+                //公众号设置
+                Route::Resource("official_account_setting","SettingController",['only'=>['index','store']]);
+
+                //下载
+                Route::get('official_activity/download',"ActivityController@download")->name('official_activity.download');
+
+                //上传
+                Route::post('official_activity/upload',"ActivityController@upload")->name('official_activity.upload');
+
+                //启动活动
+                Route::post('official_activity/launch',"ActivityController@launch")->name('official_activity.launch');
+
+            }
+        );
     }
 )
 ;

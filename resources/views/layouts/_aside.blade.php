@@ -80,6 +80,11 @@
                             <a href="{{route('experience_partners.index')}}"><i class="fa fa-group"></i>合作用户</a>
                         </li>
                     @endcan
+                        @can("experience_partners_show")
+                            <li @if(request()->segment(1)=='official_activity') class="active" @endif>
+                                <a href="{{route('official_activity.index')}}"><i class="fa fa-group"></i>公众号活动</a>
+                            </li>
+                        @endcan
                 </ul>
             </li>
             @endhasanyrole

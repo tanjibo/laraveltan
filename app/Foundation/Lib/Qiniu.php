@@ -31,7 +31,7 @@ class Qiniu
     // 要上传的空间
     private static $bucket = 'experience-room';
 
-    private static $picPrefix = '/experience/wechat-fetch/';
+    private static $picPrefix = 'experience/wechat-fetch/';
 
     public static $url = 'https://static.liaorusanshe.com/';
 
