@@ -23,6 +23,7 @@ class ActivityController extends Controller
 
     public function index()
     {
+        echo phpinfo();exit;
         if (!OfficialAccountDefaultSetting::officialAccountHasDefaultSetting()) {
 
             return redirect()->route('official_account_setting.index');
