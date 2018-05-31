@@ -13,7 +13,7 @@
 @yield('content')
 <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
 <script src="/adminLTEcomponents/sweetalert/sweetalert2.min.js"></script>
 {{--<script src="https://unpkg.com/promise-polyfill"></script>--}}
