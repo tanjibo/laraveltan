@@ -30,7 +30,7 @@ class CreateOfficialActivity extends Migration
             $table->string('qr_code_url')->comment('活动入口二维码'); //即输入电话号码的那一步
             $table->text('default_welcome')->comment('默认欢迎语');
             $table->text('be_recommend_welcome')->comment('被推荐获得抽奖码欢迎语');
-            $table->text('auto_reply_welcome')->default("已收到您的留言，请稍等")->comment('自动回复用语');
+            $table->text('auto_reply_welcome')->comment('自动回复用语');
             $table->dateTime("start_time")->index()->comment('活动开始时间');
             $table->dateTime("end_time")->comment('活动结束时间');
             $table->string("poster_base_img_url")->comment('海报背景图');
