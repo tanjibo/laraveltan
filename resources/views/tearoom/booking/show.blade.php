@@ -307,7 +307,7 @@
             requirements = {!! $booking->tearoom_booking_requirements !!}
                 myRequirements = "{!! $myRequirements !!}"
         console.log(requirements);
-        new Vue({
+      let vm=  new Vue({
             el: '#app',
             data: {
                 status: model.status,
@@ -340,9 +340,10 @@
 
                 submit(){
                     let params = {status: this.changeStatus};
-                    if (this.changeStatus == 1 || this.changeStatus == 10) {
+                    if (this.changeStatus == 1 || this.changeStatus == 10 ||this.changeStatus==-10) {
                         params.real_fee = this.form.real_fee
                     }
+
                     if(!params.real_fee){
                         this.$message.error('请输入实付金额');
                         return false;
