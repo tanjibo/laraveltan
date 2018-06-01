@@ -12,6 +12,7 @@
 namespace App\Foundation\Lib;
 
 
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 
 class PostImgCombine
@@ -51,9 +52,10 @@ class PostImgCombine
         $filePath = $base_path . $fileName;
         $img->save($filePath, 70);
 
+
         $data = app("wechat.official_account")->material->uploadImage($filePath);
 
-
+         Log::error($data);
         return [ 'poster_media_id' => $data[ 'media_id' ], 'poster_url' => asset('/officialAccount/poster/' . $fileName) ];
     }
 
