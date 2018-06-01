@@ -17,6 +17,7 @@ use App\Models\OfficialActivityUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 
 class HomeController extends BaseController
@@ -108,7 +109,7 @@ class HomeController extends BaseController
             if (OfficialActivityUser::attendDraw($user, $this->activity)) {
 
                 $subscribe = $this->app->user->get($wxUserInfo[ "openid" ]);
-
+                  Log::info($subscribe);
                 //等于1的时候代表订阅过
                 if (isset($subscribe[ "subscribe" ]) && !$subscribe[ "subscribe" ]) {
 
