@@ -38,7 +38,7 @@
                                 </el-form-item>
 
 
-                                <el-form-item label="正文内容">
+                                <el-form-item label="菜单栏设置">
                                     <new-quill-editor :id="'1'" :editdata.sync="form.menu_json"></new-quill-editor>
                                 </el-form-item>
 
