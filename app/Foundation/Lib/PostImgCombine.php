@@ -26,8 +26,8 @@ class PostImgCombine
         $result = app("wechat.official_account")->qrcode->temporary($data, 6 * 24 * 3600);
         $url    = app("wechat.official_account")->qrcode->url($result[ "ticket" ]);
 
-       // $img = Image::make(public_path() .$activity->poster_base_img_url);
-        $img = Image::make(public_path() .'/officialAccount/wechat.jpg');
+        $img = Image::make(public_path() .$activity->poster_base_img_url);
+        //$img = Image::make(public_path() .'/officialAccount/wechat.jpg');
 
         $img->text(
             $user->nickname, 180, 1060, function( $font ) {
@@ -46,9 +46,9 @@ class PostImgCombine
         $base_path = public_path() . '/officialAccount/poster/';
 
         is_dir($base_path) or mkdir($base_path, 0770);
-        $fileName = str_random(16) . '.png';
+        $fileName = str_random(16) . '.jpg';
         $filePath = $base_path . $fileName;
-        $img->save($filePath);
+        $img->save($filePath,70);
 
         $data = app("wechat.official_account")->material->uploadImage($filePath);
 
