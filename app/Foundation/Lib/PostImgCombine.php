@@ -39,9 +39,10 @@ class PostImgCombine
         );
         $qrcode = Image::make($url)->resize(182, 182);
         //$avatar = Image::make($user->avatar)->resize(182, 182);
+        $avatar = Image::make($url)->resize(182, 182);
 
         $img->insert($qrcode, 'bottom-right', 95, 200);
-        //$img->insert($avatar, 'bottom-left', 95, 200);
+        $img->insert($avatar, 'bottom-left', 95, 200);
 
         $base_path = public_path() . '/officialAccount/poster/';
 
