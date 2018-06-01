@@ -29,14 +29,14 @@ class PostImgCombine
         $img = Image::make(public_path() .$activity->poster_base_img_url);
         //$img = Image::make(public_path() .'/officialAccount/wechat.jpg');
 
-//        $img->text(
-//            $user->nickname, 180, 1060, function( $font ) {
-//            $font->file(public_path() . '/officialAccount/simhei.ttf');
-//            $font->size(28);
-//            $font->color('#fff');
-//            $font->align("center");
-//        }
-//        );
+        $img->text(
+            $user->nickname, 180, 1060, function( $font ) {
+            $font->file(public_path() . '/officialAccount/simhei.ttf');
+            $font->size(28);
+            $font->color('#fff');
+            $font->align("center");
+        }
+        );
         $qrcode = Image::make($url)->resize(182, 182);
         //$avatar = Image::make($user->avatar)->resize(182, 182);
 
