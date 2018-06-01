@@ -77,6 +77,7 @@ class OfficialAccountAuthenticate extends OAuthAuthenticate
             $url= $query ? $request->getPathInfo().$question.$query : $request->getPathInfo();
 
             $url="http://m.liaorusanshe.com".$url;
+            
             return $officialAccount->oauth->scopes($scopes)->redirect($url);
         }
 
