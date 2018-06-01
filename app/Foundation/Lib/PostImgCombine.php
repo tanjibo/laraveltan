@@ -69,7 +69,7 @@ class PostImgCombine
 
         return json_encode(
             [
-                "expire_seconds" => 20,
+                "expire_seconds" => 604800,
                 "action_name"    => "QR_STR_SCENE",
                 "action_info"    => [
                     "scene" => [

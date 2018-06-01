@@ -80,7 +80,7 @@ class WechatEventMessageHandler implements EventHandlerInterface
      */
     protected static function subscribe( $message )
     {
-       Log::info($message);
+
         if ($message[ 'EventKey' ]) {
 
             static::addShareUserRelation($message);
@@ -147,8 +147,8 @@ class WechatEventMessageHandler implements EventHandlerInterface
     private static function parseParams( $message )
     {
         //{"scene":{"scene_str":"ohJajxKAue5qiLgaEkgB_4nUx7Xg","official_activity_id":1}}}
-        Log::error($message);
-        return json_decode($message[ 'EventKey' ], true)[ 'action_info' ][ 'scene' ];
+
+        return json_decode(str_replace("qrscene_",'',$message[ 'EventKey' ]), true)[ 'action_info' ][ 'scene' ];
     }
 
 }
