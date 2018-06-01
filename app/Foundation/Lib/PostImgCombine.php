@@ -26,7 +26,7 @@ class PostImgCombine
         $result = app("wechat.official_account")->qrcode->temporary($data, 6 * 24 * 3600);
         $url    = app("wechat.official_account")->qrcode->url($result[ "ticket" ]);
 
-        $img = Image::make(public_path() .$activity->poster_base_img_url);
+        $img = Image::make(public_path() . $activity->poster_base_img_url);
         //$img = Image::make(public_path() .'/officialAccount/wechat.jpg');
 
         $img->text(
@@ -37,9 +37,9 @@ class PostImgCombine
             $font->align("center");
         }
         );
-        $qrcode = Image::make($url)->resize(182, 182);
-        $context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
-        $avatar = Image::make( file_get_contents($user->avatar,false,$context))->resize(182, 182);
+        $qrcode  = Image::make(static::getImage($url))->resize(182, 182);
+
+        $avatar  = Image::make(static::getImage($user->avatar))->resize(182, 182);
 
         $img->insert($qrcode, 'bottom-right', 95, 200);
         $img->insert($avatar, 'bottom-left', 95, 200);
@@ -49,12 +49,12 @@ class PostImgCombine
         is_dir($base_path) or mkdir($base_path, 0770);
         $fileName = str_random(16) . '.jpg';
         $filePath = $base_path . $fileName;
-        $img->save($filePath,70);
+        $img->save($filePath, 70);
 
         $data = app("wechat.official_account")->material->uploadImage($filePath);
 
 
-        return [ 'poster_media_id' => $data[ 'media_id' ], 'poster_url' => asset('/officialAccount/poster/'.$fileName) ];
+        return [ 'poster_media_id' => $data[ 'media_id' ], 'poster_url' => asset('/officialAccount/poster/' . $fileName) ];
     }
 
 
@@ -79,6 +79,18 @@ class PostImgCombine
                 ],
             ]
         );
+    }
+
+   static function getImage( $url )
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_ENCODING, "");  //加速
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return $output;
     }
 
 }
