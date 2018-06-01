@@ -20,6 +20,7 @@ use App\Models\OfficialActivityShareRelation;
 use EasyWeChat\Kernel\Contracts\EventHandlerInterface;
 use EasyWeChat\Kernel\Messages\Image;
 use EasyWeChat\Kernel\Messages\Text;
+use Illuminate\Support\Facades\Log;
 
 
 class WechatEventMessageHandler implements EventHandlerInterface
@@ -79,7 +80,7 @@ class WechatEventMessageHandler implements EventHandlerInterface
      */
     protected static function subscribe( $message )
     {
-
+       Log::info($message);
         if ($message[ 'EventKey' ]) {
 
             static::addShareUserRelation($message);

@@ -102,7 +102,7 @@ class HomeController extends BaseController
                 //用户来源
                 $userData[ 'source' ] = User::SOURCE_DRAW;
                 $userData[ "phone" ]  = $request->phone;
-                User::query()->create($userData);
+                $user=User::query()->create($userData);
             }
 
             //参加活动
