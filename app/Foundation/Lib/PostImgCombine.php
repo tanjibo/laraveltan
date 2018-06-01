@@ -55,7 +55,6 @@ class PostImgCombine
 
         $data = app("wechat.official_account")->material->uploadImage($filePath);
 
-         Log::error($data);
         return [ 'poster_media_id' => $data[ 'media_id' ], 'poster_url' => asset('/officialAccount/poster/' . $fileName) ];
     }
 

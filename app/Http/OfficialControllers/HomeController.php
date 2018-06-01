@@ -85,15 +85,14 @@ class HomeController extends BaseController
                 'status'   => User::USER_STATUS_ON,
 
             ];
-//            if (!in_array(App::environment() ,['local','test']) ){
-//                $userData[ 'union_id' ] = $wxUserInfo[ "unionid" ];
-//                $user                   = User::query()->where('union_id', $wxUserInfo[ "unionid" ])->first();
-//            }
-//            else {
-//                $user = User::query()->where('open_id', $wxUserInfo[ "openid" ])->first();
-//            }
+            if (!in_array(App::environment() ,['local','test']) ){
+                $userData[ 'union_id' ] = $wxUserInfo[ "unionid" ];
+                $user                   = User::query()->where('union_id', $wxUserInfo[ "unionid" ])->first();
+            }
+            else {
+                $user = User::query()->where('open_id', $wxUserInfo[ "openid" ])->first();
+            }
 
-            $user = User::query()->where('open_id', $wxUserInfo[ "openid" ])->first();
 
             if ($user) {
                 $user->update($userData);
@@ -109,7 +108,7 @@ class HomeController extends BaseController
             if (OfficialActivityUser::attendDraw($user, $this->activity)) {
 
                 $subscribe = $this->app->user->get($wxUserInfo[ "openid" ]);
-                  Log::info($subscribe);
+
                 //等于1的时候代表订阅过
                 if (isset($subscribe[ "subscribe" ]) && !$subscribe[ "subscribe" ]) {
 
