@@ -147,6 +147,7 @@ class WechatEventMessageHandler implements EventHandlerInterface
     private static function parseParams( $message )
     {
         //{"scene":{"scene_str":"ohJajxKAue5qiLgaEkgB_4nUx7Xg","official_activity_id":1}}}
+        Log::info($message);
         return json_decode($message[ 'EventKey' ], true)[ 'action_info' ][ 'scene' ];
     }
 
