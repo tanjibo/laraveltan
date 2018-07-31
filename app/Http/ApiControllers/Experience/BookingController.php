@@ -7,11 +7,12 @@ use App\Http\Resources\Experience\ExperienceRoomBookingResource;
 use App\Models\ExperienceBooking;
 use App\Models\PaymentLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Repositories\ExperienceRoomBookingRepository;
 use Repositories\MiniDateRepository;
 use Repositories\PaymentRepository;
 
-class ExperienceRoomBookingController extends ApiController
+class BookingController extends ApiController
 {
 
     public $bookingRepository, $dateRepository, $payment;
@@ -23,17 +24,20 @@ class ExperienceRoomBookingController extends ApiController
         $this->payment           = $payment;
     }
 
+
     /**
      * @param string $room_id
      * 获取一个房间不可入住的时间
      */
-    public function RoomCheckinDisableBy(Request $request,$room_id)
+    public function RoomCheckinDisableBy( Request $request, $room_id )
     {
-        $request['room_id']=$room_id;
-        $this->validate($request,[
-                'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
-                'checkin'=>'date_format:Y-m-d'
-        ]);
+        $request[ 'room_id' ] = $room_id;
+        $this->validate(
+            $request, [
+            'room_id' => 'required|numeric|max:10|min:1', //房间id 不能为空
+            'checkin' => 'date_format:Y-m-d',
+        ]
+        );
 
         return $this->success($this->bookingRepository->RoomCheckinDisableApi());
     }
@@ -43,14 +47,16 @@ class ExperienceRoomBookingController extends ApiController
      * 获取一个房间不可退房时间
      * @return mixed
      */
-    public function RoomCheckoutDisableBy(Request $request,$room_id)
+    public function RoomCheckoutDisableBy( Request $request, $room_id )
     {
-        $request['room_id']=$room_id;
+        $request[ 'room_id' ] = $room_id;
 
-        $this->validate($request,[
-            'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
-            'checkin'=>'required|date_format:Y-m-d'
-        ]);
+        $this->validate(
+            $request, [
+            'room_id' => 'required|numeric|max:10|min:1', //房间id 不能为空
+            'checkin' => 'required|date_format:Y-m-d',
+        ]
+        );
 
         return $this->success($this->bookingRepository->RoomCheckoutDisableApi());
     }
@@ -59,15 +65,17 @@ class ExperienceRoomBookingController extends ApiController
      * 剩余可以预订的房间
      * @return mixed
      */
-    public function leftCheckinRoom(Request $request,$room_id)
+    public function leftCheckinRoom( Request $request, $room_id )
     {
-        $request['room_id']=$room_id;
+        $request[ 'room_id' ] = $room_id;
 
-        $this->validate($request,[
-            'room_id'=>'required|numeric|max:10|min:1', //房间id 不能为空
-            'checkin'=>'required|date_format:Y-m-d',
-            'checkout'=>'required|date_format:Y-m-d'
-        ]);
+        $this->validate(
+            $request, [
+            'room_id'  => 'required|numeric|max:10|min:1', //房间id 不能为空
+            'checkin'  => 'required|date_format:Y-m-d',
+            'checkout' => 'required|date_format:Y-m-d',
+        ]
+        );
 
         if ($resource = $this->bookingRepository->leftCheckinRoomApi()) {
             return $this->success($resource);
@@ -87,13 +95,16 @@ class ExperienceRoomBookingController extends ApiController
         if (is_string($request->rooms)) {
             $request->rooms = json_decode($request->rooms, true);
         }
-        $this->validate($request,[
-            'checkin'=>'required|date_format:Y-m-d',
-            'checkout'=>'required|date_format:Y-m-d',
-            'rooms'=>'required|array', //房间id 不能为空
+        $this->validate(
+            $request, [
+            'checkin'  => 'required|date_format:Y-m-d',
+            'checkout' => 'required|date_format:Y-m-d',
+            'rooms'    => 'required|array', //房间id 不能为空
 
-        ]);
-        return $this->success([ 'total' => ExperienceBooking::calculateFee($request->checkin, $request->checkout, $request->rooms,$request->isPrepay) ]);
+        ]
+        );
+
+        return $this->success([ 'total' => ExperienceBooking::calculateFee($request->checkin, $request->checkout, $request->rooms, $request->isPrepay) ]);
     }
 
 
@@ -106,30 +117,38 @@ class ExperienceRoomBookingController extends ApiController
     {
 
         if (is_string($request->rooms)) {
-            $request['rooms'] = json_decode($request->rooms, true);
+            $request[ 'rooms' ] = json_decode($request->rooms, true);
         }
 
-        $this->validate($request,[
-            'checkin'=>'required|date_format:Y-m-d', //入住时间
-            'checkout'=>'required|date_format:Y-m-d', //退房时间
-            'customer'=>'required|max:10',           //顾客
-            'gender'=>'required',
-            'pay_mode'=>'required', //支付方式
-            'people'=>'required|max:10|min:1',//人数
-            'rooms'=>'required|array', //房间id 不能为空
-            'mobile'=>'bail|required|size:11|regex:/^1[34578][0-9]{9}$/', //电话号码
+        $this->validate(
+            $request, [
+            'checkin'  => 'required|date_format:Y-m-d', //入住时间
+            'checkout' => 'required|date_format:Y-m-d', //退房时间
+            'customer' => 'required|max:10',           //顾客
+            'gender'   => 'required',
+            'pay_mode' => 'required', //支付方式
+            'people'   => 'required|max:10|min:1',//人数
+            'rooms'    => 'required|array', //房间id 不能为空
+            'mobile'   => 'bail|required|size:11|regex:/^1[34578][0-9]{9}$/', //电话号码
 
-        ]);
+        ]
+        );
 
-        //if ($model = ExperienceBooking::query()->first()) {
+        if ($this->bookingRepository->checkRoomCheckInIsUsed($request->rooms, $request->checkin)) {
+            return $this->failed('抱歉,您选的日期前一秒已被使用,请重新选取时间');
+        }
+
+        // if ($model = ExperienceBooking::query()->find(279)) {
+
 
         if ($model = ExperienceBooking::store($request)) {
             //和微信支付交互
 
-            $data = $this->payment->unifiedorder($model);
+            if ($model->real_price)
+                $data = $this->payment->unifiedorder($model);
 
             //booking_id
-            $data['booking_id']=$model->id;
+            $data[ 'booking_id' ] = $model->id;
 
             return $this->success($data);
         }
@@ -151,14 +170,18 @@ class ExperienceRoomBookingController extends ApiController
 
 
         if ($model = ExperienceBooking::query()->find($request->booking_id)) {
+
+            if ($this->bookingRepository->checkRoomCheckInIsUsed($request->booking_id, $model->checkin)) {
+                return $this->failed('抱歉,您选的日期前一秒已被使用,请重新选取时间');
+            }
             //和微信支付交互
-            if($model->status!=0){
+            if ($model->status != 0) {
                 return $this->error('error');
             }
             $data = $this->payment->unifiedorder($model);
 
             //booking_id
-            $data['booking_id']=$model->id;
+            $data[ 'booking_id' ] = $model->id;
             return $this->success($data);
         }
         else {
@@ -172,7 +195,6 @@ class ExperienceRoomBookingController extends ApiController
      */
     public function orderList()
     {
-
         return $this->success($this->bookingRepository->orderListApi());
     }
 
@@ -206,7 +228,7 @@ class ExperienceRoomBookingController extends ApiController
     public function orderStatusToChange( Request $request )
     {
         //授权
-        $this->authorize('update',ExperienceBooking::query()->find($request->booking_id));
+        $this->authorize('update', ExperienceBooking::query()->find($request->booking_id));
 
 
         if (ExperienceBooking::changeBookingOrder($request->booking_id, $request->status)) {
@@ -214,7 +236,7 @@ class ExperienceRoomBookingController extends ApiController
             return $this->message('success');
         }
         else {
-            return  $this->failed('fail');
+            return $this->failed('fail');
         }
     }
 
@@ -224,13 +246,13 @@ class ExperienceRoomBookingController extends ApiController
     }
 
 
-
-
-    public function calendarInit(Request $request)
+    public function calendarInit( Request $request )
     {
-        $this->validate($request,[
-            'room_id'=>'required'
-        ]);
+        $this->validate(
+            $request, [
+            'room_id' => 'required',
+        ]
+        );
         return $this->success($this->dateRepository->getDate());
     }
 

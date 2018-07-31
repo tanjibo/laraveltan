@@ -12,40 +12,17 @@
 namespace App\Http\ApiControllers;
 
 
-
-
+use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
+use App\Traits\ApiResponse;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpFoundation\Response;
 
 
 class ApiController extends Controller
 {
-   use ApiResponse;
-
-    protected function token( Request $request, string $client = 'experience' )
-    {
-
-         $user =$request->username?:$request->union_id;
-        $request->request->add(
-            config('passport.'.$client) +
-            [
-                'username' => $user,
-                'password' => $request->password,
-            ]
-        );
-        $proxy = Request::create('oauth/token', 'POST');
-
-        $response = \Route::dispatch($proxy);
-
-        $data = json_decode($response->getContent(), true);
-        if ($response->getStatusCode() == $this->statusCode) {
-            return $this->success($data);
-        }
-        else {
-            return $this->notFound($data);
-        }
-    }
+    use ApiResponse;
 
 
 

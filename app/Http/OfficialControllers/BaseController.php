@@ -28,7 +28,7 @@ class BaseController extends Controller
 
         $this->app = app("wechat.official_account");
 
-        $this->isActiveActivity();
+        //$this->isActiveActivity();
 
     }
 
@@ -54,6 +54,7 @@ class BaseController extends Controller
         if (strtotime($model->end_time) < time()) {
 
             echo  header("Location:".route("officialAccount.gateway",['status'=>"be_end"]));
+
             exit;
         }
 

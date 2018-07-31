@@ -2,9 +2,11 @@
 
 namespace App\Http\ApiControllers\Experience;
 
+
 use App\Http\ApiControllers\ApiController;
 use App\Http\Resources\Experience\UserResource;
 use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,8 +24,9 @@ class UserController extends ApiController
             return $this->success(new UserResource(User::query()->find(Auth::id()?:165)));
 
         }else{
-            return $this->failed('error');
+            return $this->failed('获取用户信息错误');
         }
+
     }
 
 

@@ -19,8 +19,10 @@ use App\Models\OfficialActivityUser;
 use App\Models\OfficialActivityShareRelation;
 use EasyWeChat\Kernel\Contracts\EventHandlerInterface;
 use EasyWeChat\Kernel\Messages\Image;
+use EasyWeChat\Kernel\Messages\Raw;
 use EasyWeChat\Kernel\Messages\Text;
 use Illuminate\Support\Facades\Log;
+use Repositories\MemberCardEventRepository;
 
 
 class WechatEventMessageHandler implements EventHandlerInterface
@@ -49,12 +51,16 @@ class WechatEventMessageHandler implements EventHandlerInterface
             return call_user_func_array([ static::class, $eventType ], [ $message ]);
 
         }
+        //会员卡推送事件
+
+        app(MemberCardEventRepository::class)->handler($message);
 
 
     }
 
     public function click( $message )
     {
+
         $data = explode(":", $message[ 'EventKey' ]);
 
         $user = OfficialActivityUser::query()->withoutGlobalScopes()->where("open_id", $message[ 'FromUserName' ])->where('official_activity_id', $data[ 1 ])->first();
@@ -148,7 +154,7 @@ class WechatEventMessageHandler implements EventHandlerInterface
     {
         //{"scene":{"scene_str":"ohJajxKAue5qiLgaEkgB_4nUx7Xg","official_activity_id":1}}}
 
-        return json_decode(str_replace("qrscene_",'',$message[ 'EventKey' ]), true)[ 'action_info' ][ 'scene' ];
+        return json_decode(str_replace("qrscene_", '', $message[ 'EventKey' ]), true)[ 'action_info' ][ 'scene' ];
     }
 
 }

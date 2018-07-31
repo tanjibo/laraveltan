@@ -48,8 +48,10 @@ class VerifyController extends Controller
 
     public function gateway()
     {
-        return view("official_front.gate");
+
+        return view("official_front.gate",compact('json'));
     }
+
 
 
 

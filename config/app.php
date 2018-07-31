@@ -128,6 +128,8 @@ return [
     'official_domain' => env('OFFICIAL_DOMAIN', 'm.liaorusanshe.com'),
     'admin_domain'  => env('ADMIN_DOMAIN', 'admin.liaorusanshe.com'),
     'api_domain'    => env('API_DOMAIN', 'api.liaorusanshe.com'),
+    //会员卡缓存key
+    "member_card_cache_key"=>env('MEMBER_CARD_CACHE_KEY','member_card'),
 
     /*
     |--------------------------------------------------------------------------

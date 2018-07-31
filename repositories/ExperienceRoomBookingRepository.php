@@ -16,6 +16,7 @@ use App\Http\Resources\Experience\ExperienceRoomResource;
 use App\Models\ExperienceBooking;
 use App\Models\ExperienceRoom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -29,6 +30,13 @@ class ExperienceRoomBookingRepository
         $this->request = $request;
     }
 
+    public function checkRoomCheckInIsUsed($val,$checkin){
+        $val=is_array($val)?$val:Arr::wrap($val);
+        foreach($val as $v){
+           if($this->RoomCheckinDisableApi($v)->contains($checkin)) return true;
+        }
+        return false;
+    }
 
     /**
      * 一个房间不可选的入住时间
@@ -277,6 +285,7 @@ class ExperienceRoomBookingRepository
         //正常订单
 
         $model = ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->when(isset($this->request->orderStatus),function($query){
+          if($this->request->orderStatus)
            $query->where('status', $this->request->orderStatus);
         });
 

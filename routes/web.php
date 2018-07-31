@@ -15,6 +15,7 @@ Route::get("login", "LoginController@showLoginForm");
 Route::post("login", "LoginController@login")->name('login');
 Route::get('logout', "LoginController@logout")->name('logout');
 
+
 /**
  * 安吉
  */
@@ -140,7 +141,7 @@ Route::middleware([ "auth" ])->group(
 
                 //公众号设置
                 Route::Resource("official_account_setting","SettingController",['only'=>['index','store']]);
-
+                Route::post("official_account_setting/reset","SettingController@resetOfficialAccountMenu")->name('official_account_setting.reset');
                 //下载
                 Route::get('official_activity/download',"ActivityController@download")->name('official_activity.download');
 

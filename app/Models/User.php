@@ -8,6 +8,7 @@
 namespace App\Models;
 
 
+use App\Exceptions\InternalException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
@@ -86,6 +87,7 @@ class User extends Authenticatable
     const SOURCE_ALL            = 100;  // 全部
     const SOURCE_NOUSER         = 888888;  // 没有
     const SOURCE_DRAW           = 5;  //抽奖
+    const SOURCE_MEMBER_CARD    = 6;  //会员卡
 
     /**
      * 终端
@@ -451,8 +453,6 @@ class User extends Authenticatable
     }
 
 
-
-
     /**
      * 添加用户海报
      */
@@ -460,5 +460,111 @@ class User extends Authenticatable
     {
         $this->draw->update($this->makePoster());
 
+    }
+
+
+    public static function addUserByMemberCard( $wxUserInfo )
+    {
+
+        $userData = [
+            'avatar'   => $wxUserInfo[ "headimgurl" ],
+            'nickname' => $wxUserInfo[ "nickname" ],
+            'gender'   => $wxUserInfo[ "sex" ],
+            'open_id'  => $wxUserInfo[ "openid" ],
+            'status'   => User::USER_STATUS_ON,
+        ];
+
+        if ( isset($wxUserInfo[ 'username' ])) {
+            $userData[ 'username' ] = $wxUserInfo[ 'username' ];
+        }
+
+
+        if (isset($wxUserInfo[ 'email' ])) {
+            $userData[ 'email' ] = $wxUserInfo[ 'email' ];
+        }
+
+        if (isset($wxUserInfo[ 'birthday' ])) {
+            $userData[ 'birthday' ] = $wxUserInfo[ 'birthday' ];
+        }
+
+        if (!in_array(app()->environment(), [ 'local', 'test' ])) {
+            $userData[ 'union_id' ] = $wxUserInfo[ "unionid" ];
+            $user                   = User::query()->where('union_id', $wxUserInfo[ "unionid" ])->first();
+        }
+        else {
+            $user = User::query()->where('open_id', $wxUserInfo[ "openid" ])->first();
+        }
+
+
+        if ($user) {
+            //之前就没有电话号码
+            if (!$user->mobile) {
+                if (static::findUserByMobile($wxUserInfo[ 'mobile' ])) {
+                    throw new InternalException('手机号已经被注册了');
+                }
+                $userData[ "mobile" ] = $wxUserInfo[ 'mobile' ];
+
+            }
+            else {
+                if ($wxUserInfo != $user->mobile) {
+
+                    $if = static::query()->where('mobile', $wxUserInfo['mobile'])->whereKeyNot($user->id)->first();
+                    if ($if) throw new InternalException('手机号已经被注册了');
+                    $userData[ "mobile" ] = $wxUserInfo[ 'mobile' ];
+                }
+            }
+            $user->update($userData);
+
+        }
+        else {
+            //用户来源
+            if (static::findUserByMobileOrUnionId($wxUserInfo[ 'mobile' ])) {
+                throw new InternalException('手机号已经被注册了');
+            }
+            $userData[ 'source' ] = User::SOURCE_MEMBER_CARD;
+            $userData[ "mobile" ] = $wxUserInfo[ 'mobile' ];
+            $user                 = User::query()->create($userData);
+        }
+        return $user;
+    }
+
+
+    static  function storeUser(){
+        $userData = [
+            'avatar'       => $avatarUrl,
+            'nickname'     => $nickName,
+            'union_id'     => $unionId,
+            'gender'       => $gender,
+            'status'       => User::USER_STATUS_ON,
+
+        ];
+
+        if ($user = User::query()->where('union_id', $unionId)->first()) {
+
+            $user->update($userData);
+
+        }
+        else {
+            //用户来源
+            $userData[ 'source' ] = User::SOURCE_EXPERIENCEROOM;
+            User::query()->create($userData);
+
+        }
+    }
+
+
+
+    public static function findUserByMobileOrUnionId( $val )
+    {
+        return static::query()->where('mobile', $val)->orWhere('union_id',$val)->first();
+    }
+
+    public function findUserByMobile(){
+
+    }
+
+    public static function findUserByUnionId(string $union_id){
+
+        return static::query()->where('union_id',$union_id)->first();
     }
 }

@@ -19,8 +19,7 @@
 {{--<script src="https://unpkg.com/promise-polyfill"></script>--}}
 <script>
     //微信配置
-
-    wx.config(<?php echo app("wechat.official_account")->jssdk->buildConfig(['onMenuShareTimeline','onMenuShareAppMessage','showMenuItems','hideAllNonBaseMenuItem'], false);?>);
+    wx.config(<?php echo app("wechat.official_account")->jssdk->buildConfig(['onMenuShareTimeline','onMenuShareAppMessage','showMenuItems','hideAllNonBaseMenuItem','chooseCard', 'openCard','addCard'], true);?>);
 
     window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

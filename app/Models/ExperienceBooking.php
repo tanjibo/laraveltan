@@ -197,6 +197,27 @@ class ExperienceBooking extends Eloquent
     }
 
     /**
+     * Set attribute with balance
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setBalanceAttribute( $value )
+    {
+        $this->attributes[ 'balance' ] = intval($value * 100);
+    }
+
+    /**
+     * Get attribute with balance
+     *
+     * @param  string $value
+     * @return int
+     */
+    public function getBalanceAttribute( $value )
+    {
+        return doubleval($value / 100);
+    }
+    /**
      * 计算费用
      *
      * @param  [type] $checkin  [description]
@@ -218,6 +239,7 @@ class ExperienceBooking extends Eloquent
                 // 节日价
                 //预付金
                 $prepay  = $isPrepay ? ($r->prepay_percent / 100) : 1;
+
                 $special = ExperienceSpecialPrice::query()->where('experience_room_id', $r->id)->where('date', $date)->value('price');
                 //加上预付金
                 $total += ($special === null ? $r->price * $prepay : $special * $prepay);

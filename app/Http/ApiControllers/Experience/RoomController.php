@@ -12,23 +12,23 @@
 namespace App\Http\ApiControllers\Experience;
 
 
+
 use App\Http\ApiControllers\ApiController;
 
 use App\Models\ExperienceRoomCommonSetting;
 use App\Models\Partners;
-use App\Models\PartnerUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Repositories\ExperienceRoomRepository;
 
 
-class ExperienceRoomController extends ApiController
+class RoomController extends ApiController
 {
     protected $repository;
     public function __construct( ExperienceRoomRepository $repository )
     {
         $this->repository = $repository;
     }
+
 
     public function roomList( Request $request )
     {

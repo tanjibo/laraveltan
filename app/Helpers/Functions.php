@@ -25,46 +25,7 @@ function getActivityId()
  */
 function makeMenu( $activity )
 {
-    $data = [
-        [
-            "type" => "view",
-            "name" => '抽奖码排行榜',
-            'url'  => makeActivityMixUrl('officialAccount.user.numberList', $activity),
-        ],
-        [
-            "type" => "click",
-            "name" => '获取推广海报',
-            "key"  => 'official_activity_post_envent:' . $activity->id,
-        ],
-        [
-            "type" => "view",
-            "name" => $activity->name,
-            "url"  => makeActivityMixUrl('officialAccount.home', $activity),
-        ],
-    ];
-
-    $defaultSetting=\App\Models\OfficialAccountDefaultSetting::officialAccountHasDefaultSetting();
-
-    preg_match('/<pre.*>([\s\S]*?)<\/pre>/', $defaultSetting->menu_json, $match);
-
-        $str = html_entity_decode($match[ 1 ]);
-
-        $str = str_replace([ "<span class=hljs-string>", "<span class=\"hljs-string\">", "</span>", "<span class=\"hljs-symbol\">","<span class=\"hljs-comment\">" ], [ "" ], $str);
-
-       $menu = eval("return $str;");
-
-
-    //代表开启
-    if(!isset(request()->close)){
-        $menu[ 1 ][ 'sub_button' ] = array_merge($menu[ 1 ][ 'sub_button' ], $data);
-    }
-    //app_id
-
-    $menu[ 1 ][ 'sub_button' ][ 0 ][ 'appid' ] = config("minilrss.default.appid");
-
-
-    $result = app("wechat.official_account")->menu->create($menu);
-    return $result;
+   app(\Repositories\OfficialAccountMenuRepository::class)->makeMenu($activity);
 }
 
 /**

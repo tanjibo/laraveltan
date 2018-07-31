@@ -40,29 +40,32 @@ class BookingApiObserver
     public function creating( ExperienceBooking $booking )
     {
 
-        $booking->user_id = Auth::id() ?: 1;
+        $booking->user_id = Auth::id();
         //计算价格
-        if (App::environment() == 'test' || App::environment() == 'develop') {
+        if (App::environment(['test','develop','local'])) {
             $booking->price = $total = 0.1;
         }
         else {
             $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms, $this->request->isPrepay);
-
+             //原始价格
             $booking->price = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms, false);
         }
 
-        //如果是余额支付
-        if ($booking->pay_mode == $booking::PAY_MODE_BALANCE) {
-            $account = User::accountInfo($booking->user_id);
+        $user = User::query()->find($booking->user_id);
 
-            if ($account[ 'balance' ] < $total) {
-                $booking->balance    = $account[ 'balance' ];
-                $booking->real_price = $total - $account[ 'balance' ];
+        //如果是余额支付
+
+        if ($booking->pay_mode == $booking::PAY_MODE_BALANCE) {
+
+            if ($user[ 'balance' ] < $total) {
+                $booking->balance    = $user[ 'balance' ];
+                $booking->real_price = $total - $user[ 'balance' ];
             }
             else {
                 $booking->balance    = $total;
                 $booking->real_price = 0;
             }
+            $user->decrement('balance',$booking->balance*100);
         }
         else {
             $booking->real_price = $total;
@@ -70,7 +73,9 @@ class BookingApiObserver
 
         $booking->checkin   = date('Y-m-d', strtotime($this->request->checkin));
         $booking->checkout  = date('Y-m-d', strtotime($this->request->checkout));
+        //如果真正支付的金额为0说明不用支付了
         $booking->status    = $booking::STATUS_UNPAID;
+
         $booking->is_prepay = $this->request->isPrepay;
         $booking->source    = static::isComingPartner($this->request->partnerToken);
 

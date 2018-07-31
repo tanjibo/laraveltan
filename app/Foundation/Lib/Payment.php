@@ -2,6 +2,7 @@
 
 namespace App\Foundation\Lib;
 
+use App\Exceptions\InternalException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -38,9 +39,12 @@ class Payment
 
         // 获取预支付ID
         $data = static::post('https://api.mch.weixin.qq.com/pay/unifiedorder', $xml);
+
         $data = static::xml2array($data);
-        if (!isset($data[ 'prepay_id' ]))
-            return false;
+
+        if (!isset($data[ 'prepay_id' ])){
+             throw new InternalException('支付发生错误:'.$data['err_code_des']);
+        }
         $prepayId = $data[ 'prepay_id' ];
 
         //再次签名

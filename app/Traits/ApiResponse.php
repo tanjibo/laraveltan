@@ -9,8 +9,8 @@
  * Time: 5:42 PM
  */
 
-namespace App\Http\ApiControllers;
-use Illuminate\Support\Facades\Response;
+namespace App\Traits;
+
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 trait ApiResponse
@@ -31,7 +31,7 @@ trait ApiResponse
 
     public function respond( $data, $header = [] )
     {
-        return Response::json($data, $this->getStatusCode(), $header);
+        return response()->json($data, $this->getStatusCode(), $header);
     }
 
     public function status( $status, array $data, $code = null )

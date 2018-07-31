@@ -16,6 +16,7 @@
             <p>长按下方二维码，关注<span style="font-weight: 700;color:red;">了如三舍</span>公众号，更多免费活动等着你！</p>
             <img style="margin-top:80px;" src="{{asset('/officialAccount/img/ewm.jpg')}}" alt="">
             <p style="font-size:40px;">了如三舍</p>
+
         </section>
 
     </section>
@@ -38,5 +39,9 @@
         })
 
 
+
+
+
     </script>
+
 @endsection

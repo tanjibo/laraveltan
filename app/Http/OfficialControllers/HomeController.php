@@ -18,6 +18,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use Repositories\StoreUserRepository;
 
 
 class HomeController extends BaseController
@@ -36,14 +37,15 @@ class HomeController extends BaseController
         $drawUser = OfficialActivityUser::isJoin($user[ 'openid' ]);
         $activity = $this->activity;
 
-
         //参加过活动的通知，直接跳到个人中心
         if ($drawUser[ 'draw_number_count' ]) {
             return redirect()->route("officialAccount.user.numberCenter", [ 'official_activity_id' => $activity ]);
         }
 
 
+
         $share = $activity->share_settings->first();
+
 
         $shareTimeLine = WechatShareHandle::shareOnTimeLine(
             $share->title,
@@ -60,7 +62,7 @@ class HomeController extends BaseController
      * @return \Illuminate\Http\JsonResponse
      * 获取用户电话号码
      */
-    public function getPhone( Request $request )
+    public function getPhone( Request $request,StoreUserRepository $repository)
     {
 
         if ($request->ajax()) {
@@ -75,34 +77,10 @@ class HomeController extends BaseController
             }
 
             $wxUserInfo = wechatOauthUser();
+             $wxUserInfo['phone']=$request->phone;
 
+            $user=$repository->storeUserByWebMobile($wxUserInfo);
 
-            $userData = [
-                'avatar'   => $wxUserInfo[ "headimgurl" ],
-                'nickname' => $wxUserInfo[ "nickname" ],
-                'gender'   => $wxUserInfo[ "sex" ],
-                'open_id'  => $wxUserInfo[ "openid" ],
-                'status'   => User::USER_STATUS_ON,
-
-            ];
-            if (!in_array(App::environment() ,['local','test']) ){
-                $userData[ 'union_id' ] = $wxUserInfo[ "unionid" ];
-                $user                   = User::query()->where('union_id', $wxUserInfo[ "unionid" ])->first();
-            }
-            else {
-                $user = User::query()->where('open_id', $wxUserInfo[ "openid" ])->first();
-            }
-
-
-            if ($user) {
-                $user->update($userData);
-            }
-            else {
-                //用户来源
-                $userData[ 'source' ] = User::SOURCE_DRAW;
-                $userData[ "phone" ]  = $request->phone;
-                $user=User::query()->create($userData);
-            }
 
             //参加活动
             if (OfficialActivityUser::attendDraw($user, $this->activity)) {

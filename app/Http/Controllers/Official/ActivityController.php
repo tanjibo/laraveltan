@@ -112,6 +112,7 @@ class ActivityController extends Controller
             OfficialActivity::query()->where('id', "!=", $official_activity->id)->update([ 'is_active' => 2 ]);
 
         }
+
         //重新生成菜单栏
         makeMenu($official_activity);
 

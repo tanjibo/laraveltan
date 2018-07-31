@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Repositories\ExperienceRoomCommentRepository;
 use Repositories\QiniuUploadRepository;
 
-class ExperienceBookingCommentController extends ApiController
+class CommentController extends ApiController
 {
     protected $comment;
 
