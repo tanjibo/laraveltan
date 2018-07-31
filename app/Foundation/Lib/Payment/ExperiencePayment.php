@@ -40,7 +40,7 @@ class ExperiencePayment extends Payment implements paymentInterface
     {
         $config             = static::payConfig();
         $config[ 'number' ] = $number;
-        $config[ 'fee' ]    = $fee;
+        $config[ 'fee' ]    = $fee>100?$fee:0.1;
         return parent::orderRefund($config);
     }
 
