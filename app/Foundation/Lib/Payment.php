@@ -43,7 +43,7 @@ class Payment
         $data = static::xml2array($data);
 
         if (!isset($data[ 'prepay_id' ])){
-             throw new InternalException('支付发生错误:'.$data['err_code_des']);
+             throw new InternalException('支付发生错误:'.json_encode($data).$data['err_code_des']);
         }
         $prepayId = $data[ 'prepay_id' ];
 
