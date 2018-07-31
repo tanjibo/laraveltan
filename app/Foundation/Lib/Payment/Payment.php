@@ -40,7 +40,7 @@ class Payment
         $data = static::post('https://api.mch.weixin.qq.com/pay/unifiedorder', $xml);
 
         $data = static::xml2array($data);
-      
+
         if (!isset($data[ 'prepay_id' ])) {
             throw new InternalException('支付发生错误:' . $data[ 'err_code_des' ]);
         }
@@ -243,7 +243,7 @@ class Payment
      * @return array|bool
      * 微信支付回调
      */
-    public function wechatNotify( $pay_key )
+   static public function wechatNotify( $pay_key )
     {
         $xml = file_get_contents("php://input");
 
