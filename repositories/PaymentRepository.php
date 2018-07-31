@@ -26,7 +26,7 @@ class PaymentRepository
         //类型,判断普通，山云荟，星月阁
         extract(
             [
-                'body'   => '了如三舍安吉体验店',
+                'body'   => '了如三舍安吉体验中心',
                 'fee'    => $order->real_price,
                 'number' => (App::environment()=='local'||App::environment()=='test')?'E' . str_pad($order->id, 12, '0', STR_PAD_LEFT):'EP' . str_pad($order->id, 12, '0', STR_PAD_LEFT),
                 'notify' => '/api/mini/callback/' . $order->id,
