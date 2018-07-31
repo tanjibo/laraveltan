@@ -114,11 +114,14 @@ class Payment
         return false;
     }
 
+
+
+
     /**
      * @return string
      * 自己系统生成的退款订单号
      */
-    private static function refundId()
+    protected static function refundId()
     {
         return date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
     }
@@ -129,7 +132,7 @@ class Payment
      * @return bool|mixed
      * 不能再本地调试，而且不能再post 方法中调用，你要不要这么坑爹
      */
-    private static function postSsl( $url, $params )
+    protected static function postSsl( $url, $params )
     {
         $ch = curl_init();
         //超时时间

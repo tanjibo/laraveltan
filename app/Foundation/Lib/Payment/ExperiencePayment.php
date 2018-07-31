@@ -2,6 +2,9 @@
 
 namespace App\Foundation\Lib\Payment;
 
+use Carbon\Carbon;
+
+
 /**
  * |--------------------------------------------------------------------------
  * |
@@ -11,8 +14,6 @@ namespace App\Foundation\Lib\Payment;
  * Date: 31/7/2018
  * Time: 2:03 PM
  */
-
-
 class ExperiencePayment extends Payment implements paymentInterface
 {
 
@@ -46,6 +47,29 @@ class ExperiencePayment extends Payment implements paymentInterface
     static public function notify()
     {
         return static::wechatNotify(config('pay.experience.pay_key'));
+    }
+
+    /**
+     * @param $date
+     * 退款规则
+     */
+    static public function refundFeeRegular( $date )
+    {
+        $date = new Carbon($date . ' 12:00:00');
+        //大于五天
+        if (Carbon::now()->addDay(5)->lt($date)) {
+            return 1;
+        } //小于五天大于三天
+        elseif (Carbon::now()->addDay(3)->lt($date)) {
+            return 0.5;
+        }
+        elseif (Carbon::now()->addDay(1)->lt($date)) {
+            return 0.2;
+        }
+        else {
+            return 0;
+        }
+
     }
 
 }

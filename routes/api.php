@@ -35,7 +35,7 @@ Route::group(
 
 
     Route::group(
-        [ 'middleware' => App::environment() == 'local'?'auth.api': 'auth.api' ], function() {
+        [ 'middleware' => 'auth.api' ], function() {
 
 
 

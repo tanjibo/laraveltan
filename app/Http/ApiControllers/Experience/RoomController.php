@@ -17,8 +17,10 @@ use App\Http\ApiControllers\ApiController;
 
 use App\Models\ExperienceRoomCommonSetting;
 use App\Models\Partners;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Repositories\ExperienceRoomRepository;
+use function Sodium\add;
 
 
 class RoomController extends ApiController
@@ -32,7 +34,6 @@ class RoomController extends ApiController
 
     public function roomList( Request $request )
     {
-
         if ($data = $this->repository->all()) {
             //添加第三方用户来源
             Partners::addPartnerUser();

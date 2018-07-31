@@ -14,8 +14,9 @@ namespace App\Observer\Experience;
 
 use App\Events\RefundFailNotificationEvent;
 use App\Events\SendNotificationEvent;
-use App\Foundation\Lib\Payment;
 
+
+use App\Foundation\Lib\Payment\ExperiencePayment;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
@@ -26,6 +27,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Repositories\PaymentRepository;
 
 class BookingApiObserver
 {
@@ -212,7 +214,9 @@ class BookingApiObserver
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-            $result = App::environment() == 'local' ? [ 'result_code' => '' ] : Payment\ExperiencePayment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+            $result = App::environment() == 'local' ? [ 'result_code' => '' ] :
+                app(PaymentRepository::class)->experienceRefund($booking);
+
 
             if ($result[ 'result_code' ] == 'SUCCESS') {
                 //更改订单状态为已退款
