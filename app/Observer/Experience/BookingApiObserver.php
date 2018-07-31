@@ -15,8 +15,7 @@ namespace App\Observer\Experience;
 use App\Events\RefundFailNotificationEvent;
 use App\Events\SendNotificationEvent;
 use App\Foundation\Lib\Payment;
-use App\Jobs\SendBookingEmail;
-use App\Jobs\SendRefundFailEmail;
+
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\ExperienceBooking;
@@ -42,12 +41,12 @@ class BookingApiObserver
 
         $booking->user_id = Auth::id();
         //计算价格
-        if (App::environment(['test','develop','local'])) {
+        if (App::environment([ 'test', 'develop', 'local' ])) {
             $booking->price = $total = 0.1;
         }
         else {
             $total = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms, $this->request->isPrepay);
-             //原始价格
+            //原始价格
             $booking->price = $booking::calculateFee($booking->checkin, $booking->checkout, $this->request->rooms, false);
         }
 
@@ -65,16 +64,16 @@ class BookingApiObserver
                 $booking->balance    = $total;
                 $booking->real_price = 0;
             }
-            $user->decrement('balance',$booking->balance*100);
+            $user->decrement('balance', $booking->balance * 100);
         }
         else {
             $booking->real_price = $total;
         }
 
-        $booking->checkin   = date('Y-m-d', strtotime($this->request->checkin));
-        $booking->checkout  = date('Y-m-d', strtotime($this->request->checkout));
+        $booking->checkin  = date('Y-m-d', strtotime($this->request->checkin));
+        $booking->checkout = date('Y-m-d', strtotime($this->request->checkout));
         //如果真正支付的金额为0说明不用支付了
-        $booking->status    = $booking::STATUS_UNPAID;
+        $booking->status = $booking::STATUS_UNPAID;
 
         $booking->is_prepay = $this->request->isPrepay;
         $booking->source    = static::isComingPartner($this->request->partnerToken);
@@ -213,9 +212,9 @@ class BookingApiObserver
         if (isset($request->status) && $booking->status == ExperienceBooking::STATUS_CANCEL) {
 
 
-            $result = App::environment() == 'local' ? [ 'result_code' => '' ] : Payment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
+            $result = App::environment() == 'local' ? [ 'result_code' => '' ] : Payment\ExperiencePayment::refund('E' . str_pad($booking->id, 12, '0', STR_PAD_LEFT), $booking->real_price);
 
-           if ($result[ 'result_code' ] == 'SUCCESS') {
+            if ($result[ 'result_code' ] == 'SUCCESS') {
                 //更改订单状态为已退款
                 $booking->is_refund = ExperienceBooking::STATUS_REFUNDED;
                 ExperienceRefund::query()->create($result);
@@ -242,6 +241,6 @@ class BookingApiObserver
     {
 
         event(new SendNotificationEvent($booking));
-         //SendBookingEmail::dispatch($booking);
+        //SendBookingEmail::dispatch($booking);
     }
 }

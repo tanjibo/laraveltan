@@ -136,16 +136,16 @@ class BookingController extends ApiController
 
         if ($this->bookingRepository->checkRoomCheckInIsUsed($request->rooms, $request->checkin)) {
             return $this->failed('抱歉,您选的日期前一秒已被使用,请重新选取时间');
-        }
+       }
 
-        // if ($model = ExperienceBooking::query()->find(279)) {
+
 
 
         if ($model = ExperienceBooking::store($request)) {
             //和微信支付交互
 
             if ($model->real_price)
-                $data = $this->payment->unifiedorder($model);
+                $data = $this->payment->experienceUnifiedOrder($model);
 
             //booking_id
             $data[ 'booking_id' ] = $model->id;
@@ -178,7 +178,7 @@ class BookingController extends ApiController
             if ($model->status != 0) {
                 return $this->error('error');
             }
-            $data = $this->payment->unifiedorder($model);
+            $data = $this->payment->experienceUnifiedOrder($model);
 
             //booking_id
             $data[ 'booking_id' ] = $model->id;
@@ -264,7 +264,7 @@ class BookingController extends ApiController
     public function miniNotifyCallback( Request $request )
     {
 
-        extract($this->payment->notify());
+        extract($this->payment->experienceNotify());
 
         ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
 
