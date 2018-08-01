@@ -23,14 +23,7 @@ Route::group(
     //小程序登录
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
     Route::post('/customer/refreshToken',"LoginController@refreshToken");
-    Route::post('/room/list', 'RoomController@roomList')->name('room.list');
-    Route::post('/room/detail/{room_id}', 'RoomController@roomDetail')->name('room.detail');
-    Route::post('/room/questions', 'RoomController@question');
-    //评论列表
-    Route::post('/comment/list/{room_id}', 'CommentController@commentList')->name('room.comment.list');
-    Route::get('/article/process',"ArticleController@index");
-    Route::get('/article/list',"ArticleController@list");
-    Route::get('/article/detail/{id}/',"ArticleController@show");
+
 
 
 
@@ -41,7 +34,14 @@ Route::group(
 
         Route::post('/customer/logout', 'LoginController@logout')->name('customer.logout');
 
-
+        Route::post('/room/list', 'RoomController@roomList')->name('room.list');
+        Route::post('/room/detail/{room_id}', 'RoomController@roomDetail')->name('room.detail');
+        Route::post('/room/questions', 'RoomController@question');
+        //评论列表
+        Route::post('/comment/list/{room_id}', 'CommentController@commentList')->name('room.comment.list');
+        Route::get('/article/process',"ArticleController@index");
+        Route::get('/article/list',"ArticleController@list");
+        Route::get('/article/detail/{id}/',"ArticleController@show");
 
         //房间不可订日期
         Route::post('/booking/room_checkin_disable/{room_id}', 'BookingController@RoomCheckinDisableBy')->name('room.booking.roomCheckinDisable');
