@@ -6,6 +6,8 @@ use App\Foundation\Exception\ExceptionReport;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+
 
 class Handler extends ExceptionHandler
 {
@@ -50,20 +52,23 @@ class Handler extends ExceptionHandler
         if ($request->is('api/*')) {
             $response = [];
             $error    = $this->convertExceptionToResponse($exception);
-            $response[ 'code' ] = $error->getStatusCode();
+            $response[ 'code' ] = Response::HTTP_BAD_REQUEST;
             $response[ 'message' ]  = 'something error';
             if (config('app.debug')) {
                 $response[ 'message' ] = $exception->getMessage() ?: 'something error';
                 if ($error->getStatusCode() >= 500) {
                     if (config('app.debug')) {
                         $response[ 'trace' ]   = $exception->getTraceAsString();
-                        $response[ 'code' ] = $error->getStatusCode();
+                       // $response[ 'code' ] = $error->getStatusCode();
+                        //为了解决旧版本的问题
+                        $response[ 'code' ] = Response::HTTP_BAD_REQUEST;
                     }
                 }
             }
             $response[ 'data' ] = [];
 
             return response()->json($response, $error->getStatusCode());
+
         }
         else {
             return parent::render($request, $exception);
