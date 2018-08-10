@@ -1,21 +1,21 @@
 <?php
-
 /**
  * |--------------------------------------------------------------------------
  * |
  * |--------------------------------------------------------------------------
  * Created by PhpStorm.
  * User: weaving
- * Date: 20/12/2017
- * Time: 2:14 PM
+ * Date: 7/8/2018
+ * Time: 10:26 AM
  */
-namespace App\Observer;
-use App\Models\User;
-use Illuminate\Http\Request;
 
-class UserObserver
+namespace Repositories;
+
+
+use App\Models\TearoomSchedule;
+
+class TearoomBookingRepository
 {
-
 
 
 }

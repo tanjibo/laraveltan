@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Experience;
 
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\Resource;
 
 class ExperienceBookingCommentResource extends Resource

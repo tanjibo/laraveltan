@@ -12,9 +12,9 @@
 namespace App\Http\ApiControllers\Experience;
 
 
-
 use App\Http\ApiControllers\ApiController;
 
+use App\Models\ExperienceRoom;
 use App\Models\ExperienceRoomCommonSetting;
 use App\Models\Partners;
 use Carbon\Carbon;
@@ -26,6 +26,7 @@ use function Sodium\add;
 class RoomController extends ApiController
 {
     protected $repository;
+
     public function __construct( ExperienceRoomRepository $repository )
     {
         $this->repository = $repository;
@@ -34,6 +35,7 @@ class RoomController extends ApiController
 
     public function roomList( Request $request )
     {
+
         if ($data = $this->repository->all()) {
             //添加第三方用户来源
             Partners::addPartnerUser();
@@ -52,8 +54,8 @@ class RoomController extends ApiController
 
         $this->validate(
             $request, [
-            'room_id' => 'required|numeric|max:10|min:1' //房间id 不能为空
-        ]
+                        'room_id' => 'required|numeric|max:10|min:1' //房间id 不能为空
+                    ]
         );
 
 

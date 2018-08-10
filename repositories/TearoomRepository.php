@@ -5,17 +5,23 @@
  * |--------------------------------------------------------------------------
  * Created by PhpStorm.
  * User: weaving
- * Date: 21/12/2017
- * Time: 3:06 PM
+ * Date: 7/8/2018
+ * Time: 9:40 AM
  */
 
-namespace App\Observer\Tearoom;
+namespace Repositories;
 
 
 use App\Models\Tearoom;
 
-class TearoomObserver
+class TearoomRepository
 {
 
+
+
+    public function getTearoomList(string $order='ASC')
+    {
+        return Tearoom::query()->orderBy('sort', $order)->orderBy('id',$order)->get();
+    }
 
 }

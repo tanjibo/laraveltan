@@ -14,7 +14,7 @@ namespace App\Http\ApiControllers\Art;
 
 use App\Http\ApiControllers\ApiController;
 use App\Http\Resources\Art\NotificationResource;
-use App\Http\Resources\Experience\UserResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 

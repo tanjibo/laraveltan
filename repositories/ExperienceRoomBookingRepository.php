@@ -30,10 +30,11 @@ class ExperienceRoomBookingRepository
         $this->request = $request;
     }
 
-    public function checkRoomCheckInIsUsed($val,$checkin){
-        $val=is_array($val)?$val:Arr::wrap($val);
-        foreach($val as $v){
-           if($this->RoomCheckinDisableApi($v)->contains($checkin)) return true;
+    public function checkRoomCheckInIsUsed( $val, $checkin )
+    {
+        $val = is_array($val) ? $val : Arr::wrap($val);
+        foreach ( $val as $v ) {
+            if ($this->RoomCheckinDisableApi($v)->contains($checkin)) return true;
         }
         return false;
     }
@@ -56,7 +57,7 @@ class ExperienceRoomBookingRepository
         $checkinAndCheckout = static::_oneRoomOrderDate($room_id);
 
         //后台锁定的时间------------------------
-        $lockDate=array_filter(ExperienceRoomLockDateRepository::initLockDate($room_id));
+        $lockDate = array_filter(ExperienceRoomLockDateRepository::initLockDate($room_id));
 
         $checkinAndCheckout = $checkinAndCheckout ?: collect([]);
 
@@ -100,6 +101,8 @@ class ExperienceRoomBookingRepository
         $dateToSelect = [];
         if ($checkin > date('Y-m-d'))
             $dateToSelect = splitDate(date('Y-m-d'), $checkin);
+
+
 
         //已经有的退房时间
         $endDate = static::_oneRoomOrderEndDate();
@@ -284,10 +287,13 @@ class ExperienceRoomBookingRepository
     {
         //正常订单
 
-        $model = ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->when(isset($this->request->orderStatus),function($query){
-          if($this->request->orderStatus)
-           $query->where('status', $this->request->orderStatus);
-        });
+        $model = ExperienceBooking::query()->where('user_id', Auth::id() ?: 165)->when(
+            isset($this->request->orderStatus), function( $query ) {
+            if ($this->request->orderStatus)
+                $query->where('status', $this->request->orderStatus);
+        }
+        )
+        ;
 
         $common = ExperienceRoomBookingResource::collection($model->orderBy('created_at', 'desc')->get());
         //山云荟订单

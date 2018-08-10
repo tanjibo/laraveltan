@@ -6,6 +6,7 @@ use App\Models\Tearoom;
 use App\Models\TearoomSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Repositories\TearoomScheduleRepository;
 
 class TearoomController extends Controller
 {
@@ -48,16 +49,7 @@ class TearoomController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show( $id )
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -65,7 +57,7 @@ class TearoomController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit( Tearoom $tearoom, Request $request )
+    public function edit( Tearoom $tearoom)
     {
 
         $timeSchedule = collect(TearoomSchedule::$timetable);
@@ -126,7 +118,7 @@ class TearoomController extends Controller
 
             collect($date)->map(
                 function( $item ) use ( $id ) {
-                    $points = TearoomSchedule::getInitSchedule();
+                    $points = app(TearoomScheduleRepository::class)->getInitSchedule();
                     if (isset($item[ 'selectDate' ])) {
                         foreach ( $item[ 'selectDate' ] as $v ) {
                             $points[ $v ] = 0;

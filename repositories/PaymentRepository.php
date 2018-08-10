@@ -13,7 +13,9 @@ namespace Repositories;
 
 
 use App\Foundation\Lib\Payment\ExperiencePayment;
+use App\Foundation\Lib\Payment\TearoomPayment;
 use App\Models\ExperienceBooking;
+use App\Models\Tearoom;
 
 
 class PaymentRepository
@@ -33,14 +35,29 @@ class PaymentRepository
         ];
 
         return ExperiencePayment::unifiedorder($val);
+    }
 
+
+    public function TearoomUnifiedOrder( Tearoom $order )
+    {
+        //类型,判断普通，山云荟，星月阁
+
+        $val = [
+            'body'   => '了如三舍安定门茶空间',
+            'fee'    => $order->real_fee,
+            'number' => $this->orderNumber($order),
+            'notify' => '/api/mini/callback/' . $order->id,
+            'openid' => auth()->user()->tearoom_open_id,
+        ];
+
+        return TearoomPayment::unifiedorder($val);
     }
 
     private function orderNumber( $order )
     {
 
         $prefix = strtolower(substr(strrchr(get_class($order), '\\'), 1));
-        $prefix = ($prefix == 'epxeriencebooking' ? 'EN' : 'TR');
+        $prefix = ($prefix == 'tearoombooking' ? 'EN' : 'TR');
         switch ( app()->environment() ) {
             case 'test':
                 return $prefix . '_test_' . str_pad($order->id, 12, '0', STR_PAD_LEFT);

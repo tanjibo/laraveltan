@@ -24,7 +24,4 @@ class ApiController extends Controller
 {
     use ApiResponse;
 
-
-
-
 }

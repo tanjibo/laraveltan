@@ -12,7 +12,7 @@
 namespace App\Http\Resources\Art;
 
 
-use App\Http\Resources\Experience\UserResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\Resource;
 
 class CommentResource extends Resource

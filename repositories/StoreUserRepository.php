@@ -49,6 +49,19 @@ class StoreUserRepository
 
     }
 
+    /**
+     * 通过安吉小程序添加用户
+     */
+    public function storeUserByTearoomMini( array $userInfo )
+    {
+
+        $userData                   = $this->combineUserData($userInfo);
+        $userData[ 'tearoom_open_id' ] = $userInfo[ 'openId' ];
+
+        return $this->storeUser($userData, User::SOURCE_TEAROOM);
+
+    }
+
 
     /**
      * @param array $userInfo
@@ -86,6 +99,7 @@ class StoreUserRepository
      */
     protected function storeUser( $data, $source )
     {
+
         if ($user = User::findUserByUnionId($data[ 'union_id' ])) {
             $user->update($data);
         }

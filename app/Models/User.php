@@ -158,6 +158,7 @@ class User extends Authenticatable
             'intention',
             'terminal',
             'art_open_id',
+            'tearoom_open_id'
         ];
 
 

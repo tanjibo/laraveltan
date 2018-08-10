@@ -21,29 +21,15 @@ use App\Models\TearoomSchedule;
 use App\Models\User;
 use Repositories\TearoomScheduleRepository;
 
-class BookingObserver
+class BookingApiObserver
 {
 
     public function creating( TearoomBooking $booking )
     {
 
 
-        if ($user_id = User::query()->where('mobile', $booking->mobile)->value('id')) {
-            $booking->user_id = $user_id;
-        }
-        else {
-            $user             = User::query()->create(
-                [
-                    'mobile'   => request()->mobile,
-                    'nickname' => request()->customer,
-                    'username' => request()->customer,
-                    'gender'   => request()->gender,
-                    'device'   => User::DEVICE_OTHER,
-                ]
-            )
-            ;
-            $booking->user_id = $user->id;
-        }
+        $booking->user_id = auth()->id();
+
         $price = TearoomPrice::query()->find(request()->price_id);
 
         //算出截止时间点
@@ -52,10 +38,9 @@ class BookingObserver
         //时间段
         $booking->time = TearoomSchedule::$timetable[ request()->start_point ] . ' - ' . TearoomSchedule::$timetable[ $booking->end_point ];
         //价格
-        $booking->real_fee =$booking->fee = $price->fee;
+        $booking->real_fee = $booking->fee = $price->fee;
         $booking->status   = TearoomBooking::STATUS_UNPAID;
-        $booking->pay_mode = TearoomBooking::PAY_MODE_OFFLINE;
-
+        $booking->pay_mode = request()->pay_mode;
 
     }
 
@@ -65,8 +50,8 @@ class BookingObserver
 
         // 锁定时间
         app(TearoomScheduleRepository::class)->lockTime($booking->tearoom_id, $booking->date, $booking->start_point, $booking->end_point);
-       //发送短信
-       event(new SendTearoomBackendNotificationEvent($booking));
+        //发送短信
+       // event(new SendTearoomBackendNotificationEvent($booking));
     }
 
 
@@ -166,10 +151,9 @@ class BookingObserver
     }
 
 
-
-    public function updated(TearoomBooking $booking)
+    public function updated( TearoomBooking $booking )
     {
-     //发送短信通知没有完成
+        //发送短信通知没有完成
 //        event(new SendTearoomBackendNotificationEvent($booking));
     }
 
