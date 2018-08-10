@@ -78,10 +78,11 @@ class PaymentRepository
      */
     public function experienceRefund( ExperienceBooking $order )
     {
-        if (!$percent = ExperiencePayment::refundFeeRegular($order->checkin)) {
-            return [ 'result_code' => 'SUCCESS' ];
-        }
-        return ExperiencePayment::refund($this->orderNumber($order->id), number_format($order->real_price * $percent, 2));
+        return ExperiencePayment::refund($this->orderNumber($order->id), $order->real_price);
+//        if (!$percent = ExperiencePayment::refundFeeRegular($order->checkin)) {
+//            return [ 'result_code' => 'SUCCESS' ];
+//        }
+//        return ExperiencePayment::refund($this->orderNumber($order->id), number_format($order->real_price * $percent, 2));
     }
 
     /**
