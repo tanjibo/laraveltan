@@ -2365,7 +2365,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             imgUrl: this.imgurl,
-            defaultUploadUrl: this.uploadurl || 'upload/qiniu',
+            defaultUploadUrl: this.uploadurl || '/upload/qiniu',
             loading: false,
             token: window.axios.defaults.headers.common['X-CSRF-TOKEN']
         };

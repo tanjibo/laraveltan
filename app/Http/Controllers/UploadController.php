@@ -19,7 +19,7 @@ class UploadController extends Controller
 
     private static $picPrefix = '/experience/userupload/';
 
-    public static $url = 'https://static.liaorusanshe.com';
+    public static $url = 'https://static.liaorusanshe.com/';
 
     /**
      * @param string $data 二进制数据
