@@ -161,6 +161,8 @@ Route::group(
         Route::post('/user/userInfo', 'UserController@userInfo');
     }
     );
+    //支付回调
+    Route::post('/mini/tearoom/callback/{booking_id}', 'BookingController@miniNotifyCallback')->name('tearoom.mini.callback');
 
 }
 );

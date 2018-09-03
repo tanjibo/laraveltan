@@ -47,7 +47,7 @@ class PaymentRepository
             'body'   => '了如三舍安定门茶空间',
             'fee'    => $order->real_fee,
             'number' => $this->orderNumber($order),
-            'notify' => '/api/mini/callback/' . $order->id,
+            'notify' => '/api/mini/tearoom/callback/' . $order->id,
             'openid' => auth()->user()->tearoom_open_id,
         ];
 
@@ -58,7 +58,7 @@ class PaymentRepository
     {
 
         $prefix = strtolower(substr(strrchr(get_class($order), '\\'), 1));
-        $prefix = ($prefix == 'tearoombooking' ? 'EN' : 'TR');
+        $prefix = ($prefix == 'tearoombooking' ? 'TR' : 'EN');
         switch ( app()->environment() ) {
             case 'test':
                 return $prefix . '_test_' . str_pad($order->id, 12, '0', STR_PAD_LEFT);
