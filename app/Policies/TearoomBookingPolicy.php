@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Api\TearoomBooking;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy extends Policy
+class TearoomBookingPolicy
 {
     use HandlesAuthorization;
 
@@ -19,11 +20,7 @@ class UserPolicy extends Policy
         //
     }
 
-    public function edit(User $user){
-
-    }
-
-    public function del(User $user){
-
+    public function update(User $user,TearoomBooking $booking){
+        return $user->id ==$booking->user_id;
     }
 }

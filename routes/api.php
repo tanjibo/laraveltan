@@ -138,6 +138,7 @@ Route::group(
     //小程序登录
     Route::post('/miniLogin', 'LoginController@miniLogin')->name('tearoom.mini.login');
     Route::post('/refreshToken', "LoginController@refreshToken");
+    Route::get('/init_calendar', "ScheduleController@initCalendar");
     Route::group(
         [ 'middleware' =>'auth.api' ], function() {
         //待修改
@@ -149,8 +150,15 @@ Route::group(
         Route::get('/price_chart', 'TearoomController@priceChart')->name('tearoom.index.priceChart');
         //时间段
         Route::post('/schedule', 'ScheduleController@index')->name('tearoom.schedule.index');
+        Route::post('/booking/total_price/{price}', 'BookingController@totalPrice')->name('tearoom.booking.totalPrice');
         //创建订单
         Route::post('/booking/create', 'BookingController@store')->name('tearoom.booking.create');
+
+        Route::post('/booking/order_list', 'BookingController@orderList')->name('tearoom.booking.orderList');
+        Route::post('/booking/repay', 'BookingController@repay')->name('tearoom.booking.repay');
+
+        //用户资料
+        Route::post('/user/userInfo', 'UserController@userInfo');
     }
     );
 

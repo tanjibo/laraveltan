@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Foundation\Auth\LrssEloquentUserProvider;
+use App\Models\Api\TearoomBooking;
 use App\Models\ExperienceBooking;
 use App\Policies\ExperienceRoomBookingPolicy;
+use App\Policies\TearoomBookingPolicy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         = [
             //  'App\Model' => 'App\Policies\ModelPolicy',
             ExperienceBooking::class => ExperienceRoomBookingPolicy::class,
+            TearoomBooking::class => TearoomBookingPolicy::class,
         ];
 
     /**

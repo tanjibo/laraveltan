@@ -7,6 +7,7 @@
 
 namespace App\Models\Api;
 
+use App\Models\Tearoom;
 use Reliese\Database\Eloquent\Model as Eloquent;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -48,6 +49,24 @@ class TearoomBooking extends \App\Models\TearoomBooking
     }
 
 
+    public static function changeStatus(\App\Models\TearoomBooking $booking,$status='')
+    {
+        if (!$booking)
+            return false;
 
+        //删除订单
+        if ($status == static::STATUS_CANCEL) {
+            $booking->delete();
+            return true;
+        }
+
+        if ($booking->status == $status) {
+            return true;
+        }
+
+
+        $booking->status = $status;
+        return $booking->save();
+    }
 
 }

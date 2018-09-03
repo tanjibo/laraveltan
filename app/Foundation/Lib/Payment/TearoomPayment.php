@@ -35,7 +35,7 @@ class TearoomPayment extends Payment implements paymentInterface
     }
 
     public static function notify(){
-
+        return static::wechatNotify(config('pay.tearoom.pay_key'));
     }
 
 

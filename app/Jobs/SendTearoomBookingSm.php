@@ -2,15 +2,15 @@
 
 namespace App\Jobs;
 
-use App\Models\User;
-use App\Models\WechatDrawActiveUser;
+use App\Events\SendTearoomBackendNotificationEvent;
+use App\Models\Api\TearoomBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class WechatPoster implements ShouldQueue
+class SendTearoomBookingSm implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -19,11 +19,10 @@ class WechatPoster implements ShouldQueue
      *
      * @return void
      */
-    protected $user;
-
-    public function __construct(User $user)
+    protected  $booking;
+    public function __construct(TearoomBooking $order)
     {
-        $this->user=$user;
+        $this->booking=$order;
     }
 
     /**
@@ -33,6 +32,6 @@ class WechatPoster implements ShouldQueue
      */
     public function handle()
     {
-        $this->user->addUserPoster();
+        event(new SendTearoomBackendNotificationEvent($this->booking));
     }
 }

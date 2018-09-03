@@ -16,6 +16,7 @@ use App\Foundation\Lib\Payment\ExperiencePayment;
 use App\Foundation\Lib\Payment\TearoomPayment;
 use App\Models\ExperienceBooking;
 use App\Models\Tearoom;
+use App\Models\TearoomBooking;
 
 
 class PaymentRepository
@@ -38,7 +39,7 @@ class PaymentRepository
     }
 
 
-    public function TearoomUnifiedOrder( Tearoom $order )
+    public function tearoomUnifiedOrder( TearoomBooking $order )
     {
         //类型,判断普通，山云荟，星月阁
 
@@ -92,6 +93,15 @@ class PaymentRepository
     public function experienceNotify()
     {
         return ExperiencePayment::notify();
+    }
+
+    /**
+     * @return array|bool
+     * 安吉支付回调
+     */
+    public function tearoomNotify()
+    {
+        return TearoomPayment::notify();
     }
 
 }

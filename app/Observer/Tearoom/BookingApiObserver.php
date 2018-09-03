@@ -12,7 +12,8 @@
 namespace App\Observer\Tearoom;
 
 
-use App\Events\SendTearoomBackendNotificationEvent;
+
+use App\Jobs\SendTearoomBookingSm;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\TearoomBooking;
@@ -39,6 +40,9 @@ class BookingApiObserver
         $booking->time = TearoomSchedule::$timetable[ request()->start_point ] . ' - ' . TearoomSchedule::$timetable[ $booking->end_point ];
         //价格
         $booking->real_fee = $booking->fee = $price->fee;
+        if(app()->environment(['local','test','develop'])){
+            $booking->real_fee = $booking->fee = 0.1;
+        }
         $booking->status   = TearoomBooking::STATUS_UNPAID;
         $booking->pay_mode = request()->pay_mode;
 
@@ -154,7 +158,8 @@ class BookingApiObserver
     public function updated( TearoomBooking $booking )
     {
         //发送短信通知没有完成
-//        event(new SendTearoomBackendNotificationEvent($booking));
+        SendTearoomBookingSm::dispatch($booking);
+       // event(new SendTearoomBackendNotificationEvent($booking));
     }
 
 }

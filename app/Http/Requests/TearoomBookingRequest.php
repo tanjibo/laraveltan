@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TearoomBookingRequest extends FormRequest
 {
@@ -25,15 +26,15 @@ class TearoomBookingRequest extends FormRequest
     {
         return [
             'price_id'    => "required",
-           'date'        => 'required|date_format:Y-m-d',
-           'end_point'   => 'required',
-           'start_point' => 'required',
-           'tearoom_id'  => "required",
-            'limits'      => 'required',
+            'date'        => 'required',
+            'end_point'   => 'required',
+            'start_point' => 'required',
+            'tearoom_id'  => "required",
+            //'limits'      => 'required',
             'customer'    => 'required|max:10',           //顾客
-            'gender'      => 'required',
-           'pay_mode'    => 'required', //支付方式
-           'peoples'     => 'required|min:1',//人数
+            //'gender'      => 'required',
+            'pay_mode'    => 'required', //支付方式
+            'peoples'     => 'required|min:1',//人数
             'mobile'      => 'bail|required|size:11|regex:/^1[34578][0-9]{9}$/', //电话号码
 
         ];

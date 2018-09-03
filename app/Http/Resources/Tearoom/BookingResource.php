@@ -16,10 +16,18 @@ class BookingResource extends Resource
     {
         return [
           'id'=>$this->id,
-          'image'=>$this->image,
-          'limits'=>$this->limits,
-          'name'=>$this->name
+          'date'=>$this->date,
+          'time'=>$this->time,
+          'real_fee'=>$this->real_fee,
+          'customer'=>$this->customer,
+          'mobile'=>$this->mobile,
+          'tearoom'=>$this->tearoom->name,
+          'created_at'=>$this->created_at->toDateTimeString(),
+          'statusToText'=>static::statusToText($this->status),
+          'status'=>$this->status,
         ];
 
     }
+
+
 }

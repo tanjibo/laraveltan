@@ -12,7 +12,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class TearoomBooking
- * 
+ *
  * @property int $id
  * @property int $user_id
  * @property int $tearoom_id
@@ -34,7 +34,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
- * 
+ *
  * @property \App\Models\Tearoom $tearoom
  * @property \App\Models\User $user
  *
@@ -43,8 +43,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class TearoomBooking extends Eloquent
 {
 
-	use \Illuminate\Database\Eloquent\SoftDeletes;
-	protected $table = 'tearoom_booking';
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    protected $table = 'tearoom_booking';
     use ModelTrait;
     use LogsActivity;
     /**
@@ -55,6 +55,7 @@ class TearoomBooking extends Eloquent
     const STATUS_PAID     = 1;     // 已支付
     const STATUS_COMPLETE = 10;  // 已完成
     const STATUS_CANCEL   = -10; // 已取消
+    const STATUS_ALL  = 100; // 已取消
 
     /**
      * 支付方式
@@ -83,25 +84,26 @@ class TearoomBooking extends Eloquent
             'date',
         ];
 
-	protected $fillable = [
-		'user_id',
-		'tearoom_id',
-		'date',
-		'time',
-		'start_point',
-		'end_point',
-		'customer',
-		'gender',
-		'mobile',
-		'peoples',
-		'fee',
-		'discount',
-		'real_fee',
-		'pay_mode',
-		'tips',
-		'remark',
-		'status'
-	];
+    protected $fillable
+        = [
+            'user_id',
+            'tearoom_id',
+            'date',
+            'time',
+            'start_point',
+            'end_point',
+            'customer',
+            'gender',
+            'mobile',
+            'peoples',
+            'fee',
+            'discount',
+            'real_fee',
+            'pay_mode',
+            'tips',
+            'remark',
+            'status',
+        ];
 
     public function setDateAttribute( $val )
     {
@@ -114,6 +116,20 @@ class TearoomBooking extends Eloquent
     }
 
 
+    static function statusToText( $status )
+    {
+        switch ( $status ) {
+            case static::STATUS_UNPAID:
+                return "待支付";
+            case static::STATUS_PAID:
+                return "已支付";
+            case static::STATUS_COMPLETE:
+                return "已完成";
+            case static::STATUS_CANCEL :
+                return "已取消";
+        }
+    }
+
     public function tearoom()
     {
         return $this->belongsTo(\App\Models\Tearoom::class);
@@ -123,7 +139,6 @@ class TearoomBooking extends Eloquent
     {
         return $this->belongsTo(\App\Models\User::class);
     }
-
 
 
     public function tearoom_booking_requirements()
