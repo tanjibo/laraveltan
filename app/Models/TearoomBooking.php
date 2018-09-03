@@ -46,7 +46,7 @@ class TearoomBooking extends Eloquent
     use \Illuminate\Database\Eloquent\SoftDeletes;
     protected $table = 'tearoom_booking';
     use ModelTrait;
-    use LogsActivity;
+
     /**
      * 订单状态
      */
