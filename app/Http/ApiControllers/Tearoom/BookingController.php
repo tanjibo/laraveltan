@@ -135,30 +135,5 @@ class BookingController extends ApiController
     }
 
 
-    /**
-     * @param Request $request
-     * 微信支付回调
-     */
-    public function miniNotifyCallback( Request $request, PaymentRepository $paymentRepository )
-    {
-
-        extract($paymentRepository->tearoomNotify());
-
-        TearoomBooking::changeStatus($request->booking_id, TearoomBooking::STATUS_PAID);
-
-        if (!PaymentLog::query()->where('order_number', $out_trade_no)->count()) {
-            PaymentLog::query()->create(
-                [
-                    'order_number' => $out_trade_no,
-                    'trade_number' => $transaction_id,
-                    'fee'          => $total_fee / 100,
-                    'type'         => 4, //小程序
-                    'created_at'   => date('Y-m-d H:i:s'),
-                ]
-            )
-            ;
-
-        }
-    }
 
 }

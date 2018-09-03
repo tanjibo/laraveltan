@@ -8,6 +8,7 @@ use App\Models\ExperienceBooking;
 use App\Models\PaymentLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Repositories\ExperienceRoomBookingRepository;
 use Repositories\MiniDateRepository;
 use Repositories\PaymentRepository;
@@ -264,22 +265,12 @@ class BookingController extends ApiController
     public function miniNotifyCallback( Request $request )
     {
 
-        extract($this->payment->experienceNotify());
+        $callback=$this->payment->experienceNotify();
 
-        ExperienceBooking::changeBookingOrder($request->booking_id, ExperienceBooking::STATUS_PAID);
-
-        if (!PaymentLog::query()->where('order_number', $out_trade_no)->count()) {
-            PaymentLog::query()->create(
-                [
-                    'order_number' => $out_trade_no,
-                    'trade_number' => $transaction_id,
-                    'fee'          => $total_fee / 100,
-                    'type'         => 3, //小程序
-                    'created_at'   => date('Y-m-d H:i:s'),
-                ]
-            )
-            ;
-
+        if(Str::contains($callback['out_trade_no'],'EN')){
+            $this->payment->experienceCallBack($callback,$request->booking_id);
+        }else{
+            $this->payment->tearoomCallBack($callback,$request->booking_id);
         }
     }
 

@@ -15,6 +15,7 @@ namespace Repositories;
 use App\Foundation\Lib\Payment\ExperiencePayment;
 use App\Foundation\Lib\Payment\TearoomPayment;
 use App\Models\ExperienceBooking;
+use App\Models\PaymentLog;
 use App\Models\Tearoom;
 use App\Models\TearoomBooking;
 
@@ -47,7 +48,7 @@ class PaymentRepository
             'body'   => '了如三舍安定门茶空间',
             'fee'    => $order->real_fee,
             'number' => $this->orderNumber($order),
-            'notify' => '/api/mini/tearoom/callback/' . $order->id,
+            'notify' => '/api/mini/callback/' . $order->id,
             'openid' => auth()->user()->tearoom_open_id,
         ];
 
@@ -103,5 +104,34 @@ class PaymentRepository
     {
         return TearoomPayment::notify();
     }
+
+    public function tearoomCallBack($callback,$booking_id){
+        \App\Models\Api\TearoomBooking::changeStatus($booking_id, TearoomBooking::STATUS_PAID);
+        $this->paymentLog($callback,4);
+
+    }
+
+    public function experienceCallBack($callback,$booking_id){
+        ExperienceBooking::changeBookingOrder($booking_id, ExperienceBooking::STATUS_PAID);
+        $this->paymentLog($callback,3);
+    }
+
+
+     private function paymentLog(array $callback,$type){
+          extract($callback);
+         if (!PaymentLog::query()->where('order_number', $out_trade_no)->count()) {
+             PaymentLog::query()->create(
+                 [
+                     'order_number' => $out_trade_no,
+                     'trade_number' => $transaction_id,
+                     'fee'          => $total_fee / 100,
+                     'type'         => $type, //小程序
+                     'created_at'   => date('Y-m-d H:i:s'),
+                 ]
+             )
+             ;
+
+         }
+     }
 
 }
