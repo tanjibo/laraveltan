@@ -18,6 +18,7 @@ use App\Models\ExperienceBooking;
 use App\Models\PaymentLog;
 use App\Models\Tearoom;
 use App\Models\TearoomBooking;
+use EasyWeChat\Factory;
 
 
 class PaymentRepository
@@ -105,35 +106,57 @@ class PaymentRepository
         return TearoomPayment::notify();
     }
 
-    public function tearoomCallBack($callback,$booking_id){
+    public function tearoomCallBack( $callback, $booking_id )
+    {
         if (!$booking = TearoomBooking::find($booking_id))
             return false;
         \App\Models\Api\TearoomBooking::changeStatus($booking, TearoomBooking::STATUS_PAID);
-        $this->paymentLog($callback,4);
+        $this->paymentLog($callback, 4);
 
     }
 
-    public function experienceCallBack($callback,$booking_id){
+    public function experienceCallBack( $callback, $booking_id )
+    {
         ExperienceBooking::changeBookingOrder($booking_id, ExperienceBooking::STATUS_PAID);
-        $this->paymentLog($callback,3);
+
+        $this->paymentLog($callback, 3);
     }
 
 
-     private function paymentLog(array $callback,$type){
-          extract($callback);
-         if (!PaymentLog::query()->where('order_number', $out_trade_no)->count()) {
-             PaymentLog::query()->create(
-                 [
-                     'order_number' => $out_trade_no,
-                     'trade_number' => $transaction_id,
-                     'fee'          => $total_fee / 100,
-                     'type'         => $type, //小程序
-                     'created_at'   => date('Y-m-d H:i:s'),
-                 ]
-             )
-             ;
+    private function tearoomPaySuccessWechatNotify($open_id,$form_id)
+    {
+        $app = Factory::miniProgram(app('wechat.mini_program.tearoom'));
+        $app->template_message->send(
+            [
+                'touser'      => 'user-openid',
+                'template_id' => 'template-id',
+                'page'        => 'index',
+                'form_id'     => 'form-id',
+                'data'        => [
+                    'keyword1' => 'VALUE',
+                    'keyword2' => 'VALUE2',
+                    // ...
+                ],
+            ]
+        );
+    }
 
-         }
-     }
+    private function paymentLog( array $callback, $type )
+    {
+        extract($callback);
+        if (!PaymentLog::query()->where('order_number', $out_trade_no)->count()) {
+            PaymentLog::query()->create(
+                [
+                    'order_number' => $out_trade_no,
+                    'trade_number' => $transaction_id,
+                    'fee'          => $total_fee / 100,
+                    'type'         => $type, //小程序
+                    'created_at'   => date('Y-m-d H:i:s'),
+                ]
+            )
+            ;
+
+        }
+    }
 
 }

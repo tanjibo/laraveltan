@@ -157,6 +157,12 @@ Route::group(
         Route::post('/booking/order_list', 'BookingController@orderList')->name('tearoom.booking.orderList');
         Route::post('/booking/repay', 'BookingController@repay')->name('tearoom.booking.repay');
 
+        //发送模板通知
+        Route::post('/booking/send_wechat_notify/{booking}/{formId}', 'WechatTemplateController@sendPaySuccessNotify');
+
+        //取消订单
+       // Route::post('/booking/cancel/{booking}/{formId}', 'BookingController@');
+
         //用户资料
         Route::post('/user/userInfo', 'UserController@userInfo');
     }

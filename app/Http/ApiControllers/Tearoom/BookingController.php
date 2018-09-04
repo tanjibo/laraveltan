@@ -19,6 +19,7 @@ use App\Jobs\CloseTearoomBooking;
 use App\Models\Api\TearoomBooking;
 use App\Models\PaymentLog;
 use App\Models\TearoomPrice;
+use EasyWeChat\Factory;
 use Illuminate\Http\Request;
 use Repositories\PaymentRepository;
 use Repositories\TearoomBookingRepository;
@@ -33,6 +34,7 @@ class BookingController extends ApiController
         $this->repository = $repository;
 
     }
+
 
 
     public function store( TearoomBookingRequest $request, PaymentRepository $paymentRepository )
@@ -119,14 +121,13 @@ class BookingController extends ApiController
      * @return mixed
      *
      */
-    public function changeOrderStatus( Request $request )
+    public function changeOrderStatus( TearoomBooking $booking,$formId )
     {
         //授权
-        $this->authorize('update', TearoomBooking::query()->find($request->booking_id));
+        $this->authorize('update', $booking);
 
 
-        if (TearoomBooking::changeStatus($request->booking_id, $request->status)) {
-
+        if (TearoomBooking::changeStatus($booking, TearoomBooking::STATUS_CANCEL)) {
             return $this->message('success');
         }
         else {
