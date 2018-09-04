@@ -14,7 +14,7 @@ class WechatTemplateController extends ApiController
      protected  $mini;
 
     public function __construct() {
-        $this->mini = Factory::miniProgram(app('wechat.mini_program.tearoom'));
+        $this->mini = Factory::miniProgram(config('wechat.mini_program.tearoom'));
     }
 
 
