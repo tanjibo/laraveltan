@@ -89,6 +89,16 @@ class PaymentRepository
     }
 
     /**
+     * @param ExperienceBooking $order
+     * @return array|bool
+     * 退款
+     */
+    public function tearoomRefund( TearoomBooking $order )
+    {
+        return TearoomPayment::refund($this->orderNumber($order), number_format($order->real_price, 2));
+    }
+
+    /**
      * @return array|bool
      * 安吉支付回调
      */
@@ -106,6 +116,7 @@ class PaymentRepository
         return TearoomPayment::notify();
     }
 
+
     public function tearoomCallBack( $callback, $booking_id )
     {
         if (!$booking = TearoomBooking::find($booking_id))
@@ -122,24 +133,6 @@ class PaymentRepository
         $this->paymentLog($callback, 3);
     }
 
-
-    private function tearoomPaySuccessWechatNotify($open_id,$form_id)
-    {
-        $app = Factory::miniProgram(app('wechat.mini_program.tearoom'));
-        $app->template_message->send(
-            [
-                'touser'      => 'user-openid',
-                'template_id' => 'template-id',
-                'page'        => 'index',
-                'form_id'     => 'form-id',
-                'data'        => [
-                    'keyword1' => 'VALUE',
-                    'keyword2' => 'VALUE2',
-                    // ...
-                ],
-            ]
-        );
-    }
 
     private function paymentLog( array $callback, $type )
     {

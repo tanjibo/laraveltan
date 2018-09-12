@@ -73,7 +73,7 @@ class ExperienceBooking extends Eloquent
     const STATUS_CHECKIN  = 2;    // 已入住
     const STATUS_COMPLETE = 10;   // 已完成
     const STATUS_CANCEL   = -10;  // 已取消
-    const STATUS_DEL      = -100;  // 已取消
+    const STATUS_DEL      = -100;  // 已删除
     const STATUS_SUCCESS_REFUND      = -11;  // 完成用户退款
 
     /**

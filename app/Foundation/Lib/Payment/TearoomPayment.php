@@ -31,7 +31,10 @@ class TearoomPayment extends Payment implements paymentInterface
     }
 
     public static function refund( $number, $fee ){
-
+        $config             = static::payConfig();
+        $config[ 'number' ] = $number;
+        $config[ 'fee' ]    = $fee > 100 ? $fee : 0.1;
+        return parent::orderRefund($config);
     }
 
     public static function notify(){

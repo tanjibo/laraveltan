@@ -55,7 +55,9 @@ class TearoomBooking extends Eloquent
     const STATUS_PAID     = 1;     // 已支付
     const STATUS_COMPLETE = 10;  // 已完成
     const STATUS_CANCEL   = -10; // 已取消
+    const STATUS_DEL   = -100;   // 已删除
     const STATUS_ALL  = 100; // 已取消
+
 
     /**
      * 支付方式
@@ -63,6 +65,11 @@ class TearoomBooking extends Eloquent
     const PAY_MODE_OFFLINE = 0;    // 线下支付
     const PAY_MODE_WECHAT  = 1;    // 微信支付
     const PAY_MODE_BALANCE = 10;   // 余额支付
+
+    const STATUS_NO_REFUND = 0;    // 不用退款
+    const STATUS_UNREFUND  = 1;    // 未退款
+    const STATUS_REFUNDED =2 ;   // 已退款
+
 
     protected $casts
         = [

@@ -20,6 +20,7 @@ use App\Models\TearoomBooking;
 use App\Models\TearoomPrice;
 use App\Models\TearoomSchedule;
 use App\Models\User;
+use Repositories\PaymentRepository;
 use Repositories\TearoomScheduleRepository;
 
 class BookingApiObserver
@@ -150,6 +151,28 @@ class BookingApiObserver
             )
             ;
         }
+//
+//        //退款------------  暂时不用自动退款，改成人工手退
+//        if (isset(request()->status) && $booking->status == ::STATUS_CANCEL) {
+//
+//
+//            $result = App::environment() == 'local' ? [ 'result_code' => '' ] :
+//                app(PaymentRepository::class)->tearoomRefund($booking);
+//
+//            if ($result[ 'result_code' ] == 'SUCCESS') {
+//                //更改订单状态为已退款
+//                $booking->is_refund = TearoomBooking::STATUS_REFUNDED;
+//            }
+//            else {
+//                //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
+//
+//                $booking->is_refund = TearoomBooking::STATUS_UNREFUND;
+//                event(new RefundFailNotificationEvent($booking));
+//                //队列发送--------------有点问题-------------放弃了
+//                //SendRefundFailEmail::dispatch($booking);
+//            }
+//
+//        }
 
 
     }
