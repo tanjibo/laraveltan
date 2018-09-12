@@ -19,7 +19,7 @@ class SettingsController extends Controller
         $question = ExperienceRoomCommonSetting::question();
         $img      = ExperienceRoomCommonSetting::img();
         $tip      = ExperienceRoomCommonSetting::tip();
-        $mini     = MiniCommonSettings::experienceMiniSetting();
+        $mini     = MiniCommonSettings::experienceMiniSetting()??'[]';
 
         return view('experience.settings.index', compact('question', 'img', 'tip', 'mini'));
     }

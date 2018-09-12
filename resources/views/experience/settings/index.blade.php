@@ -118,7 +118,7 @@
     <script>
 
 
-        let question ={!! $question !!}, img ={!! $img !!}, tip ={!! $tip !!},mini='{!! $mini !!}';
+        let question ={!! $question !!}, img ={!! $img !!}, tip ={!! $tip !!},mini={!! $mini !!};
 
         let vm = new Vue({
             el: '#app',
@@ -130,7 +130,7 @@
                     navigation_bar_color: mini.navigation_bar_color|| '#8ddef8',
                     banner_url: mini.banner_url,
                     common_color: mini.common_color || '#8ddef8',
-                    mini_type:mini.mini_type|| "1",
+                    mini_type:mini.mini_type+''|| "1",
                 },
                 mini_rules: {
                     navigation_bar_color: [
