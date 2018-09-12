@@ -74,6 +74,7 @@ Route::middleware([ "auth" ])->group(
 
                 //-----------------------设置---------------------------
                 Route::resource('experience_settings', 'SettingsController');
+                Route::post('experience_settings/mini_setting', 'SettingsController@miniSetting')->name('mini_setting');
                 //----------------------三舍改造过程-----------------------------
                 Route::resource('experience_article', 'ArticleController');
 

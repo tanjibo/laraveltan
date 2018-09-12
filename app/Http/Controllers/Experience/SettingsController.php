@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Experience;
 
 use App\Http\Controllers\Controller;
 use App\Models\Backend\ExperienceRoomCommonSetting;
+use App\Models\MiniCommonSettings;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -18,7 +19,9 @@ class SettingsController extends Controller
         $question = ExperienceRoomCommonSetting::question();
         $img      = ExperienceRoomCommonSetting::img();
         $tip      = ExperienceRoomCommonSetting::tip();
-        return view('experience.settings.index', compact('question', 'img', 'tip'));
+        $mini     = MiniCommonSettings::experienceMiniSetting();
+
+        return view('experience.settings.index', compact('question', 'img', 'tip', 'mini'));
     }
 
     /**
@@ -39,7 +42,21 @@ class SettingsController extends Controller
      */
     public function store( Request $request )
     {
-      return response()->json(ExperienceRoomCommonSetting::store());
+        return response()->json(ExperienceRoomCommonSetting::store());
+    }
+
+    public function miniSetting( Request $request )
+    {
+
+        $this->validate(
+            $request, [
+            'mini_type'            => 'required',
+            'navigation_bar_color' => 'required',
+            'banner_url'           => 'required',
+            'common_color'         => 'required',
+        ]
+        );
+        return response()->json(MiniCommonSettings::store($request->all()));
     }
 
     /**

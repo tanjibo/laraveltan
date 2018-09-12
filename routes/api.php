@@ -17,13 +17,16 @@ use Illuminate\Http\Request;
  * 小程序api
  */
 
+//小程序通用设置
+
+
 Route::group(
     [ 'namespace' => 'Experience', 'middleware' => 'api' ], function() {
 
     //小程序登录
     Route::post('/customer/miniLogin', 'LoginController@miniLogin')->name('customer.mini.login');
     Route::post('/customer/refreshToken', "LoginController@refreshToken");
-
+    Route::post('/mini/common_setting', 'MiniSettingsController@index');
 
     Route::group(
         [ 'middleware' => 'auth.api' ], function() {
@@ -83,6 +86,7 @@ Route::group(
 
         //用户资料
         Route::post('/user/userInfo', 'UserController@userInfo');
+
 
     }
     );
