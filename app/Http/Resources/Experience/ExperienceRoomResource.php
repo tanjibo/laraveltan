@@ -61,7 +61,7 @@ class ExperienceRoomResource extends Resource
         if ($a) {
             $a = collect($a)->map(
                 function( $item ) {
-                    return $this->https($item->url);
+                    return $this->https($item->url,false);
                 }
             );
         }
@@ -112,9 +112,11 @@ class ExperienceRoomResource extends Resource
      * @return mixed
      * 转换http https 为https
      */
-    private function https( $url )
+    private function https( $url ,$isHttpsType=true)
     {
-        $url = $this->qiniuUrlParams($url);
+        if($isHttpsType){
+            $url = $this->qiniuUrlParams($url);
+        }
         preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
         if ($data[ 1 ] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
