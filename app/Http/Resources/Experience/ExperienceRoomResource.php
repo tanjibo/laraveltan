@@ -119,6 +119,6 @@ class ExperienceRoomResource extends Resource
         if ($data[ 1 ] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
         else
-            return $url;
+            return $url.'?imageMogr2/auto-orient/strip/format/jpg/size-limit/$(fsize)!/interlace/1';
     }
 }

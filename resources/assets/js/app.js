@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 
+
 window.Vue = require('vue');
 window.Quill=require('quill')
 import ElementUI from 'element-ui'
