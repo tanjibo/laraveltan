@@ -44,7 +44,7 @@ class ExperienceRoomResource extends Resource
         return $this->mergeWhen(
             $request->room_id, array_merge_recursive(
                                  [
-                                     'intro'          => $this->intro,
+                                     'intro' => $this->intro,
                                  ], $this->attachUrl(), $this->sliderUrl(), $this->comment(), $this->un()
                              )
         );
@@ -114,10 +114,16 @@ class ExperienceRoomResource extends Resource
      */
     private function https( $url )
     {
+        $url = $this->qiniuUrlParams($url);
         preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
         if ($data[ 1 ] && $data[ 1 ] == 'http')
             return str_replace('http', 'https', $url);
         else
-            return $url.'?imageMogr2/auto-orient/strip/format/jpg/size-limit/$(fsize)!/interlace/1';
+            return $url;
+    }
+
+    private function qiniuUrlParams( $url )
+    {
+        return $url . '?imageMogr2/auto-orient/strip/format/jpg/size-limit/$(fsize)!/interlace/1';
     }
 }
