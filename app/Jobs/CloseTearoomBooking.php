@@ -35,13 +35,13 @@ class CloseTearoomBooking implements ShouldQueue
     public function handle()
     {
 
-        if ($this->order->status == TearoomBooking::STATUS_PAID) {
-            return;
+        if ($this->order->status == TearoomBooking::STATUS_UNPAID) {
+
+
+            $this->order->update([ 'status' => TearoomBooking::STATUS_CANCEL ]);
+
+            app(TearoomScheduleRepository::class)->unlockTime($this->order->tearoom_id, $this->order->date, $this->order->start_point, $this->order->end_point);
         }
-        $this->order->update([ 'status' => TearoomBooking::STATUS_CANCEL ]);
-
-        app(TearoomScheduleRepository::class)->unlockTime($this->order->tearoom_id, $this->order->date, $this->order->start_point, $this->order->end_point);
-
 
     }
 }
