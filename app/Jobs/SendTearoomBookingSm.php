@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Events\SendTearoomBackendNotificationEvent;
-use App\Models\TearoomBooking;
+use App\Models\Api\TearoomBooking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

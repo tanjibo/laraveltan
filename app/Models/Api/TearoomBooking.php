@@ -49,6 +49,7 @@ class TearoomBooking extends \App\Models\TearoomBooking
 
     public static function changeOrderStatusToApi(\App\Models\Api\TearoomBooking $booking,$status='')
     {
+
         if (!$booking)
             return false;
 

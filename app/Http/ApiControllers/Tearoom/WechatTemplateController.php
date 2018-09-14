@@ -2,11 +2,10 @@
 
 namespace App\Http\ApiControllers\Tearoom;
 
-use App\Foundation\Lib\WechatTemplate;
+
 use App\Http\ApiControllers\ApiController;
 use App\Models\Api\TearoomBooking;
 use EasyWeChat\Factory;
-use Illuminate\Http\Request;
 
 class WechatTemplateController extends ApiController
 {
@@ -46,7 +45,7 @@ class WechatTemplateController extends ApiController
         $this->mini->template_message->send(
             [
                 'touser'      => $booking->user->tearoom_open_id,
-                'template_id' => 'yzVKNh-DIT1YONhWy1Yl1nGBPDc6WoOV5lrunhYfWWM',
+                'template_id' => '7qEVrNOLoSxgA5H_8hJuPN2zFI10iBNewOZK29FEnoI',
                 'page'        => '/pages/orderlist?orderStatus=-10',
                 'form_id'     =>$form_id,
                 'data'        => [

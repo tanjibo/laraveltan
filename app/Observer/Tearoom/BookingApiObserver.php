@@ -17,7 +17,7 @@ use App\Jobs\SendTearoomBookingSm;
 use App\Jobs\SendTearoomRefundFailEmail;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
-use App\Models\TearoomBooking;
+use App\Models\Api\TearoomBooking;
 use App\Models\TearoomPrice;
 use App\Models\TearoomSchedule;
 use App\Models\User;
@@ -152,7 +152,7 @@ class BookingApiObserver
         }
 //
         //退款------------  暂时不用自动退款，改成人工手退
-        if (isset(request()->status) && $booking->status == \App\Models\Api\TearoomBooking::STATUS_CANCEL) {
+        if (isset(request()->status) && $booking->status == TearoomBooking::STATUS_CANCEL) {
 
 
             $result = app()->environment() == 'local' ? [ 'result_code' => '' ] :
