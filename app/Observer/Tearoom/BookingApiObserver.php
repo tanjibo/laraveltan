@@ -180,9 +180,10 @@ class BookingApiObserver
     public function updated( TearoomBooking $booking )
     {
         //发送短信通知没有完成
-        if(request()->status && in_array(request()->status,[TearoomBooking::STATUS_PAID,TearoomBooking::STATUS_CANCEL])){
+        if($booking->status==TearoomBooking::STATUS_PAID ||request()->status==TearoomBooking::STATUS_CANCEL){
             SendTearoomBookingSm::dispatch($booking)->onQueue(app()->environment()."_tearoomSm");
         }
+
        // event(new SendTearoomBackendNotificationEvent($booking));
     }
 
