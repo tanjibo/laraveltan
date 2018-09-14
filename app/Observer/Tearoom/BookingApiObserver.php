@@ -167,7 +167,7 @@ class BookingApiObserver
 
                 $booking->is_refund = TearoomBooking::STATUS_UNREFUND;
              //   event(new RefundFailNotificationEvent($booking));
-                //队列发送--------------有点问题-------------放弃了
+                //队列发送-
                 SendTearoomRefundFailEmail::dispatch($booking)->onQueue(app()->environment().'_tearoomSm');
             }
 
