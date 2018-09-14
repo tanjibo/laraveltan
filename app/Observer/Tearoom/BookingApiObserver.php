@@ -168,7 +168,7 @@ class BookingApiObserver
                 $booking->is_refund = TearoomBooking::STATUS_UNREFUND;
              //   event(new RefundFailNotificationEvent($booking));
                 //队列发送--------------有点问题-------------放弃了
-                SendTearoomRefundFailEmail::dispatch($booking);
+                SendTearoomRefundFailEmail::dispatch($booking)->onQueue(app()->environment().'_tearoomSm');
             }
 
         }
@@ -180,7 +180,9 @@ class BookingApiObserver
     public function updated( TearoomBooking $booking )
     {
         //发送短信通知没有完成
-        SendTearoomBookingSm::dispatch($booking);
+        if(request()->status && in_array(request()->status,[TearoomBooking::STATUS_PAID,TearoomBooking::STATUS_CANCEL])){
+            SendTearoomBookingSm::dispatch($booking)->onQueue(app()->environment()."_tearoomSm");
+        }
        // event(new SendTearoomBackendNotificationEvent($booking));
     }
 

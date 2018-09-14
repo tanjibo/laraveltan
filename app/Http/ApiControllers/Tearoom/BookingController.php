@@ -15,7 +15,6 @@ namespace App\Http\ApiControllers\Tearoom;
 use App\Http\ApiControllers\ApiController;
 use App\Http\Requests\TearoomBookingRequest;
 use App\Jobs\CloseTearoomBooking;
-use App\Jobs\SendTearoomRefundFailEmail;
 use App\Models\Api\TearoomBooking;
 use App\Models\TearoomPrice;
 use Illuminate\Http\Request;
@@ -38,7 +37,7 @@ class BookingController extends ApiController
     {
         if ($model = TearoomBooking::store($request->all())) {
             //异步队列
-            $this->dispatch(new CloseTearoomBooking($model, config('app.tearoom_order_ttl')));
+            CloseTearoomBooking::dispatch($model, config('app.tearoom_order_ttl'))->onQueue(app()->environment()."_tearoomSm");
             //和微信支付交互
             if ($model->real_fee)
                 $data = $paymentRepository->TearoomUnifiedOrder($model);

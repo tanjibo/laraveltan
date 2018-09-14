@@ -36,7 +36,7 @@ class SendTearoomBackendNotificationEventListener
             return;
         }
 
-        if ($event->booking->status == TearoomBooking::STATUS_CANCEL) {
+        if (isset($this->request->status) && $event->booking->status == TearoomBooking::STATUS_CANCEL) {
             $this->cancelNotify($event->booking);
             return;
         }

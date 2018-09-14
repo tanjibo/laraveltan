@@ -14,8 +14,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'tearoom_order_ttl' => 30,
 
+    'tearoom_order_ttl' => 30,
     /*
     |--------------------------------------------------------------------------
     | Application Environment
