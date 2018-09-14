@@ -13,6 +13,7 @@ namespace App\Http\ApiControllers\Experience;
 
 
 use App\Http\ApiControllers\ApiController;
+use App\Http\Resources\Experience\MiniSetttingResource;
 use App\Models\MiniCommonSettings;
 
 class MiniSettingsController extends ApiController
@@ -20,6 +21,6 @@ class MiniSettingsController extends ApiController
 
      public function index(){
 
-         return $this->success(MiniCommonSettings::experienceMiniSetting());
+         return $this->success(new MiniSetttingResource(MiniCommonSettings::experienceMiniSetting()));
      }
 }

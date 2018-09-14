@@ -1,5 +1,21 @@
 <?php
 
+
+function toHttps( $url, $urlPrams = true )
+{
+    if (!\Illuminate\Support\Str::contains($url, [ '?imageMogr2', '?imageView2' ])) {
+        if ($urlPrams)
+            $url = $url . '?imageMogr2/auto-orient/strip/format/webp/size-limit/$(fsize)!/interlace/1';
+    }
+
+    preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
+    if ($data[ 1 ] && $data[ 1 ] == 'http')
+        return str_replace('http', 'https', $url);
+    else
+        return $url;
+
+}
+
 /**
  * @param string $route
  * @param $activity
@@ -14,7 +30,7 @@ function makeActivityMixUrl( string $route, $activity )
 
 function getActivityId()
 {
-    $id = \Qiniu\base64_urlSafeDecode(request()->app_source)?:request()->official_activity_id;
+    $id = \Qiniu\base64_urlSafeDecode(request()->app_source) ?: request()->official_activity_id;
     return $id;
 }
 
@@ -25,7 +41,7 @@ function getActivityId()
  */
 function makeMenu( $activity )
 {
-   app(\Repositories\OfficialAccountMenuRepository::class)->makeMenu($activity);
+    app(\Repositories\OfficialAccountMenuRepository::class)->makeMenu($activity);
 }
 
 /**
