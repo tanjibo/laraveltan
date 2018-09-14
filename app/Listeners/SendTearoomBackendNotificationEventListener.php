@@ -31,7 +31,7 @@ class SendTearoomBackendNotificationEventListener
      */
     public function handle( SendTearoomBackendNotificationEvent $event )
     {
-        if ($event->booking->status == TearoomBooking::STATUS_UNPAID) {
+        if ($event->booking->status == TearoomBooking::STATUS_PAID) {
             $this->createNotify($event->booking);
             return;
         }
