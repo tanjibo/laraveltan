@@ -5,7 +5,7 @@ function toHttps( $url, $urlPrams = true )
 {
     if (!\Illuminate\Support\Str::contains($url, [ '?imageMogr2', '?imageView2' ])) {
         if ($urlPrams)
-            $url = $url . '?imageMogr2/auto-orient/strip/format/webp/size-limit/$(fsize)!/interlace/1';
+            $url = $url . '?imageMogr2/auto-orient/strip/format/jpg/size-limit/$(fsize)!/interlace/1';
     }
 
     preg_match('/^(http[s]?)\:\/\/(.+)/i', $url, $data);
