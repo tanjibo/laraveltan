@@ -117,7 +117,7 @@ class PaymentRepository
 
     public function tearoomCallBack( $callback, $booking_id )
     {
-        if (!$booking = TearoomBooking::find($booking_id))
+        if (!$booking = \App\Models\Api\TearoomBooking::query()->find($booking_id))
             return false;
         \App\Models\Api\TearoomBooking::changeOrderStatusToApi($booking, TearoomBooking::STATUS_PAID);
         $this->paymentLog($callback, 4);
