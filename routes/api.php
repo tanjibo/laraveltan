@@ -162,10 +162,12 @@ Route::group(
         Route::post('/booking/repay', 'BookingController@repay')->name('tearoom.booking.repay');
 
         //发送模板通知
-        Route::post('/booking/send_wechat_notify/{booking}/{formId}', 'WechatTemplateController@sendPaySuccessNotify');
+        Route::post('/booking/pay_success_wechat_notify/{booking}/{formId}', 'WechatTemplateController@sendPaySuccessNotify');
 
-        //取消订单
-       // Route::post('/booking/cancel/{booking}/{formId}', 'BookingController@');
+        //更改订单状态
+        Route::get('/booking/change_order_status/{booking}/{status}/', 'BookingController@changeOrderStatus');
+        //发送退款通知
+        Route::get('/booking/refund_wechat_notify/{booking}/{form_id}', 'WechatTemplateController@sendCancelNotify');
 
         //用户资料
         Route::post('/user/userInfo', 'UserController@userInfo');

@@ -14,6 +14,7 @@ namespace App\Observer\Tearoom;
 
 
 use App\Jobs\SendTearoomBookingSm;
+use App\Jobs\SendTearoomRefundFailEmail;
 use App\Models\AccountRecord;
 use App\Models\CreditLog;
 use App\Models\TearoomBooking;
@@ -52,16 +53,14 @@ class BookingApiObserver
 
     public function created( TearoomBooking $booking )
     {
-
         // 锁定时间
         app(TearoomScheduleRepository::class)->lockTime($booking->tearoom_id, $booking->date, $booking->start_point, $booking->end_point);
-        //发送短信
-       // event(new SendTearoomBackendNotificationEvent($booking));
     }
 
 
     public function updating( TearoomBooking $booking )
     {
+
         switch ( request()->status ?: "" ) {
             // 已支付
             case $booking::STATUS_PAID:
@@ -135,7 +134,7 @@ class BookingApiObserver
         app(TearoomScheduleRepository::class)->unlockTime($booking->tearoom_id, $booking->date, $booking->start_point, $booking->end_point);
 
         // 余额支付
-        if ($booking->status == $booking::STATUS_PAID && $booking->pay_mode == $booking::PAY_MODE_BALANCE) {
+        if ( $booking->pay_mode == $booking::PAY_MODE_BALANCE) {
             // 返还余额
             $user          = User::query()->select('id', 'balance')->find($booking->user_id);
             $user->balance += $booking->real_fee;
@@ -152,27 +151,27 @@ class BookingApiObserver
             ;
         }
 //
-//        //退款------------  暂时不用自动退款，改成人工手退
-//        if (isset(request()->status) && $booking->status == ::STATUS_CANCEL) {
-//
-//
-//            $result = App::environment() == 'local' ? [ 'result_code' => '' ] :
-//                app(PaymentRepository::class)->tearoomRefund($booking);
-//
-//            if ($result[ 'result_code' ] == 'SUCCESS') {
-//                //更改订单状态为已退款
-//                $booking->is_refund = TearoomBooking::STATUS_REFUNDED;
-//            }
-//            else {
-//                //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
-//
-//                $booking->is_refund = TearoomBooking::STATUS_UNREFUND;
-//                event(new RefundFailNotificationEvent($booking));
-//                //队列发送--------------有点问题-------------放弃了
-//                //SendRefundFailEmail::dispatch($booking);
-//            }
-//
-//        }
+        //退款------------  暂时不用自动退款，改成人工手退
+        if (isset(request()->status) && $booking->status == \App\Models\Api\TearoomBooking::STATUS_CANCEL) {
+
+
+            $result = app()->environment() == 'local' ? [ 'result_code' => '' ] :
+                app(PaymentRepository::class)->tearoomRefund($booking);
+
+            if ($result[ 'result_code' ] == 'SUCCESS') {
+                //更改订单状态为已退款
+                $booking->is_refund = TearoomBooking::STATUS_REFUNDED;
+            }
+            else {
+                //发送邮件通知 https://d.laravel-china.org/docs/5.5/notifications#introduction
+
+                $booking->is_refund = TearoomBooking::STATUS_UNREFUND;
+             //   event(new RefundFailNotificationEvent($booking));
+                //队列发送--------------有点问题-------------放弃了
+                SendTearoomRefundFailEmail::dispatch($booking);
+            }
+
+        }
 
 
     }

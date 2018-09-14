@@ -26,6 +26,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SendTearoomBackendNotificationEvent' => [
             'App\Listeners\SendTearoomBackendNotificationEventListener',
         ],
+        //发送茶社后台下单通知
+        'App\Events\TearoomRefundFailNotificationEvent' => [
+            'App\Listeners\TearoomRefundFailNotificationEventListener',
+        ],
           //中式空间
         'App\Events\ArtShowNotificationEvent' => [
             'App\Listeners\ArtShowNotificationEventListener',

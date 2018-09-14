@@ -40,14 +40,14 @@ class WechatTemplateController extends ApiController
         );
     }
 
-    function sendCancelNotify(TearoomBooking $booking,$formId){
+    function sendCancelNotify(TearoomBooking $booking,$form_id){
 
         $this->mini->template_message->send(
             [
                 'touser'      => $booking->user->tearoom_open_id,
                 'template_id' => 'yzVKNh-DIT1YONhWy1Yl1nGBPDc6WoOV5lrunhYfWWM',
                 'page'        => '/pages/orderlist?orderStatus=-10',
-                'form_id'     =>$formId,
+                'form_id'     =>$form_id,
                 'data'        => [
                     'keyword1' => "订单已成功申请'.$booking->real_fee.'元退款，请关注您的账户变动",
                     'keyword2' => date('Y-m-d,H:i:s'),

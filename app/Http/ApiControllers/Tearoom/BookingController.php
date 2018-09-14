@@ -12,14 +12,12 @@
 namespace App\Http\ApiControllers\Tearoom;
 
 
-use App\Foundation\Lib\Payment\TearoomPayment;
 use App\Http\ApiControllers\ApiController;
 use App\Http\Requests\TearoomBookingRequest;
 use App\Jobs\CloseTearoomBooking;
+use App\Jobs\SendTearoomRefundFailEmail;
 use App\Models\Api\TearoomBooking;
-use App\Models\PaymentLog;
 use App\Models\TearoomPrice;
-use EasyWeChat\Factory;
 use Illuminate\Http\Request;
 use Repositories\PaymentRepository;
 use Repositories\TearoomBookingRepository;
@@ -36,13 +34,10 @@ class BookingController extends ApiController
     }
 
 
-
     public function store( TearoomBookingRequest $request, PaymentRepository $paymentRepository )
     {
-
-
         if ($model = TearoomBooking::store($request->all())) {
-           //异步队列
+            //异步队列
             $this->dispatch(new CloseTearoomBooking($model, config('app.tearoom_order_ttl')));
             //和微信支付交互
             if ($model->real_fee)
@@ -82,7 +77,7 @@ class BookingController extends ApiController
      * @return mixed
      * 重新支付
      */
-    public function repay( Request $request,PaymentRepository $payment)
+    public function repay( Request $request, PaymentRepository $payment )
     {
 
 
@@ -110,7 +105,7 @@ class BookingController extends ApiController
     /**
      * 订单列表
      */
-    public function orderList(Request $request)
+    public function orderList( Request $request )
     {
         return $this->success($this->repository->orderListApi($request->orderStatus));
     }
@@ -121,20 +116,18 @@ class BookingController extends ApiController
      * @return mixed
      *
      */
-    public function changeOrderStatus( TearoomBooking $booking,$formId )
+    public function changeOrderStatus(Request $request,TearoomBooking $booking)
     {
         //授权
         $this->authorize('update', $booking);
 
-
-        if (TearoomBooking::changeStatus($booking, TearoomBooking::STATUS_CANCEL)) {
+        if (TearoomBooking::changeOrderStatusToApi($booking, $request->status)) {
             return $this->message('success');
         }
         else {
             return $this->failed('fail');
         }
     }
-
 
 
 }

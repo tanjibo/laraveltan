@@ -16,9 +16,7 @@ use App\Foundation\Lib\Payment\ExperiencePayment;
 use App\Foundation\Lib\Payment\TearoomPayment;
 use App\Models\ExperienceBooking;
 use App\Models\PaymentLog;
-use App\Models\Tearoom;
 use App\Models\TearoomBooking;
-use EasyWeChat\Factory;
 
 
 class PaymentRepository
@@ -126,12 +124,14 @@ class PaymentRepository
 
     }
 
+
     public function experienceCallBack( $callback, $booking_id )
     {
         ExperienceBooking::changeBookingOrder($booking_id, ExperienceBooking::STATUS_PAID);
 
         $this->paymentLog($callback, 3);
     }
+
 
 
     private function paymentLog( array $callback, $type )

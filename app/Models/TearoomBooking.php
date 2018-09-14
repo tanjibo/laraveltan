@@ -110,6 +110,10 @@ class TearoomBooking extends Eloquent
             'tips',
             'remark',
             'status',
+            'is_prepay',
+            'is_refund',
+            'is_discount',
+            'balance'
         ];
 
     public function setDateAttribute( $val )
