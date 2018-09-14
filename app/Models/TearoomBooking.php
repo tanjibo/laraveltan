@@ -7,7 +7,6 @@
 
 namespace App\Models;
 
-use Reliese\Database\Eloquent\Model as Eloquent;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -40,7 +39,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  *
  * @package App\Models
  */
-class TearoomBooking extends Eloquent
+class TearoomBooking extends \Illuminate\Database\Eloquent\Model
 {
 
     use \Illuminate\Database\Eloquent\SoftDeletes;
