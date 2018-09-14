@@ -38,6 +38,7 @@ class WechatTemplateController extends ApiController
                 ],
             ]
         );
+        return $this->success(['data'=>'success']);
     }
 
     function sendCancelNotify(TearoomBooking $booking,$form_id){
@@ -55,6 +56,7 @@ class WechatTemplateController extends ApiController
                 ],
             ]
         );
+        return $this->success(['data'=>'success']);
     }
 
 }
