@@ -20,7 +20,6 @@ class VerifyCsrfToken extends BaseVerifier
 
     protected function isReading( $request )
     {
-        
         $method = [ 'HEAD', 'GET', 'OPTIONS' ];
         if (app()->environment('test')) {
             array_push($method, 'POST');
