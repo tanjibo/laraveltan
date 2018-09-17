@@ -18,6 +18,7 @@ class MiniSetttingResource extends Resource
             'common_color'=>$this->common_color,
             'navigation_bar_color'=>$this->navigation_bar_color,
            // 'banner_url'=>toHttps($this->banner_url),
+
             'banner_url'=>$this->banner_url,
         ];
     }
