@@ -11,17 +11,19 @@ class VerifyCsrfToken extends BaseVerifier
      *
      * @var array
      */
-    protected $except = [
-        '/LrssMiniProgram',
-        "/official_account/*",
-        "/official_account",
-    ];
-    protected function isReading($request)
+    protected $except
+        = [
+            '/LrssMiniProgram',
+            "/official_account/*",
+            "/official_account",
+        ];
+
+    protected function isReading( $request )
     {
-        $method=['HEAD', 'GET', 'OPTIONS'];
-        if(app()->environment('test')){
-           array_push($method,'POST');
+        $method = [ 'HEAD', 'GET', 'OPTIONS' ];
+        if (app()->environment('test')) {
+            array_push($method, 'POST');
         }
-        return in_array($request->method(),$method);
+        return in_array($request->method(), $method);
     }
 }
