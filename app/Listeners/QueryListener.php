@@ -27,21 +27,21 @@ class QueryListener
      */
     public function handle(QueryExecuted $event)
     {
-        $sql=str_replace("?","'%s'",$event->sql);
-       $params= collect($event->bindings)->map(function($item){
-            if($item instanceof  \DateTime){
-               return $item->getTimestamp();
-            }else{
-                return $item;
-            }
-        });
-        try{
-            $log=vsprintf($sql,$params->toArray());
-
-            Log::info($log);
-        }catch (\Exception $e){
-             echo 111;
-        }
+//        $sql=str_replace("?","'%s'",$event->sql);
+//       $params= collect($event->bindings)->map(function($item){
+//            if($item instanceof  \DateTime){
+//               return $item->getTimestamp();
+//            }else{
+//                return $item;
+//            }
+//        });
+//        try{
+//            $log=vsprintf($sql,$params->toArray());
+//
+//            Log::info($log);
+//        }catch (\Exception $e){
+//             echo 111;
+//        }
 
 
     }
