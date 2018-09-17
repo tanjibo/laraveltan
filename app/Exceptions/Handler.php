@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
         $error                 = $this->convertExceptionToResponse($exception);
         $response[ 'code' ]    = $error->getStatusCode();
         $response[ 'message' ] = 'something error';
-        dd( $exception->getMessage() );
+        dd( $exception);
         return parent::render($request, $exception);
 
     }
