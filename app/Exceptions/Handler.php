@@ -6,8 +6,6 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\AcceptHeader;
 
 
 class Handler extends ExceptionHandler
@@ -78,7 +76,10 @@ class Handler extends ExceptionHandler
 
         }
 
-
+        $error                 = $this->convertExceptionToResponse($exception);
+        $response[ 'code' ]    = $error->getStatusCode();
+        $response[ 'message' ] = 'something error';
+        dd( $exception->getMessage() );
         return parent::render($request, $exception);
 
     }
