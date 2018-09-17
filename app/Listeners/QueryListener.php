@@ -35,7 +35,14 @@ class QueryListener
                 return $item;
             }
         });
-        $log=vsprintf($sql,$params->toArray());
-        Log::info($log);
+        try{
+            $log=vsprintf($sql,$params->toArray());
+
+            Log::info($log);
+        }catch (\Exception $e){
+             echo 111;
+        }
+
+
     }
 }

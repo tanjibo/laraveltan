@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 
-
-
-use Illuminate\Support\Facades\Log;
-use Jenssegers\Agent\Facades\Agent;
+use App\Charts\ExperienceRoomBillFlowChart;
+use App\Charts\UserChart;
+use App\Models\Api\ExperienceBooking;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class HomeController extends Controller
 {
@@ -27,6 +27,13 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('home');
+        $barObj    = new ExperienceRoomBillFlowChart;
+        $userObj=new UserChart;
+        $userLineChart=$userObj->lineChart();
+        $lineObj=clone $barObj;
+        $barChart=$barObj->barChart();
+        $lineChart=$lineObj->lineChart();
+
+        return view('home', compact('barChart','lineChart','userLineChart'));
     }
 }
