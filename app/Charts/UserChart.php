@@ -32,7 +32,7 @@ class UserChart extends Chart
             function( $item ) {
                 return date_format($item->created_at, 'Y-m');
             }
-        )->map(
+        )->take(-24)->map(
             function( $item, $key ) {
                 return [
                     'total'      => $item->count(),
