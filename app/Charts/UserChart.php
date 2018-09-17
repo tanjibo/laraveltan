@@ -36,18 +36,19 @@ class UserChart extends Chart
             function( $item, $key ) {
                 return [
                     'total'      => $item->count(),
-                    'mall'       => $item->where('status', User::SOURCE_DEFAULT)->count(),
-                    'tearoom'    => $item->where('status', User::SOURCE_TEAROOM)->count(),
-                    'experience' => $item->where('status', User::SOURCE_EXPERIENCEROOM)->count(),
-                    'artShow'    => $item->where('status', User::SOURCE_ARTSHOW)->count(),
+                    'mall'       => $item->where('source', User::SOURCE_DEFAULT)->count(),
+                    'tearoom'    => $item->where('source', User::SOURCE_TEAROOM)->count(),
+                    'experience' => $item->where('source', User::SOURCE_EXPERIENCEROOM)->count(),
+                    'artShow'    => $item->where('source', User::SOURCE_ARTSHOW)->count(),
                     'date'       => $key,
                 ];
 
             }
         )
         ;
+ 
         $date       = $allOrder->pluck('date');
-        $mail       = $allOrder->pluck('mail');
+        $mail       = $allOrder->pluck('mall');
         $tearoom    = $allOrder->pluck('tearoom');
         $experience = $allOrder->pluck('experience');
         $artShow    = $allOrder->pluck('artShow');
@@ -69,6 +70,7 @@ class UserChart extends Chart
             ]
         )
         ;
+
         $this->dataset("总增加人数", 'line', $total);
         $this->dataset("商城", 'line', $mail);
         $this->dataset("茶舍", 'line', $tearoom);
