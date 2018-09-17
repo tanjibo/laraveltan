@@ -16,4 +16,12 @@ class VerifyCsrfToken extends BaseVerifier
         "/official_account/*",
         "/official_account",
     ];
+    protected function isReading($request)
+    {
+        $method=['HEAD', 'GET', 'OPTIONS'];
+        if(app()->environment('test')){
+           array_push($method,'POST');
+        }
+        return in_array($request->method(),$method);
+    }
 }
