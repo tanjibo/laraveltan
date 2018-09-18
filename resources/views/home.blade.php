@@ -14,13 +14,60 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="fa fa-user-circle-o"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">用户总数</span>
+                            <span class="info-box-number">{{$totalUserNum}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="fa  fa-rmb"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">安吉总流水</span>
+                            <span class="info-box-number" style="color:red">￥{{$barChart->totalBillNum}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="fa fa-cart-plus"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">安吉完成订单</span>
+                            <span class="info-box-number">{{$barChart->totalCompleteOrderCount}}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <!-- /.col -->
+            </div>
+            <div class="row" style="margin-top: 20px;">
+
+                <div class="col-md-12" style="margin-top:20px;">
                     {!! $barChart->container() !!}
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-top:20px;">
                     {!! $lineChart->container() !!}
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-top:20px;">
                     {!! $userLineChart->container() !!}
                 </div>
 

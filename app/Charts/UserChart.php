@@ -14,6 +14,7 @@ class UserChart extends Chart
      * @return void
      */
     protected $allUserData;
+    public $totalUserNum;
 
     public function __construct()
     {
@@ -46,7 +47,8 @@ class UserChart extends Chart
             }
         )
         ;
- 
+
+        $this->totalUserNum=$this->allUserData->count();
         $date       = $allOrder->pluck('date');
         $mail       = $allOrder->pluck('mall');
         $tearoom    = $allOrder->pluck('tearoom');

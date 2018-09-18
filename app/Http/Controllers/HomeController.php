@@ -30,10 +30,11 @@ class HomeController extends Controller
         $barObj    = new ExperienceRoomBillFlowChart;
         $userObj=new UserChart;
         $userLineChart=$userObj->lineChart();
+        $totalUserNum=$userObj->totalUserNum;
         $lineObj=clone $barObj;
         $barChart=$barObj->barChart();
         $lineChart=$lineObj->lineChart();
 
-        return view('home', compact('barChart','lineChart','userLineChart'));
+        return view('home', compact('barChart','lineChart','userLineChart','totalUserNum'));
     }
 }

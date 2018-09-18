@@ -14,6 +14,8 @@ class ExperienceRoomBillFlowChart extends Chart
      * @return void
      */
     protected $allOrderData = null;
+    public $totalBillNum;
+    public $totalCompleteOrderCount;
 
     public function __construct()
     {
@@ -30,6 +32,10 @@ class ExperienceRoomBillFlowChart extends Chart
     private function getAllOrder()
     {
         $this->allOrderData = ExperienceBooking::query()->withoutGlobalScope(new SoftDeletingScope())->get();
+        $order=$this->allOrderData->where('status', 10);
+        $this->totalCompleteOrderCount=$order->count();
+        $this->totalBillNum=$order->sum('real_price');
+
     }
 
     public function barChart()
