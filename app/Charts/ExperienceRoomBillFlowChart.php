@@ -74,17 +74,17 @@ class ExperienceRoomBillFlowChart extends Chart
             ]
         )
         ;
-        $this->dataset("每月应付总金额", 'bar', $price)->options(
+        $this->dataset("应付总金额", 'bar', $price)->options(
             [
-                'color'  => 'red',
+                'color'  => '#00c0ef',
                 'barGap' => 0,
             ]
         )
         ;
 
-        $this->dataset('每月实付总金额', 'bar', $real_price)->options(
+        $this->dataset('实付总金额', 'bar', $real_price)->options(
             [
-                'color'  => 'green',
+                'color'  => '#00a65a',
                 'barGap' => 0,
             ]
         )
@@ -133,10 +133,10 @@ class ExperienceRoomBillFlowChart extends Chart
             ]
         )
         ;
-        $this->dataset("每月总订单数", 'line', $total);
-        $this->dataset("每月取消数", 'line', $cancel);
-        $this->dataset("每月完成数", 'line', $complete);
-        $this->dataset("每月支付数", 'line', $paid);
+        $this->dataset("总订单数", 'line', $total);
+        $this->dataset("取消数", 'line', $cancel);
+        $this->dataset("完成数", 'line', $complete);
+        $this->dataset("支付数", 'line', $paid);
 
 
         return $this;
