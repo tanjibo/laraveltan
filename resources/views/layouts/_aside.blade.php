@@ -20,7 +20,7 @@
         <ul class="sidebar-menu" data-widget="tree">
 
             <li class="treeview active">
-                <a href="{{route('home')}}">
+                <a href="{{route('home')}}" onclick="window.location.href='{{route('home')}}'">
                     <i class="fa fa-dashboard"></i> <span>首页</span>
                     <span class="pull-right-container">
             </span>
