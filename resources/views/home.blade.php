@@ -32,7 +32,7 @@
                         <span class="info-box-icon bg-red"><i class="fa  fa-rmb"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">安吉总流水</span>
+                            <span class="info-box-text">安吉线上总流水</span>
                             <span class="info-box-number" style="color:red">￥{{$barChart->totalBillNum}}</span>
                         </div>
                         <!-- /.info-box-content -->
