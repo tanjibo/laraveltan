@@ -25,7 +25,7 @@ class BookingResource extends Resource
           'created_at'=>$this->created_at->toDateTimeString(),
           'statusToText'=>static::statusToText($this->status),
           'status'=>$this->status,
-          'image'=>$this->tearoom->image.'?imageMogr2/gravity/Center/crop/190x166/auto-orient/strip/format/jpg/size-limit/$(fsize)!/interlace/1'
+          'image'=>$this->tearoom->image.'?imageMogr2/thumbnail/!190x160r/auto-orient/strip/format/jpg/size-limit/$(fsize)!/interlace/1'
         ];
 
     }
