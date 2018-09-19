@@ -17,6 +17,7 @@ use App\Http\Requests\TearoomBookingRequest;
 use App\Jobs\CloseTearoomBooking;
 use App\Models\Api\TearoomBooking;
 use App\Models\TearoomPrice;
+use App\Models\TearoomSchedule;
 use Illuminate\Http\Request;
 use Repositories\PaymentRepository;
 use Repositories\TearoomBookingRepository;
@@ -37,7 +38,7 @@ class BookingController extends ApiController
     {
         if ($model = TearoomBooking::store($request->all())) {
             //异步队列
-            CloseTearoomBooking::dispatch($model, config('app.tearoom_order_ttl'))->onQueue(app()->environment()."_tearoomSm");
+            CloseTearoomBooking::dispatch($model, config('app.tearoom_order_ttl'))->onQueue(app()->environment() . "_tearoomSm");
             //和微信支付交互
             if ($model->real_fee)
                 $data = $paymentRepository->TearoomUnifiedOrder($model);
@@ -59,13 +60,39 @@ class BookingController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      * 订单价格
      */
-    public function totalPrice( TearoomPrice $price )
+    public function totalPrice( TearoomPrice $price, Request $request )
     {
+        $this->validate(
+            $request, [
+                        'start_point' => 'required',
+                        'date'        => [
+                            'required',
+                            function( $attribute, $value, $fail ) {
+                                if (!strtotime($value)) {
+                                    return $fail($attribute . ' is invalid.');
+                                }
+                            },
+                        ],
+                    ]
+        );
+        $end_point = $price->durations > 0 ? $request->start_point + $price->durations : $request->start_point - $price->durations;
+        //时间段
+        $time      = TearoomSchedule::$timetable[ $request->start_point ] . ' - ' . TearoomSchedule::$timetable[ $end_point ];
+        $durations = $price->durations / 2;
+        if ($durations > 0) {
+            $durations .= '小时';
+        }
+        else {
+            $durations = '夜场';
+        }
         return $this->success(
             [
-                'tearoom' => $price->tearoom->name,
-                'limits'  => $price->tearoom->limits,
-                'price'   => $price->fee,
+                'tearoom'   => $price->tearoom->name,
+                'limits'    => $price->tearoom->limits,
+                'durations' => $durations,
+                'time'      => $time,
+                'date'      => date_format((new \DateTime($request->date)), 'Y-m-d'),
+                'price'     => $price->fee,
             ]
         );
 
@@ -115,7 +142,7 @@ class BookingController extends ApiController
      * @return mixed
      *
      */
-    public function changeOrderStatus(Request $request,TearoomBooking $booking)
+    public function changeOrderStatus( Request $request, TearoomBooking $booking )
     {
         //授权
         $this->authorize('update', $booking);
