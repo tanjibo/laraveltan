@@ -25,7 +25,5 @@ class ArticleResource extends Resource
             'article_child'=>$this->when(isset($request->type), ArticleResource::collection($this->articleChild))
         ];
     }
-    private function  formatUrl(string  $url){
 
-    }
 }
