@@ -263,14 +263,13 @@ class Sm extends Eloquent
         $res     = $client->send($request, [ 'form_params' => $params ]);
 
         $result = explode(',', $res->getBody()->getContents());
-
         // 保存短信记录
         self::store(
             [
                 'mobile'  => $mobile,
                 'content' => $content,
                 'type'    => $type,
-                'status'  => $result[ 1 ] ? -2 : 0,
+                'status'  => $result[ 1 ] ?? 0,
             ]
         );
 
