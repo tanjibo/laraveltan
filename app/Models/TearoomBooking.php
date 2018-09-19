@@ -7,7 +7,6 @@
 
 namespace App\Models;
 
-use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class TearoomBooking
