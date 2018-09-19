@@ -91,7 +91,7 @@ class BookingController extends ApiController
                 'limits'    => $price->tearoom->limits,
                 'durations' => $durations,
                 'time'      => $time,
-                'date'      => date_format((new \DateTime($request->date)), 'Y-m-d'),
+                'date'      => date_format((new \DateTime($request->date)), 'Y年m月d日'),
                 'price'     => $price->fee,
             ]
         );
