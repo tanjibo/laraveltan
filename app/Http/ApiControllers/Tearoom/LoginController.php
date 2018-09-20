@@ -44,7 +44,7 @@ class LoginController extends ApiController
 
             $request->offsetSet('username', $decryptedData[ 'unionId' ]);
             $request->offsetSet('password', '');
-            return $this->success($this->accessToken($request));
+            return $this->success($this->accessToken($request,'tearoom'));
 
         }
         return $this->failed('login failed');
