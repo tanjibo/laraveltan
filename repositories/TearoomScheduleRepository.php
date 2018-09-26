@@ -65,7 +65,7 @@ class TearoomScheduleRepository
         $timetable = [];
         $durations = abs($price->durations); //时间段
         //判断$date<date('Y-m-d') 如果传过来时间小于当前的时间，代表补过去时间的订单，
-        $time = $date < date('Y-m-d') ? strtotime($date) : time();
+        $time = $date < date('Y-m-d') ? strtotime($date) : time()+4*3600;
 
         for ( $i = $space->start_point; $i <= $space->end_point; ++$i ) {
             $range     = substr($schedule, $i, $durations);
