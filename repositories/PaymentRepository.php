@@ -93,7 +93,10 @@ class PaymentRepository
      */
     public function tearoomRefund( TearoomBooking $order )
     {
-        return TearoomPayment::refund($this->orderNumber($order), number_format($order->real_price, 2));
+        if (!$percent = TearoomPayment::refundFeeRegular($order->date)) {
+            return [ 'result_code' => 'SUCCESS' ];
+        }
+        return TearoomPayment::refund($this->orderNumber($order), number_format($order->real_price*$percent, 2));
     }
 
     /**

@@ -12,6 +12,8 @@
 namespace App\Foundation\Lib\Payment;
 
 
+use Carbon\Carbon;
+
 class TearoomPayment extends Payment implements paymentInterface
 {
     public static function payConfig(){
@@ -41,5 +43,27 @@ class TearoomPayment extends Payment implements paymentInterface
         return static::wechatNotify(config('pay.tearoom.pay_key'));
     }
 
+    /**
+     * @param $date
+     * 退款规则
+     */
+    static public function refundFeeRegular( $date )
+    {
+        $date = new Carbon($date);
+        //大于五天
+        if (Carbon::now()->addDay(5)->lt($date)) {
+            return 1;
+        } //小于五天大于三天
+        elseif (Carbon::now()->addDay(3)->lt($date)) {
+            return 0.5;
+        }
+        elseif (Carbon::now()->addDay(1)->lt($date)) {
+            return 0.2;
+        }
+        else {
+            return 0;
+        }
+
+    }
 
 }
