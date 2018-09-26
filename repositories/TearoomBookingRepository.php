@@ -15,6 +15,7 @@ namespace Repositories;
 use App\Http\Resources\Tearoom\BookingResource;
 use App\Models\TearoomBooking;
 
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Support\Facades\Auth;
 
 class TearoomBookingRepository
@@ -22,8 +23,11 @@ class TearoomBookingRepository
 
     public function orderListApi($orderStatus=''){
          //正常订单
+
+
+       $condition= (string)$orderStatus=='All'?false:true;
         $model = TearoomBooking::query()->where('user_id', Auth::id())->when(
-            $orderStatus!='All', function( $query ) use ($orderStatus) {
+            $condition, function( $query ) use ($orderStatus) {
                 $query->where('status',$orderStatus);
         }
         )->orderBy('created_at', 'desc')->get();
