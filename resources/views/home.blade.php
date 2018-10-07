@@ -82,7 +82,7 @@
 @endsection
 
 @section('javascript')
-    <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.min.js"></script>
+    <script src="{{asset("js/echart.4.1.0.js")}}"></script>
     {!! $barChart->script() !!}
     {!! $lineChart->script() !!}
     {!! $userLineChart->script() !!}
